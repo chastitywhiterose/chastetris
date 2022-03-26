@@ -143,6 +143,8 @@ void next_file_input()
 
   //printf("Character==%c\n",c);
 
+  move_id=c;
+
   if(c=='W'){tetris_move_up();}
   if(c=='S'){tetris_move_down();}
   if(c=='A'){tetris_move_left();}
