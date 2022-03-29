@@ -367,11 +367,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
  use moves<frame to make sure that no frames are ever saved
 */
 
- if(moves<frame)
- {
-  TakeScreenshot_frame();
- }
- 
+ //if(moves>=frame) { TakeScreenshot_frame(); } 
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
  next_file_input();

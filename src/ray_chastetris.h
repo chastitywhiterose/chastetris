@@ -353,7 +353,7 @@ void tetris_clear_lines()
   {
    if(back_to_back==1){score+=1800;}
    else{score+=1200;back_to_back=1;}
-   PlaySound(sound);
+   //PlaySound(sound);
   }
   else
   {
@@ -365,7 +365,7 @@ void tetris_clear_lines()
  {
   if(back_to_back==1){score+=1200;}
   else{score+=800;back_to_back=1;}
-  PlaySound(sound1);
+  //PlaySound(sound1);
  }
 
  if(lines_cleared!=0)
