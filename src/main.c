@@ -171,6 +171,8 @@ void ray_chastetris()
  int block_size=height/grid_height;
  int grid_offset_x=block_size; /*how far from the left size of the window the grid display is*/
 
+ int radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
+
  if(blocks_used==1)
  { 
   sprintf(gamename,"Long Boi");
@@ -294,10 +296,14 @@ while(!WindowShouldClose())
 
 ray_block_color=(Color){r,g,b,255};
 
-/*DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_block_color);*/
+//DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_block_color);
+DrawCircle( grid_offset_x+x*block_size+radius,y*block_size+radius, radius, ray_block_color);
+
 
 /*draw texture modified by the color of this block on the grid*/
-DrawTexture(texture, grid_offset_x+x*block_size,y*block_size , ray_block_color);
+//DrawTexture(texture, grid_offset_x+x*block_size,y*block_size , ray_block_color);
+
+
 
    x+=1;
   }
