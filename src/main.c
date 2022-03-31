@@ -37,7 +37,7 @@ void keyboard()
   sprintf(movetext,"Left Rotate");
   printf("%s\n",movetext);
   block_rotate_left_basic();
-  printf("last_move_fail==%d\n",last_move_fail);
+  //printf("last_move_fail==%d\n",last_move_fail);
  }
  if(IsKeyPressed(KEY_X))
  {
@@ -45,7 +45,7 @@ void keyboard()
   sprintf(movetext,"Right Rotate");
   printf("%s\n",movetext);
   block_rotate_right_basic();
-  printf("last_move_fail==%d\n",last_move_fail);
+  //printf("last_move_fail==%d\n",last_move_fail);
  }
 
  if(IsKeyPressed(KEY_C))
@@ -296,8 +296,8 @@ while(!WindowShouldClose())
 
 ray_block_color=(Color){r,g,b,255};
 
-//DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_block_color);
-DrawCircle( grid_offset_x+x*block_size+radius,y*block_size+radius, radius, ray_block_color);
+DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_block_color);
+//DrawCircle( grid_offset_x+x*block_size+radius,y*block_size+radius, radius, ray_block_color);
 
 
 /*draw texture modified by the color of this block on the grid*/
