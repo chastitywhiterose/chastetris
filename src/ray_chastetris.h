@@ -964,7 +964,7 @@ void block_hold()
 int saved_tetris_grid[tetris_array_size];
 int saved_moves; /*number of valid moves*/
 int saved_frame;  /*current animation frame*/
-int back_to_back; /*back to back score bonus*/
+int saved_back_to_back; /*back to back score bonus*/
 
 int move_log_position;
 
@@ -981,7 +981,7 @@ int saved_lines_cleared_total;
 int save_exist=0;
 
 /*
- a special function which saves all the importantdata in the game. This allows reloading to a previous position when I make a mistake.
+ a special function which saves all the important data in the game. This allows reloading to a previous position when I make a mistake.
 */
 void tetris_save_state()
 {
@@ -1046,6 +1046,7 @@ void tetris_save_state()
  saved_hold_used=hold_used;
  saved_score=score;
  saved_lines_cleared_total=lines_cleared_total;
+ saved_back_to_back=back_to_back;
 
  move_log_position=ftell(fp); /*save position in the move log file*/
 
@@ -1126,7 +1127,7 @@ if(save_exist==0)
  hold_used=saved_hold_used;
  score=saved_score;
  lines_cleared_total=saved_lines_cleared_total;
-
+ back_to_back=saved_back_to_back;
 
  fseek(fp,move_log_position,SEEK_SET);
 
