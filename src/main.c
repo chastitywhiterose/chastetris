@@ -13,6 +13,8 @@ Texture2D texture; /*used when textures are used*/
 Sound sound; /*main sound played*/
 Sound sound1; /*others sounds played*/
 
+int radius; //used for circles sometimes
+
 FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
@@ -169,9 +171,9 @@ void ray_chastetris()
  int *p=tetris_grid;
 
  int block_size=height/grid_height;
- int grid_offset_x=block_size; /*how far from the left size of the window the grid display is*/
+ int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
 
- int radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
+ radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
 
  if(blocks_used==1)
  { 
@@ -182,8 +184,8 @@ void ray_chastetris()
   sprintf(gamename,"Chaste Tris");
  }
 
- next_block_x=(grid_width-current_block_width)/2;
- next_block_y=0;
+ //next_block_x=(grid_width-current_block_width)/2;
+ //next_block_y=0;
 
  printf("block_size==%d\n",block_size);
 
@@ -205,7 +207,6 @@ void ray_chastetris()
   y+=1;
  }
 
-  block_x=next_block_x;block_y=next_block_y;
  
   /* Loop until the user closes the window */
 
@@ -235,16 +236,16 @@ while(!WindowShouldClose())
    bx=0;
    while(bx<4)
    {
-    if(main_block_array[bx+by*4]!=0)
+    if(main_block.array[bx+by*4]!=0)
     {
-     if( p[block_x+bx+(block_y+by)*grid_width]!=0 )
+     if( p[main_block.x+bx+(main_block.y+by)*grid_width]!=0 )
      {
       printf("Error: Block in Way\n");
 
       /*because a collision has occurred. We restore everything back to the way it was before block was moved.*/
 
       /*restore backup of block location*/
-      block_x=block_x1,block_y=block_y1;
+      main_block.x=block_x1,main_block.y=block_y1;
 
      /*Restore backup of entire grid*/
      y=0;
@@ -262,7 +263,7 @@ while(!WindowShouldClose())
       break;}
      else
      {
-      p[block_x+bx+(block_y+by)*grid_width]=block_color;
+      p[main_block.x+bx+(main_block.y+by)*grid_width]=main_block.color;
      }
     }
     bx+=1;
@@ -311,6 +312,13 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
  }
 
 
+ /*draw the boundary walls*/
+
+DrawRectangle(grid_offset_x-block_size,0*block_size,block_size,height,(Color){255,255,255,255});
+DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,(Color){255,255,255,255});
+
+
+
  /*end of drawing code for grid*/
 
 
@@ -330,10 +338,6 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
   /*printf("last_move_spin==%d\n",last_move_spin);*/
 
 
- /*draw the boundary walls*/
-
-DrawRectangle(0*block_size,0*block_size,block_size,height,(Color){255,255,255,255});
-DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,(Color){255,255,255,255});
 
 /*some text drawing*/
  
@@ -341,10 +345,11 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
   DrawText(gamename,fontsize*8,0,fontsize*2, (Color){255,255,255,255});
 
 
-  /*DrawText(movetext,fontsize*14,height-fontsize*6,fontsize, (Color){255,255,255,255});*/
+  //DrawText(movetext,fontsize*14,height-fontsize*6,fontsize, (Color){255,255,255,255});
 
 
-  DrawText("Chastity White Rose",fontsize*8,fontsize*9,fontsize, (Color){255,255,255,255});
+
+  DrawText("Chastity White Rose",fontsize*8,fontsize*10,fontsize, (Color){255,255,255,255});
   DrawText("River Black Rose",fontsize*8,fontsize*11,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Score: %d",score);
@@ -353,11 +358,14 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
   sprintf(text,"Lines: %d",lines_cleared_total);
   DrawText(text,fontsize*8,fontsize*4,fontsize, (Color){255,255,255,255});
 
-  sprintf(text,"This: %c",current_block_id);
+  sprintf(text,"This: %c",main_block.id);
   DrawText(text,fontsize*8,fontsize*5,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Hold: %c",hold_block_id);
   DrawText(text,fontsize*8,fontsize*6,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Move: %d",moves);
+  DrawText(text,fontsize*8,fontsize*7,fontsize, (Color){255,255,255,255});
 
   /*DrawTexture(texture, width/2 - texture.width/2, height/2 - texture.height/2, WHITE);*/
 
@@ -394,12 +402,12 @@ int main(int argc, char **argv)
  InitWindow(width,height,"Chastity's Game");
  SetTargetFPS(60);
 
- texture=LoadTexture("textures/star_face.png");
+ //texture=LoadTexture("textures/star_face.png");
 
  InitAudioDevice();      // Initialize audio device
 
- sound = LoadSound("./audio/respectfully.mp3"); //load the audio
- sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
+ //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
+ //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
 
  //PlaySound(sound);
 
@@ -429,8 +437,15 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  ClearBackground((Color){0,0,0,255});
 
- DrawText("Welcome to Chaste Tris",fontsize*4,fontsize*4,fontsize, (Color){255,255,255,255});
- DrawText("Press Enter to Begin game.",fontsize*4,fontsize*5,fontsize, (Color){255,255,255,255});
+ DrawText("Welcome to Chaste Tris",fontsize*2,fontsize*0,fontsize, (Color){255,255,255,255});
+
+ DrawText("Programming: Chastity White Rose",fontsize*2,fontsize*2,fontsize, (Color){255,255,255,255});
+ DrawText("Inspiration: River Black Rose",fontsize*2,fontsize*3,fontsize, (Color){255,255,255,255});
+
+ DrawText("Press Enter to Begin game.",fontsize*2,fontsize*5,fontsize, (Color){255,255,255,255});
+
+ DrawText("https://github.com/chastitywhiterose/chastetris",fontsize*2,fontsize*8,40, (Color){255,255,255,255});
+
 
  EndDrawing();
 }
@@ -443,7 +458,8 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  if(fp_input!=NULL){fclose(fp_input);}
 
- UnloadSound(sound);     // Unload sound data
+ //UnloadSound(sound);     // Unload sound data
+ //UnloadSound(sound1);     // Unload sound data
 
  return 0;
 }
