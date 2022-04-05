@@ -21,20 +21,19 @@ struct tetris_block
 
 /*details of main block*/
 
-struct tetris_block main_block; /*the structure which will be the main/visible block*/
+struct tetris_block main_block,hold_block,temp_block; /*the structures which will be the main,hold,temp block*/
 
 
 int block_x1=0,block_y1=0; /*when temporarily moving a block and backing up it's location*/
 
 int max_block_width=4; /* the max width of any tetris block*/
 
-int next_x,next_block_y;
 
 int block_array_backup[16],backup_block_width,backup_block_color;/*backup during rotation*/
 
 int hold_used=0;
-int block_array_hold[16],hold_block_width,hold_block_color,hold_block_id=0; /*the hold block storage*/
-int block_array_hold1[16],hold1_block_width,hold1_block_color,hold1_block_id; /*the second hold block storage*/
+//int block_array_hold[16],hold_block_width,hold_block_color,hold_block_id=0; /*the hold block storage*/
+//int block_array_hold1[16],hold1_block_width,hold1_block_color,hold1_block_id; /*the second hold block storage*/
 
 int moves=0; /*number of valid moves*/
 int moves_tried=0; /*number of attempted moves*/
@@ -184,14 +183,11 @@ void spawn_block()
   y+=1;
  }
 
- next_x=(grid_width-main_block.width_used)/2;
- next_block_y=0;
+ main_block.x=(grid_width-main_block.width_used)/2;
+ main_block.y=0;
 
- main_block.x=next_x;
- main_block.y=next_block_y;
-
-
-
+ main_block.spawn_x=main_block.x;
+ main_block.spawn_y=main_block.y;
 }
 
 void chastetris_info()
@@ -705,73 +701,25 @@ void block_rotate_left_basic()
 
 void block_hold()
 {
- int x=0,y=0;
-
-
-
- /*printf("hold block width: %d\n",hold_block_width);*/
-
  if(hold_used==0) /*just store block if nothing there*/
  {
-
   /*printf("hold block used first time.\n");*/
-
-  hold_block_width=main_block.width_used;
-  hold_block_color=main_block.color;
-  hold_block_id=main_block.id;
-
-  y=0;
-  while(y<max_block_width)
-  {
-   x=0;
-   while(x<max_block_width)
-   {
-    block_array_hold[x+y*max_block_width]=main_block.array[x+y*max_block_width];
-    x+=1;
-   }
-   y+=1;
-  }
-
+  hold_block=main_block;
   tetris_next_block();
   spawn_block();
-
   hold_used=1;
-
  }
-
  else
  {
-
   /*printf("Swap with previous hold block.\n");*/
-
-  hold1_block_width=hold_block_width; hold1_block_color=hold_block_color; hold1_block_id=hold_block_id; /*put the hold block into temp storage*/
-  hold_block_width=main_block.width_used; hold_block_color=main_block.color; hold_block_id=main_block.id;      /*place current block into the hold spot*/
-  main_block.width_used=hold1_block_width; main_block.color=hold1_block_color; main_block.id=hold1_block_id;   /*make the current block be the block that was held last time*/
-
-
-  y=0;
-  while(y<max_block_width)
-  {
-   x=0;
-   while(x<max_block_width)
-   {
-    block_array_hold1[x+y*max_block_width]=block_array_hold[x+y*max_block_width];
-    block_array_hold[x+y*max_block_width]=main_block.array[x+y*max_block_width];
-    main_block.array[x+y*max_block_width]=block_array_hold1[x+y*max_block_width];
-    x+=1;
-   }
-
-  y+=1;
+  temp_block=hold_block;
+  hold_block=main_block;
+  main_block=temp_block;
+  main_block.x=main_block.spawn_x;
+  main_block.y=main_block.spawn_y;
  }
-
-}
-
  fputc(move_id,fp);
 }
-
-
-
-
 
 int saved_tetris_grid[tetris_array_size];
 int saved_moves; /*number of valid moves*/
@@ -791,6 +739,8 @@ int saved_score;
 int saved_lines_cleared_total;
 
 int save_exist=0;
+
+struct tetris_block save_main_block,save_hold_block;
 
 /*
  a special function which saves all the important data in the game. This allows reloading to a previous position when I make a mistake.
@@ -812,45 +762,8 @@ void tetris_save_state()
   y+=1;
  }
 
- /*all attributes of main block*/
- saved_block_type=block_type;
- saved_main_block_width=main_block.width_used;
- saved_block_color=main_block.color;
- saved_block_id=main_block.id;
- saved_main_block_x=main_block.x;
- saved_block_y=main_block.y;
-
- /*backup main block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   saved_block_array[x+y*max_block_width]=main_block.array[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
-
-
- /*all attributes of hold block as well*/
- saved_hold_block_width=hold_block_width;
- saved_hold_block_color=hold_block_color;
- saved_hold_block_id=hold_block_id;
-
- /*backup hold block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   saved_hold_block_array[x+y*max_block_width]=block_array_hold[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
+ save_main_block=main_block;
+ save_hold_block=hold_block;
 
 
  saved_moves=moves;
@@ -894,45 +807,8 @@ if(save_exist==0)
   y+=1;
  }
 
- /*all attributes of main block*/
- block_type=saved_block_type;
- main_block.width_used=saved_main_block_width;
- main_block.color=saved_block_color;
- main_block.id=saved_block_id;
- main_block.x=saved_main_block_x;
- main_block.y=saved_block_y;
-
- /*restore backup of main block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   main_block.array[x+y*max_block_width]=saved_block_array[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
-
-
- /*all attributes of hold block as well*/
- hold_block_width=saved_hold_block_width;
- hold_block_color=saved_hold_block_color;
- hold_block_id=saved_hold_block_id;
-
- /*restore backup of hold block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   block_array_hold[x+y*max_block_width]=saved_hold_block_array[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
+ main_block=save_main_block;
+ hold_block=save_hold_block;
 
  moves=saved_moves;
  frame=saved_frame;

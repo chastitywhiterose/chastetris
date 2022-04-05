@@ -142,7 +142,6 @@ void next_file_input()
 
  else
  {
-
   //printf("Character==%c\n",c);
 
   move_id=c;
@@ -361,7 +360,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
   sprintf(text,"This: %c",main_block.id);
   DrawText(text,fontsize*8,fontsize*5,fontsize, (Color){255,255,255,255});
 
-  sprintf(text,"Hold: %c",hold_block_id);
+  sprintf(text,"Hold: %c",hold_block.id);
   DrawText(text,fontsize*8,fontsize*6,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Move: %d",moves);
@@ -445,6 +444,8 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  DrawText("Press Enter to Begin game.",fontsize*2,fontsize*5,fontsize, (Color){255,255,255,255});
 
  DrawText("https://github.com/chastitywhiterose/chastetris",fontsize*2,fontsize*8,40, (Color){255,255,255,255});
+
+ DrawText("Email: chastitywhiterose@gmail.com",fontsize*2,fontsize*9,40, (Color){255,255,255,255});
 
 
  EndDrawing();
