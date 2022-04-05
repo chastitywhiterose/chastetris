@@ -765,6 +765,7 @@ void tetris_save_state()
  save_main_block=main_block;
  save_hold_block=hold_block;
 
+ saved_block_type=block_type;
 
  saved_moves=moves;
  saved_frame=frame;
@@ -809,6 +810,8 @@ if(save_exist==0)
 
  main_block=save_main_block;
  hold_block=save_hold_block;
+
+ block_type=saved_block_type;
 
  moves=saved_moves;
  frame=saved_frame;
