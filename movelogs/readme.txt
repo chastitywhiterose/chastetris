@@ -1,2 +1,0 @@
-One of the unique features of my game is the ability to run commands from a file instead of the keyboard. This works because the blocks are in a fixed order and not random. Same input means same result. The game will read from a file named imovelog.txt and write to one named omovelog.txt
-You need only to rename the files you want to keep and save them for later use. This functions just like the Nullpomino replay feature.
