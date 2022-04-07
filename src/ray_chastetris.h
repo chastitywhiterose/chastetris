@@ -23,17 +23,10 @@ struct tetris_block
 
 struct tetris_block main_block,hold_block,temp_block; /*the structures which will be the main,hold,temp block*/
 
-
-int block_x1=0,block_y1=0; /*when temporarily moving a block and backing up it's location*/
-
 int max_block_width=4; /* the max width of any tetris block*/
 
-
-int block_array_backup[16],backup_block_width,backup_block_color;/*backup during rotation*/
-
 int hold_used=0;
-//int block_array_hold[16],hold_block_width,hold_block_color,hold_block_id=0; /*the hold block storage*/
-//int block_array_hold1[16],hold1_block_width,hold1_block_color,hold1_block_id; /*the second hold block storage*/
+
 
 int moves=0; /*number of valid moves*/
 int moves_tried=0; /*number of attempted moves*/
@@ -227,53 +220,31 @@ int pixel_on_grid(int x,int y)
  else{return tetris_grid[main_block.x+bx+(main_block.y+by)*grid_width];}
 }
 
-/*checks whether or not the block collides with anything on the current field*/
+/*
+checks whether or not the block collides with anything on the current field
+*/
 int tetris_check_move()
 {
- int x,y;
-
  moves_tried++; /*move attempted*/
 
-
-  by=0;
-  while(by<4)
+ by=0;
+ while(by<max_block_width)
+ {
+  bx=0;
+  while(bx<max_block_width)
   {
-   bx=0;
-   while(bx<4)
+   if(main_block.array[bx+by*max_block_width]!=0)
    {
-    if(main_block.array[bx+by*4]!=0)
+    if( pixel_on_grid(main_block.x+bx,main_block.y+by)!=0 )
     {
-
-     if( pixel_on_grid(main_block.x+bx,main_block.y+by)!=0 )
-     {
-      /*printf("Error: Block in Way on Move Check.\n");*/
-
-      /*because a collision has occurred. We restore everything back to the way it was before block was moved.*/
-
-      /*restore backup of block location*/
-      main_block.x=block_x1,main_block.y=block_y1;
-
-     /*Restore backup of entire grid*/
-     y=0;
-     while(y<grid_height)
-     {
-      x=0;
-      while(x<grid_width)
-      {
-       tetris_grid[x+y*grid_width]=tetris_grid_backup[x+y*grid_width];
-       x+=1;
-      }
-      y+=1;
-     }
-
-      return 1;
-     }
-
+     /*printf("Error: Block in Way on Move Check.\n");*/
+     return 1; /*return failure*/
     }
-    bx+=1;
    }
-   by+=1;
+    bx+=1;
   }
+  by+=1;
+ }
 
  moves++; /*move successful*/
  return 0;
@@ -466,12 +437,12 @@ void tetris_set_block()
 
   /*draw block onto grid at it's current location*/
   y=0;
-  while(y<4)
+  while(y<max_block_width)
   {
    x=0;
-   while(x<4)
+   while(x<max_block_width)
    {
-    if(main_block.array[x+y*4]!=0)
+    if(main_block.array[x+y*max_block_width]!=0)
     {
       tetris_grid[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color; 
     }
@@ -497,12 +468,16 @@ void tetris_set_block()
 void tetris_move_down()
 {
  /*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
+
+ temp_block=main_block;
+
+
  main_block.y+=1;
 
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
+  main_block=temp_block;
   /*printf("Block is finished\n");*/
   tetris_set_block();
   moves++; /*moves normally wouldn't be incremented because move check fails but setting a block is actually a valid move.*/
@@ -521,9 +496,7 @@ void tetris_move_down()
 /*all things about moving up*/
 void tetris_move_up()
 {
- /*make backup of block location*/
- /*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
+ temp_block=main_block;
  main_block.y-=1;
  last_move_fail=tetris_check_move();
  if(!last_move_fail)
@@ -531,15 +504,17 @@ void tetris_move_up()
   last_move_spin=0;
   fputc(move_id,fp);
  }
-;
+ else
+ {
+  main_block=temp_block;
+ }
 }
 
 
 /*all things about moving right*/
 void tetris_move_right()
 {
- /*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
+ temp_block=main_block;
  main_block.x+=1;
  last_move_fail=tetris_check_move();
  if(!last_move_fail)
@@ -547,19 +522,26 @@ void tetris_move_right()
   last_move_spin=0;
   fputc(move_id,fp);
  }
+ else
+ {
+  main_block=temp_block;
+ }
 }
 
 /*all things about moving left*/
 void tetris_move_left()
 {
- /*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
+ temp_block=main_block;
  main_block.x-=1;
  last_move_fail=tetris_check_move();
  if(!last_move_fail)
  {
   last_move_spin=0;
   fputc(move_id,fp);
+ }
+ else
+ {
+  main_block=temp_block;
  }
 }
 
@@ -569,21 +551,7 @@ void block_rotate_right_basic()
 {
  int x=0,y=0,x1=0,y1=0;
 
-/*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
-
- /*first backup block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   block_array_backup[x+y*max_block_width]=main_block.array[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
+ temp_block=main_block;
 
  /*copy it from top to bottom to right to left(my own genius rotation trick)*/
  /*same as in the left rotation function by x,y and x1,y1 are swapped in the assignment*/
@@ -597,7 +565,7 @@ void block_rotate_right_basic()
   x=0;
   while(x<main_block.width_used)
   {
-   main_block.array[x1+y1*max_block_width]=block_array_backup[x+y*max_block_width];
+   main_block.array[x1+y1*max_block_width]=temp_block.array[x+y*max_block_width];
    x+=1;
    y1++;
   }
@@ -608,19 +576,7 @@ void block_rotate_right_basic()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
- 
-  y=0;
-  while(y<max_block_width)
-  {
-   x=0;
-   while(x<max_block_width)
-   {
-    main_block.array[x+y*max_block_width]=block_array_backup[x+y*max_block_width];
-    x+=1;
-   }
-   y+=1;
-  }
-  
+  main_block=temp_block;
  }
  else
  {
@@ -635,22 +591,7 @@ void block_rotate_right_basic()
 void block_rotate_left_basic()
 {
  int x=0,y=0,x1=0,y1=0;
-
- /*make backup of block location*/
- block_x1=main_block.x,block_y1=main_block.y;
-
- /*first backup block grid*/
- y=0;
- while(y<max_block_width)
- {
-  x=0;
-  while(x<max_block_width)
-  {
-   block_array_backup[x+y*max_block_width]=main_block.array[x+y*max_block_width];
-   x+=1;
-  }
-  y+=1;
- }
+temp_block=main_block;
 
  /*copy it from top to bottom to right to left(my own genius rotation trick)*/
 /*same as in the right rotation function by x,y and x1,y1 are swapped in the assignment*/
@@ -664,7 +605,7 @@ void block_rotate_left_basic()
   x=0;
   while(x<main_block.width_used)
   {
-   main_block.array[x+y*max_block_width]=block_array_backup[x1+y1*max_block_width];
+   main_block.array[x+y*max_block_width]=temp_block.array[x1+y1*max_block_width];
    x+=1;
    y1++;
   }
@@ -675,25 +616,13 @@ void block_rotate_left_basic()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
- 
-  y=0;
-  while(y<max_block_width)
-  {
-   x=0;
-   while(x<max_block_width)
-   {
-    main_block.array[x+y*max_block_width]=block_array_backup[x+y*max_block_width];
-    x+=1;
-   }
-   y+=1;
-  }
+  main_block=temp_block;
  }
  else
  {
   last_move_spin=1;
   fputc(move_id,fp);
  }
-
 
 }
 

@@ -243,9 +243,6 @@ while(!WindowShouldClose())
 
       /*because a collision has occurred. We restore everything back to the way it was before block was moved.*/
 
-      /*restore backup of block location*/
-      main_block.x=block_x1,main_block.y=block_y1;
-
      /*Restore backup of entire grid*/
      y=0;
      while(y<grid_height)
@@ -259,7 +256,8 @@ while(!WindowShouldClose())
       y+=1;
      }
 
-      break;}
+      break;
+     }
      else
      {
       p[main_block.x+bx+(main_block.y+by)*grid_width]=main_block.color;
@@ -272,10 +270,7 @@ while(!WindowShouldClose())
 
 
 
-
 /*display the tetris grid*/
-
-
 
  y=0;
  while(y<grid_height)
@@ -283,15 +278,14 @@ while(!WindowShouldClose())
   x=0;
   while(x<grid_width)
   {
-
    pixel=p[x+y*grid_width];
    r=(pixel&0xFF0000)>>16;
    g=(pixel&0x00FF00)>>8;
    b=(pixel&0x0000FF);
 
- 
-/* printf("x=%d y=%d ",x,y);
-   printf("red=%d green=%d blue=%d\n",r,g,b);
+/*
+ printf("x=%d y=%d ",x,y);
+ printf("red=%d green=%d blue=%d\n",r,g,b);
 */
 
 ray_block_color=(Color){r,g,b,255};
