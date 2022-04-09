@@ -183,8 +183,6 @@ void ray_chastetris()
   sprintf(gamename,"Chaste Tris");
  }
 
- //next_block_x=(grid_width-current_block_width)/2;
- //next_block_y=0;
 
  printf("block_size==%d\n",block_size);
 
@@ -200,7 +198,7 @@ void ray_chastetris()
   x=0;
   while(x<grid_width)
   {
-   p[x+y*grid_width]=empty_color;
+   main_grid.array[x+y*grid_width]=empty_color;
    x+=1;
   }
   y+=1;
@@ -216,17 +214,7 @@ while(!WindowShouldClose())
   ClearBackground((Color){0,0,0,255});
 
  /*make backup of entire grid*/
- y=0;
- while(y<grid_height)
- {
-  x=0;
-  while(x<grid_width)
-  {
-   tetris_grid_backup[x+y*grid_width]=p[x+y*grid_width];
-   x+=1;
-  }
-  y+=1;
- }
+  temp_grid=main_grid;
 
   /*draw block onto grid at it's current location*/
   by=0;
@@ -242,19 +230,6 @@ while(!WindowShouldClose())
       printf("Error: Block in Way\n");
 
       /*because a collision has occurred. We restore everything back to the way it was before block was moved.*/
-
-     /*Restore backup of entire grid*/
-     y=0;
-     while(y<grid_height)
-     {
-      x=0;
-      while(x<grid_width)
-      {
-       p[x+y*grid_width]=tetris_grid_backup[x+y*grid_width];
-       x+=1;
-      }
-      y+=1;
-     }
 
       break;
      }
@@ -297,8 +272,6 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
 /*draw texture modified by the color of this block on the grid*/
 //DrawTexture(texture, grid_offset_x+x*block_size,y*block_size , ray_block_color);
 
-
-
    x+=1;
   }
   y+=1;
@@ -310,23 +283,10 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
 DrawRectangle(grid_offset_x-block_size,0*block_size,block_size,height,(Color){255,255,255,255});
 DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,(Color){255,255,255,255});
 
-
-
  /*end of drawing code for grid*/
 
-
  /*Restore backup of entire grid*/
- y=0;
- while(y<grid_height)
- {
-  x=0;
-  while(x<grid_width)
-  {
-   p[x+y*grid_width]=tetris_grid_backup[x+y*grid_width];
-   x+=1;
-  }
-  y+=1;
- }
+  main_grid=temp_grid;
 
   /*printf("last_move_spin==%d\n",last_move_spin);*/
 
@@ -359,6 +319,9 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 
   sprintf(text,"Move: %d",moves);
   DrawText(text,fontsize*8,fontsize*7,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Back to Back: %d",back_to_back);
+  DrawText(text,fontsize*8,fontsize*8,fontsize, (Color){255,255,255,255});
 
   /*DrawTexture(texture, width/2 - texture.width/2, height/2 - texture.height/2, WHITE);*/
 

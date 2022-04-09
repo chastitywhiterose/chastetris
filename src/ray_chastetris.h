@@ -3,9 +3,6 @@
 /*Part 1: Declaring variables and constants.*/
 
 #define tetris_array_size 0x1000
-//int main_grid.array[tetris_array_size];
-int tetris_grid_backup[tetris_array_size];
-
 
 /*main block structure*/
 struct tetris_grid
@@ -330,8 +327,9 @@ void tetris_clear_lines()
  {
   if(last_move_spin==1)
   {
-   if(back_to_back==1){score+=1200;}
-   else{score+=800;back_to_back=1;}
+   if(back_to_back>0){score+=1200;}
+   else{score+=800;}
+   back_to_back++;
   }
   else
   {
@@ -342,8 +340,9 @@ void tetris_clear_lines()
  {
   if(last_move_spin==1)
   {
-   if(back_to_back==1){score+=1800;}
-   else{score+=1200;back_to_back=1;}
+   if(back_to_back>0){score+=1800;}
+   else{score+=1200;}
+   back_to_back++;
    //PlaySound(sound);
   }
   else
@@ -354,8 +353,9 @@ void tetris_clear_lines()
  if(lines_cleared==3){score+=500;back_to_back=0;}
  if(lines_cleared==4)
  {
-  if(back_to_back==1){score+=1200;}
-  else{score+=800;back_to_back=1;}
+  if(back_to_back>0){score+=1200;}
+  else{score+=800;}
+  back_to_back++;
   //PlaySound(sound1);
  }
 
@@ -393,7 +393,7 @@ void tetris_fall_lines()
 
   if(xcount==0)
   {
-/*   printf("row %d is empty\n",y);*/
+   /* printf("row %d is empty\n",y);*/
 
    /*find first non empty row above empty row*/
 
@@ -493,7 +493,7 @@ void tetris_move_down()
  }
  else
  {
-  last_move_spin=0;
+  //move was successful
  }
 
  last_move_fail=0; /*because moving down is always a valid operation, the fail variable should be set to 0*/
