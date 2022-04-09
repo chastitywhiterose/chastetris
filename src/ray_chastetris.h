@@ -3,8 +3,17 @@
 /*Part 1: Declaring variables and constants.*/
 
 #define tetris_array_size 0x1000
-int tetris_grid[tetris_array_size];
+//int main_grid.array[tetris_array_size];
 int tetris_grid_backup[tetris_array_size];
+
+
+/*main block structure*/
+struct tetris_grid
+{
+ int array[tetris_array_size];
+};
+
+struct tetris_grid main_grid,temp_grid;
 
 int grid_width=10,grid_height=20;
 
@@ -217,7 +226,7 @@ int pixel_on_grid(int x,int y)
  if(y<0){/*printf("Error: Negative Y\n");*/return 1;}
  if(x>=grid_width){/*printf("Error: X too high.\n");*/return 1;}
  if(y>=grid_height){/*printf("Error: Y too high.\n");*/return 1;}
- else{return tetris_grid[main_block.x+bx+(main_block.y+by)*grid_width];}
+ else{return main_grid.array[main_block.x+bx+(main_block.y+by)*grid_width];}
 }
 
 /*
@@ -261,7 +270,7 @@ void tetris_clear_screen()
   x=0;
   while(x<grid_width)
   {
-   tetris_grid[x+y*grid_width]=empty_color;
+   main_grid.array[x+y*grid_width]=empty_color;
    x+=1;
   }
   y+=1;
@@ -284,7 +293,7 @@ void tetris_clear_lines()
   x=0;
   while(x<grid_width)
   {
-   if(tetris_grid[x+y*grid_width]!=empty_color){xcount++;}
+   if(main_grid.array[x+y*grid_width]!=empty_color){xcount++;}
    x+=1;
   }
 
@@ -299,7 +308,7 @@ void tetris_clear_lines()
    x1=0;
    while(x1<grid_width)
    {
-    tetris_grid[x1+y1*grid_width]=empty_color;
+    main_grid.array[x1+y1*grid_width]=empty_color;
 
     x1++;
    }
@@ -376,7 +385,7 @@ void tetris_fall_lines()
   x=0;
   while(x<grid_width)
   {
-   if(tetris_grid[x+y*grid_width]!=empty_color){xcount++;}
+   if(main_grid.array[x+y*grid_width]!=empty_color){xcount++;}
    x+=1;
   }
 
@@ -396,7 +405,7 @@ void tetris_fall_lines()
     x=0;
     while(x<grid_width)
     {
-     if(tetris_grid[x+y1*grid_width]!=empty_color){xcount++;}
+     if(main_grid.array[x+y1*grid_width]!=empty_color){xcount++;}
      x+=1;
     }
     if(xcount>0)
@@ -408,8 +417,8 @@ void tetris_fall_lines()
      x=0;
      while(x<grid_width)
      {
-      tetris_grid[x+y*grid_width]=tetris_grid[x+y1*grid_width];
-      tetris_grid[x+y1*grid_width]=empty_color;
+      main_grid.array[x+y*grid_width]=main_grid.array[x+y1*grid_width];
+      main_grid.array[x+y1*grid_width]=empty_color;
       x++;
      }
      break;
@@ -444,7 +453,7 @@ void tetris_set_block()
    {
     if(main_block.array[x+y*max_block_width]!=0)
     {
-      tetris_grid[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color; 
+      main_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color; 
     }
     x+=1;
    }
@@ -650,7 +659,7 @@ void block_hold()
  fputc(move_id,fp);
 }
 
-int saved_tetris_grid[tetris_array_size];
+struct tetris_grid save_grid;
 int saved_moves; /*number of valid moves*/
 int saved_frame;  /*current animation frame*/
 int saved_back_to_back; /*back to back score bonus*/
@@ -676,20 +685,7 @@ struct tetris_block save_main_block,save_hold_block;
 */
 void tetris_save_state()
 {
- int x,y;
-
- /*make backup of entire grid*/
- y=0;
- while(y<grid_height)
- {
-  x=0;
-  while(x<grid_width)
-  {
-   saved_tetris_grid[x+y*grid_width]=tetris_grid[x+y*grid_width];
-   x+=1;
-  }
-  y+=1;
- }
+ save_grid=main_grid;
 
  save_main_block=main_block;
  save_hold_block=hold_block;
@@ -715,27 +711,14 @@ void tetris_save_state()
 */
 void tetris_load_state()
 {
- int x,y;
 
-
-if(save_exist==0)
-{
- printf("No save exists yet.\n");
- return;
-}
-
- /*restore backup of entire grid*/
- y=0;
- while(y<grid_height)
+ if(save_exist==0)
  {
-  x=0;
-  while(x<grid_width)
-  {
-   tetris_grid[x+y*grid_width]=saved_tetris_grid[x+y*grid_width];
-   x+=1;
-  }
-  y+=1;
+  printf("No save exists yet.\n");
+  return;
  }
+
+ main_grid=save_grid;
 
  main_block=save_main_block;
  hold_block=save_hold_block;

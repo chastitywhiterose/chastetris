@@ -167,7 +167,7 @@ void ray_chastetris()
 {
  int pixel,r,g,b;
  int x=0,y=0;
- int *p=tetris_grid;
+ int *p=main_grid.array;
 
  int block_size=height/grid_height;
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
