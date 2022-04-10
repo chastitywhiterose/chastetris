@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <raylib.h>
-
-
 
 const int width = 1280;
 const int height = 720;
@@ -25,7 +24,7 @@ int frame=0,framelimit=1,fps=60;
 char gamename[256];
 int blocks_used=7;
 
-char text[256];
+char text[0x200];
 char movetext[256],move_id;
 int fontsize=60;
 
@@ -173,15 +172,6 @@ void ray_chastetris()
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
 
  radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
-
- if(blocks_used==1)
- { 
-  sprintf(gamename,"Long Boi");
- }
- else
- {
-  sprintf(gamename,"Chaste Tris");
- }
 
 
  printf("block_size==%d\n",block_size);
@@ -355,6 +345,22 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 
 int main(int argc, char **argv)
 {
+
+ /*process command line arguments*/
+ int x=1;
+ while(x<argc)
+ {
+  printf("argv[%i]=%s\n",x,argv[x]);
+
+  if(strcmp(argv[x],"-longboi")==00)
+  {
+   printf("Long Boi mode activated! Only the I blocks will spawn!\n");
+   blocks_used=1;
+  }
+ 
+  x++;
+ }
+
  InitWindow(width,height,"Chastity's Game");
  SetTargetFPS(60);
 
@@ -385,6 +391,17 @@ int main(int argc, char **argv)
   printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
  }
 
+ /*the name of the game depends on the blocks_used variable*/
+ if(blocks_used==1)
+ { 
+  sprintf(gamename,"Long Boi");
+ }
+ else
+ {
+  sprintf(gamename,"Chaste Tris");
+ }
+
+
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
 {
@@ -393,7 +410,8 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  ClearBackground((Color){0,0,0,255});
 
- DrawText("Welcome to Chaste Tris",fontsize*2,fontsize*0,fontsize, (Color){255,255,255,255});
+ sprintf(text,"Welcome to %s",gamename);
+ DrawText(text,fontsize*2,fontsize*0,fontsize, (Color){255,255,255,255});
 
  DrawText("Programming: Chastity White Rose",fontsize*2,fontsize*2,fontsize, (Color){255,255,255,255});
  DrawText("Inspiration: River Black Rose",fontsize*2,fontsize*3,fontsize, (Color){255,255,255,255});
