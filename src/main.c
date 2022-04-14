@@ -207,15 +207,15 @@ while(!WindowShouldClose())
   temp_grid=main_grid;
 
   /*draw block onto temp grid at it's current location*/
-  by=0;
-  while(by<max_block_width)
+  y=0;
+  while(y<max_block_width)
   {
-   bx=0;
-   while(bx<max_block_width)
+   x=0;
+   while(x<max_block_width)
    {
-    if(main_block.array[bx+by*max_block_width]!=0)
+    if(main_block.array[x+y*max_block_width]!=0)
     {
-     if( temp_grid.array[main_block.x+bx+(main_block.y+by)*grid_width]!=0 )
+     if( temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]!=0 )
      {
       printf("Error: Block in Way\n");
 
@@ -225,12 +225,12 @@ while(!WindowShouldClose())
      }
      else
      {
-      temp_grid.array[main_block.x+bx+(main_block.y+by)*grid_width]=main_block.color;
+      temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color;
      }
     }
-    bx+=1;
+    x+=1;
    }
-   by+=1;
+   y+=1;
   }
 
 
