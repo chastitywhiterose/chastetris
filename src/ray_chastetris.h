@@ -40,9 +40,6 @@ int last_move_spin=0; /*was the last move a t spin?*/
 int last_move_fail; /*did the last move fail?*/
 int back_to_back=0;
 
-
-int bx,by;
-
 int score=0;
 
 int empty_color=0x000000;
@@ -564,7 +561,7 @@ void block_rotate_right_basic()
  temp_block=main_block;
 
  /*copy it from top to bottom to right to left(my own genius rotation trick)*/
- /*same as in the left rotation function by x,y and x1,y1 are swapped in the assignment*/
+ /*same as in the left rotation function but x,y and x1,y1 are swapped in the assignment*/
 
  x1=main_block.width_used;
  y=0;
@@ -604,7 +601,7 @@ void block_rotate_left_basic()
 temp_block=main_block;
 
  /*copy it from top to bottom to right to left(my own genius rotation trick)*/
-/*same as in the right rotation function by x,y and x1,y1 are swapped in the assignment*/
+/*same as in the right rotation function but x,y and x1,y1 are swapped in the assignment*/
 
  x1=main_block.width_used;
  y=0;
