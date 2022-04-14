@@ -166,7 +166,7 @@ void ray_chastetris()
 {
  int pixel,r,g,b;
  int x=0,y=0;
- int *p=main_grid.array;
+ //int *p=main_grid.array;
 
  int block_size=height/grid_height;
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
@@ -206,26 +206,26 @@ while(!WindowShouldClose())
  /*make backup of entire grid*/
   temp_grid=main_grid;
 
-  /*draw block onto grid at it's current location*/
+  /*draw block onto temp grid at it's current location*/
   by=0;
-  while(by<4)
+  while(by<max_block_width)
   {
    bx=0;
-   while(bx<4)
+   while(bx<max_block_width)
    {
-    if(main_block.array[bx+by*4]!=0)
+    if(main_block.array[bx+by*max_block_width]!=0)
     {
-     if( p[main_block.x+bx+(main_block.y+by)*grid_width]!=0 )
+     if( temp_grid.array[main_block.x+bx+(main_block.y+by)*grid_width]!=0 )
      {
       printf("Error: Block in Way\n");
 
-      /*because a collision has occurred. We restore everything back to the way it was before block was moved.*/
+      /*because a collision has occurred. We will restore everything back to the way it was before block was moved.*/
 
       break;
      }
      else
      {
-      p[main_block.x+bx+(main_block.y+by)*grid_width]=main_block.color;
+      temp_grid.array[main_block.x+bx+(main_block.y+by)*grid_width]=main_block.color;
      }
     }
     bx+=1;
@@ -243,7 +243,7 @@ while(!WindowShouldClose())
   x=0;
   while(x<grid_width)
   {
-   pixel=p[x+y*grid_width];
+   pixel=temp_grid.array[x+y*grid_width];
    r=(pixel&0xFF0000)>>16;
    g=(pixel&0x00FF00)>>8;
    b=(pixel&0x0000FF);
@@ -275,10 +275,8 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 
  /*end of drawing code for grid*/
 
- /*Restore backup of entire grid*/
-  main_grid=temp_grid;
 
-  /*printf("last_move_spin==%d\n",last_move_spin);*/
+/*printf("last_move_spin==%d\n",last_move_spin);*/
 
 
 
