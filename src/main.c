@@ -350,7 +350,7 @@ int main(int argc, char **argv)
  {
   printf("argv[%i]=%s\n",x,argv[x]);
 
-  if(strcmp(argv[x],"-longboi")==00)
+  if(strcmp(argv[x],"-longboi")==0)
   {
    printf("Long Boi mode activated! Only the I blocks will spawn!\n");
    blocks_used=1;
