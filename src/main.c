@@ -428,8 +428,7 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  ray_chastetris();
 
- fclose(fp); /*close the file*/
-
+ if(fp!=NULL){fclose(fp);}
  if(fp_input!=NULL){fclose(fp_input);}
 
  //UnloadSound(sound);     // Unload sound data
