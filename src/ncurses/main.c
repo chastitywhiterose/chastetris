@@ -17,6 +17,52 @@ char movetext[256],move_id;
 #include "ncurses_chastetris.h"
 
 
+/*
+this function gets input from a previous log file and autoplays the moves from  it.
+this is a highly experimental feature and probably won't be in the published game
+*/
+int next_file_input()
+{
+ int c;
+ if(fp_input==NULL){return 0;}
+
+ c=fgetc(fp_input);
+
+ if(feof(fp_input))
+ {
+  /*
+   printf("End of file reached.\n");
+   printf("Now use keyboard input.\n");
+  */
+
+  /*
+   printf("Going back to beginning\n");
+   fseek(fp_input,0,SEEK_SET);
+  */
+
+  fclose(fp_input); fp_input=NULL;  return 0;
+
+ }
+
+ else
+ {
+  /*printf("Character==%c\n",c);*/
+
+  move_id=c;
+
+  if(c=='W'){tetris_move_up();}
+  if(c=='S'){tetris_move_down();}
+  if(c=='A'){tetris_move_left();}
+  if(c=='D'){tetris_move_right();}
+
+  if(c=='Z'){block_rotate_left_basic();}
+  if(c=='X'){block_rotate_right_basic();}
+  if(c=='C'){block_hold();}
+
+  return c;
+ }
+
+}
 
 
 
@@ -182,15 +228,33 @@ int main(int argc, char **argv)
 
 
  /*section for drawing text info for the game*/
- x=40;y=10;
+ x=40;y=0;
  move(y,x);
  printw("%s\n",gamename);
 
- x=40;y=11;
+ y++;
  mvprintw(y,x,"key==%d '%c'\n",key,key);
 
- x=40;y=12;
+ y++;
  mvprintw(y,x,"%s\n",text);
+
+ y++;
+ mvprintw(y,x,"Score: %d",score);
+
+ y++;
+ mvprintw(y,x,"Lines: %d",lines_cleared_total);
+
+ y++;
+ mvprintw(y,x,"This: %c",main_block.id);
+
+ y++;
+ mvprintw(y,x,"Hold: %c",hold_block.id);
+
+ y++;
+ mvprintw(y,x,"Move: %d",moves);
+
+ y++;
+ mvprintw(y,x,"Back to Back: %d",back_to_back);
 
  x=22;y=0;
  move(y,x);
@@ -203,8 +267,13 @@ int main(int argc, char **argv)
   /*keyboard section*/
 
 
-   key=getch(); /*Wait for user input */   
 
+  key=next_file_input();
+
+  if(key==0)
+  {
+   key=getch(); /*Wait for user input */   
+  }
 
 
 
@@ -215,17 +284,14 @@ int main(int argc, char **argv)
   if(key==261){key='d';}
 
 
-  if(key=='z'){strcpy(text,"Left Rotate");block_rotate_left_basic();}
-  if(key=='x'){strcpy(text,"Right Rotate");block_rotate_right_basic();}
-  if(key=='c'){strcpy(text,"Hold Block");block_hold();}
+  if(key=='z'){move_id='Z';strcpy(text,"Left Rotate");block_rotate_left_basic();}
+  if(key=='x'){move_id='X';strcpy(text,"Right Rotate");block_rotate_right_basic();}
+  if(key=='c'){move_id='C';strcpy(text,"Hold Block");block_hold();}
 
-  if(key=='w'){strcpy(text,"Move Up");tetris_move_up();}
-  if(key=='a'){strcpy(text,"Move Left");tetris_move_left();}
-  if(key=='s'){strcpy(text,"Move Down");tetris_move_down();}
-  if(key=='d'){strcpy(text,"Move Right");tetris_move_right();}
-
-
-
+  if(key=='w'){move_id='W';strcpy(text,"Move Up");tetris_move_up();}
+  if(key=='a'){move_id='A';strcpy(text,"Move Left");tetris_move_left();}
+  if(key=='s'){move_id='S';strcpy(text,"Move Down");tetris_move_down();}
+  if(key=='d'){move_id='D';strcpy(text,"Move Right");tetris_move_right();}
 
  }
 
