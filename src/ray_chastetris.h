@@ -223,7 +223,7 @@ int pixel_on_grid(int x,int y)
  if(y<0){/*printf("Error: Negative Y\n");*/return 1;}
  if(x>=grid_width){/*printf("Error: X too high.\n");*/return 1;}
  if(y>=grid_height){/*printf("Error: Y too high.\n");*/return 1;}
- else{return main_grid.array[main_block.x+bx+(main_block.y+by)*grid_width];}
+ else{return main_grid.array[x+y*grid_width];}
 }
 
 /*
@@ -231,25 +231,26 @@ checks whether or not the block collides with anything on the current field
 */
 int tetris_check_move()
 {
+ int x,y;
  moves_tried++; /*move attempted*/
 
- by=0;
- while(by<max_block_width)
+ y=0;
+ while(y<max_block_width)
  {
-  bx=0;
-  while(bx<max_block_width)
+  x=0;
+  while(x<max_block_width)
   {
-   if(main_block.array[bx+by*max_block_width]!=0)
+   if(main_block.array[x+y*max_block_width]!=0)
    {
-    if( pixel_on_grid(main_block.x+bx,main_block.y+by)!=0 )
+    if( pixel_on_grid(main_block.x+x,main_block.y+y)!=0 )
     {
      /*printf("Error: Block in Way on Move Check.\n");*/
      return 1; /*return failure*/
     }
    }
-    bx+=1;
+    x+=1;
   }
-  by+=1;
+  y+=1;
  }
 
  moves++; /*move successful*/
