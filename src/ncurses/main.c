@@ -1,5 +1,6 @@
 #include <ncurses.h>
 #include <string.h>
+#include <unistd.h> /*for usleep function*/
 
 
 FILE *fp; /*to save a file of moves played*/
@@ -228,17 +229,11 @@ int main(int argc, char **argv)
 
 
  /*section for drawing text info for the game*/
- x=40;y=0;
+ x=13;y=0;
  move(y,x);
  printw("%s\n",gamename);
 
- y++;
- mvprintw(y,x,"key==%d '%c'\n",key,key);
-
- y++;
- mvprintw(y,x,"%s\n",text);
-
- y++;
+ y+=2;
  mvprintw(y,x,"Score: %d",score);
 
  y++;
@@ -256,7 +251,16 @@ int main(int argc, char **argv)
  y++;
  mvprintw(y,x,"Back to Back: %d",back_to_back);
 
- x=22;y=0;
+/*these are used for debugging but not the rest of the time*/
+/*
+ y++;
+ mvprintw(y,x,"key==%d '%c'\n",key,key);
+
+ y++;
+ mvprintw(y,x,"%s\n",text);
+*/
+
+ y++;
  move(y,x);
 
 
@@ -266,7 +270,7 @@ int main(int argc, char **argv)
 
   /*keyboard section*/
 
-
+  /*usleep(50000);*/ /*to slow the game down when autoplaying and recording videos*/
 
   key=next_file_input();
 
