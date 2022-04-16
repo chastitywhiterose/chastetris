@@ -128,15 +128,12 @@ void next_file_input()
  {
   printf("End of file reached.\n");
   printf("Now use keyboard input.\n");
-
-
   /*
    printf("Going back to beginning\n");
    fseek(fp_input,0,SEEK_SET);
   */
 
   fclose(fp_input); fp_input=NULL;  return;
-
  }
 
  else
@@ -153,10 +150,20 @@ void next_file_input()
   if(c=='Z'){block_rotate_left_basic();}
   if(c=='X'){block_rotate_right_basic();}
   if(c=='C'){block_hold();}
-
  }
 
+
+ /*the following code is meant to be used for longboi mode in combination with a special input file*/
+ /*move backwards to the right spot for infinite loop of longbois*/
+ 
+ /*
+  c=ftell(fp_input);
+  if(c==604){fseek(fp_input,512,SEEK_SET);}
+ */
+
 }
+
+
 
 
 /*
