@@ -12,6 +12,8 @@ Texture2D texture; /*used when textures are used*/
 Sound sound; /*main sound played*/
 Sound sound1; /*others sounds played*/
 
+
+
 int radius; //used for circles sometimes
 
 FILE *fp; /*to save a file of moves played*/
@@ -26,7 +28,10 @@ int blocks_used=7;
 
 char text[0x200];
 char movetext[256],move_id;
-int fontsize=60;
+
+Font font;
+int fontsize=height/12;
+int text_x; /*the x position of where text will go*/
 
 #include "ray_chastetris.h"
 
@@ -290,33 +295,33 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 /*some text drawing*/
  
 
-  DrawText(gamename,fontsize*8,0,fontsize*2, (Color){255,255,255,255});
+  DrawText(gamename,text_x,0,fontsize*2, (Color){255,255,255,255});
 
 
   //DrawText(movetext,fontsize*14,height-fontsize*6,fontsize, (Color){255,255,255,255});
 
 
 
-  DrawText("Chastity White Rose",fontsize*8,fontsize*10,fontsize, (Color){255,255,255,255});
-  DrawText("River Black Rose",fontsize*8,fontsize*11,fontsize, (Color){255,255,255,255});
+  DrawText("Chastity White Rose",text_x,fontsize*10,fontsize, (Color){255,255,255,255});
+  DrawText("River Black Rose",text_x,fontsize*11,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Score: %d",score);
-  DrawText(text,fontsize*8,fontsize*3,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*3,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Lines: %d",lines_cleared_total);
-  DrawText(text,fontsize*8,fontsize*4,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*4,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"This: %c",main_block.id);
-  DrawText(text,fontsize*8,fontsize*5,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*5,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Hold: %c",hold_block.id);
-  DrawText(text,fontsize*8,fontsize*6,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*6,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Move: %d",moves);
-  DrawText(text,fontsize*8,fontsize*7,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*7,fontsize, (Color){255,255,255,255});
 
   sprintf(text,"Back to Back: %d",back_to_back);
-  DrawText(text,fontsize*8,fontsize*8,fontsize, (Color){255,255,255,255});
+  DrawText(text,text_x,fontsize*8,fontsize, (Color){255,255,255,255});
 
   /*DrawTexture(texture, width/2 - texture.width/2, height/2 - texture.height/2, WHITE);*/
 
@@ -343,6 +348,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
     
  }
 
+ UnloadFont(font); /*unload the font*/
  CloseWindow();
  
 }
@@ -406,6 +412,13 @@ int main(int argc, char **argv)
   sprintf(gamename,"Chaste Tris");
  }
 
+/*load a font before any text is drawn*/
+//Font font = LoadFontEx("./font/Hack-Regular.ttf", 32, 0, 250);
+
+font = LoadFont("./font/Hack-Regular.ttf");
+
+fontsize=height/12; /*customize font size based on screen height*/
+text_x=fontsize*1; /*position of text for intro screen*/
 
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
@@ -416,22 +429,30 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  ClearBackground((Color){0,0,0,255});
 
  sprintf(text,"Welcome to %s",gamename);
- DrawText(text,fontsize*2,fontsize*0,fontsize, (Color){255,255,255,255});
+ DrawText(text,text_x,fontsize*0,fontsize, (Color){255,255,255,255});
 
- DrawText("Programming: Chastity White Rose",fontsize*2,fontsize*2,fontsize, (Color){255,255,255,255});
- DrawText("Inspiration: River Black Rose",fontsize*2,fontsize*3,fontsize, (Color){255,255,255,255});
+//DrawTextEx(font, text, (Vector2){ text_x, fontsize*0 }, fontsize, 2, (Color){255,0,255,255});
 
- DrawText("Press Enter to Begin game.",fontsize*2,fontsize*5,fontsize, (Color){255,255,255,255});
 
- DrawText("https://github.com/chastitywhiterose/chastetris",fontsize*2,fontsize*8,40, (Color){255,255,255,255});
 
- DrawText("Email: chastitywhiterose@gmail.com",fontsize*2,fontsize*9,40, (Color){255,255,255,255});
+ DrawText("Programming: Chastity White Rose",text_x,fontsize*2,fontsize, (Color){255,255,255,255});
+ DrawText("Inspiration: River Black Rose",text_x,fontsize*3,fontsize, (Color){255,255,255,255});
 
+ DrawText("Press Enter to Begin game.",text_x,fontsize*5,fontsize, (Color){255,255,255,255});
+
+ DrawText("https://github.com/chastitywhiterose/chastetris",text_x,fontsize*8,40, (Color){255,255,255,255});
+
+// DrawText("Email: chastitywhiterose@gmail.com",text_x,fontsize*9,40, (Color){255,255,255,255});
+
+ DrawTextEx(font, "Email: chastitywhiterose@gmail.com", (Vector2){ text_x,fontsize*9}, fontsize, 2, (Color){255,255,255,255});
 
  EndDrawing();
 }
 /*optionally, close the window and end program after start screen*/
  //CloseWindow(); return 0;
+
+
+text_x=fontsize*8; /*position of text for game loop*/
 
  ray_chastetris();
 
@@ -440,6 +461,8 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  //UnloadSound(sound);     // Unload sound data
  //UnloadSound(sound1);     // Unload sound data
+
+ 
 
  return 0;
 }
