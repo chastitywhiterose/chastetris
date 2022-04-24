@@ -11,24 +11,40 @@ struct chaste_font
 {
  int char_width; /*width of a char*/
  int char_height; /*height of a char*/
-
-
+ Texture2D texture; /*the texture of the image of loaded font*/
 };
 
 
+struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128;
 
-Texture2D texture_font_8; /*this font is global because it will be reused a lot*/
 
-int fsize=8; /*size in both width and height for each character*/
+//Texture2D texture_font_8; /*this font is global because it will be reused a lot*/
 
-void chaste_font_load()
+//int fsize=8; /*size in both width and height for each character*/
+
+struct chaste_font chaste_font_load(char *s)
 {
+ struct chaste_font new_font;
  printf("This function tries to load a font\n");
- texture_font_8=LoadTexture("./font/bitmap/FreeBASIC Font 64.png");
 
- fsize=texture_font_8.height; /*font size is detected by original image height*/
- printf("Size of loaded font is %d\n",fsize);
 
+ new_font.texture=LoadTexture(s);
+ /*by default,font size is detected by original image height*/
+ new_font.char_width=new_font.texture.height;
+ new_font.char_height=new_font.texture.height;
+
+ if(new_font.char_height==0)
+ {
+  printf("Something went horribly wrong loading the font from file:\n%s\n",s);
+ }
+ else
+ {
+  printf("Font loaded correctly\n");
+  printf("Size of loaded font is %d\n",new_font.char_height);
+ }
+
+
+ return new_font;
 }
 
 
@@ -43,16 +59,15 @@ void chaste_font_draw_char(int c,int cx,int cy)
  int x,y;
  //printf("The character to print is '%c'\n",c);
 
-
- x=(c-' ')*fsize;
- y=0*fsize;
+ x=(c-' ')*main_font.char_width;
+ y=0*main_font.char_height;
  //printf("X=%d Y=%d\n",x,y);
 
- Rectangle rect_source = {x,y,fsize,fsize};
+ Rectangle rect_source = {x,y,main_font.char_width,main_font.char_height};
  Vector2 pos = {cx,cy}; /*coordinates of where char will be drawn*/
 
 
-DrawTextureRec(texture_font_8, rect_source, pos, (Color){255,255,255,255});
+DrawTextureRec(main_font.texture, rect_source, pos, (Color){255,255,255,255});
 
 }
 
@@ -69,15 +84,15 @@ void chaste_font_draw_string(char *s,int cx,int cy)
  while(s[i]!=0)
  {
   c=s[i];
-  if(c=='\n'){ cx=cx_start; cy+=fsize;}
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height;}
   else
   {
-   x=(c-' ')*fsize;
-   y=0*fsize;
-   Rectangle rect_source = {x,y,fsize,fsize};
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+   Rectangle rect_source = {x,y,main_font.char_width,main_font.char_height};
    Vector2 pos = {cx,cy}; /*coordinates of where char will be drawn*/
-   DrawTextureRec(texture_font_8, rect_source, pos, (Color){255,255,255,255});
-   cx+=fsize;
+   DrawTextureRec(main_font.texture, rect_source, pos, (Color){255,255,255,255});
+   cx+=main_font.char_width;;
   }
   i++;
  }

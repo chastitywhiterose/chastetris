@@ -222,29 +222,29 @@ it's in a separate function so that I can switch it out with another function wh
 */
 void draw_stats_chaste_font()
 {
- text_x=fsize*7;
+ text_x=main_font.char_height*7;
 
 
- chaste_font_draw_string(gamename,text_x,fsize*1);
+ chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
 
  sprintf(text,"Score: %d",score);
- chaste_font_draw_string(text,text_x,fsize*3);
+ chaste_font_draw_string(text,text_x,main_font.char_height*3);
 
  sprintf(text,"Lines: %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,fsize*4);
+ chaste_font_draw_string(text,text_x,main_font.char_height*4);
 
   sprintf(text,"This: %c",main_block.id);
-  chaste_font_draw_string(text,text_x,fsize*5);
+  chaste_font_draw_string(text,text_x,main_font.char_height*5);
 
   sprintf(text,"Hold: %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,fsize*6);
+  chaste_font_draw_string(text,text_x,main_font.char_height*6);
 
 
   sprintf(text,"Move: %d",moves);
-  chaste_font_draw_string(text,text_x,fsize*7);
+  chaste_font_draw_string(text,text_x,main_font.char_height*7);
 
   sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string(text,text_x,fsize*8);
+  chaste_font_draw_string(text,text_x,main_font.char_height*8);
 
 }
 
@@ -424,9 +424,6 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  sprintf(text,"Welcome to %s",gamename);
  DrawText(text,text_x,fontsize*0,fontsize, (Color){255,255,255,255});
 
-//DrawTextEx(font, text, (Vector2){ text_x, fontsize*0 }, fontsize, 2, (Color){255,0,255,255});
-
-
 
  DrawText("Programming: Chastity White Rose",text_x,fontsize*2,fontsize, (Color){255,255,255,255});
  DrawText("Inspiration: River Black Rose",text_x,fontsize*3,fontsize, (Color){255,255,255,255});
@@ -437,8 +434,6 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  DrawText("Email: chastitywhiterose@gmail.com",text_x,fontsize*9,40, (Color){255,255,255,255});
 
-// DrawTextEx(font, "Email: chastitywhiterose@gmail.com", (Vector2){ text_x,fontsize*9}, fontsize, 2, (Color){255,255,255,255});
-
  EndDrawing();
 }
 
@@ -447,7 +442,6 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 /* this function is meant to load fonts from images and display them as a welcome screen*/
 void welcome_screen_chaste_font_hello()
 {
- //chaste_font_load(); /*call the function to load my custom bitmap font*/
 
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
@@ -456,6 +450,58 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  BeginDrawing();
  ClearBackground((Color){255,0,0,255});
  chaste_font_draw_string("Hello World!\nI am:\n\nChastity\nWhite\nRose",100,100);
+ EndDrawing();
+}
+
+}
+
+
+
+/* this function is now the official welcome screen*/
+void welcome_screen_chaste_font()
+{
+
+/*before the game actually runs, optionally display a start screen*/
+while(!WindowShouldClose()) /*loop runs until key pressed*/
+{
+ if(IsKeyPressed(KEY_ENTER)){break;}
+ BeginDrawing();
+ ClearBackground((Color){0,0,0,255});
+
+ main_font=font_64;
+
+ text_x=main_font.char_height*1;
+
+ sprintf(text,"%s",gamename);
+ chaste_font_draw_string(text,text_x,main_font.char_height*1);
+
+
+ main_font=font_32;
+
+
+ sprintf(text,"Programming: Chastity White Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*5);
+
+ sprintf(text,"Inspiration:    River Black Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*6);
+
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*8);
+
+ sprintf(text,"Email: chastitywhiterose@gmail.com");
+ chaste_font_draw_string(text,text_x,main_font.char_height*10);
+
+ main_font=font_16;
+
+ sprintf(text,"https://github.com/chastitywhiterose/chastetris");
+ chaste_font_draw_string(text,text_x,main_font.char_height*24);
+
+ main_font=font_8;
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nRaylib is used for the graphics API including rectanges and textures.\nThe font handling is done with Chastity's own font library she wrote and named Chaste Font.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*52);
+
+
  EndDrawing();
 }
 
@@ -506,9 +552,23 @@ int main(int argc, char **argv)
 
 
 
-welcome_screen();
+ /*
+  call the function to load my custom bitmap font.
+  it returns a "chaste_font" structure which is stored in global variable main_font
+ */
 
-//welcome_screen_chaste_font();
+ font_8=chaste_font_load("./font/bitmap/FreeBASIC Font 8.png");
+ font_16=chaste_font_load("./font/bitmap/FreeBASIC Font 16.png");
+ font_32=chaste_font_load("./font/bitmap/FreeBASIC Font 32.png");
+ font_64=chaste_font_load("./font/bitmap/FreeBASIC Font 64.png");
+ //font_128=chaste_font_load("./font/bitmap/FreeBASIC Font 128.png");
+
+
+
+
+//welcome_screen();
+
+welcome_screen_chaste_font();
 
 
 /*
@@ -539,7 +599,9 @@ text_x=fontsize*8; /*position of text for game loop*/
   printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
  }
 
- chaste_font_load(); /*call the function to load my custom bitmap font*/
+
+ main_font=font_64; /*font should be size 64 before game loop*/
+
 
  ray_chastetris();
 
