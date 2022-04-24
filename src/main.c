@@ -167,6 +167,9 @@ void next_file_input()
   if(c==604){fseek(fp_input,512,SEEK_SET);}
  */
 
+/*  c=ftell(fp_input);
+  if(c==604){fseek(fp_input,512,SEEK_SET);}*/
+
 }
 
 
@@ -394,7 +397,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
     
  }
 
- UnloadFont(font); /*unload the font*/
+ //UnloadFont(font); /*unload the font*/
  CloseWindow();
  
 }
@@ -405,7 +408,7 @@ void welcome_screen()
 
 /*load a font before any text is drawn*/
 
-font = LoadFont("./font/Hack-Regular.ttf");
+//font = LoadFont("./font/Hack-Regular.ttf");
 
 fontsize=height/12; /*customize font size based on screen height*/
 text_x=fontsize*1; /*position of text for intro screen*/
@@ -432,9 +435,9 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  DrawText("https://github.com/chastitywhiterose/chastetris",text_x,fontsize*8,40, (Color){255,255,255,255});
 
-// DrawText("Email: chastitywhiterose@gmail.com",text_x,fontsize*9,40, (Color){255,255,255,255});
+ DrawText("Email: chastitywhiterose@gmail.com",text_x,fontsize*9,40, (Color){255,255,255,255});
 
- DrawTextEx(font, "Email: chastitywhiterose@gmail.com", (Vector2){ text_x,fontsize*9}, fontsize, 2, (Color){255,255,255,255});
+// DrawTextEx(font, "Email: chastitywhiterose@gmail.com", (Vector2){ text_x,fontsize*9}, fontsize, 2, (Color){255,255,255,255});
 
  EndDrawing();
 }
