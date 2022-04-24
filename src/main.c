@@ -34,6 +34,7 @@ int fontsize=height/12;
 int text_x; /*the x position of where text will go*/
 
 #include "ray_chastetris.h"
+#include "ray_chastefont.h"
 
 void keyboard()
 {
@@ -169,6 +170,82 @@ void next_file_input()
 }
 
 
+/*
+this function draws the stats of the game such as the lines and score using the built in raylib font
+it's in a separate function so that I can switch it out with another function when I feel like it
+*/
+void draw_stats()
+{
+
+/*some text drawing*/
+ 
+
+  DrawText(gamename,text_x,0,fontsize*2, (Color){255,255,255,255});
+
+
+  //DrawText(movetext,fontsize*14,height-fontsize*6,fontsize, (Color){255,255,255,255});
+
+
+
+  DrawText("Chastity White Rose",text_x,fontsize*10,fontsize, (Color){255,255,255,255});
+  DrawText("River Black Rose",text_x,fontsize*11,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Score: %d",score);
+  DrawText(text,text_x,fontsize*3,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Lines: %d",lines_cleared_total);
+  DrawText(text,text_x,fontsize*4,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"This: %c",main_block.id);
+  DrawText(text,text_x,fontsize*5,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Hold: %c",hold_block.id);
+  DrawText(text,text_x,fontsize*6,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Move: %d",moves);
+  DrawText(text,text_x,fontsize*7,fontsize, (Color){255,255,255,255});
+
+  sprintf(text,"Back to Back: %d",back_to_back);
+  DrawText(text,text_x,fontsize*8,fontsize, (Color){255,255,255,255});
+
+  /*DrawTexture(texture, width/2 - texture.width/2, height/2 - texture.height/2, WHITE);*/
+
+}
+
+
+/*
+this function draws the stats of the game such as the lines and score using my chaste font routines
+it's in a separate function so that I can switch it out with another function when I feel like it
+*/
+void draw_stats_chaste_font()
+{
+ text_x=fsize*7;
+
+
+ chaste_font_draw_string(gamename,text_x,fsize*1);
+
+ sprintf(text,"Score: %d",score);
+ chaste_font_draw_string(text,text_x,fsize*3);
+
+ sprintf(text,"Lines: %d",lines_cleared_total);
+ chaste_font_draw_string(text,text_x,fsize*4);
+
+  sprintf(text,"This: %c",main_block.id);
+  chaste_font_draw_string(text,text_x,fsize*5);
+
+  sprintf(text,"Hold: %c",hold_block.id);
+  chaste_font_draw_string(text,text_x,fsize*6);
+
+
+  sprintf(text,"Move: %d",moves);
+  chaste_font_draw_string(text,text_x,fsize*7);
+
+  sprintf(text,"B2B: %d",back_to_back);
+  chaste_font_draw_string(text,text_x,fsize*8);
+
+}
+
+
 
 
 /*
@@ -291,39 +368,8 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 /*printf("last_move_spin==%d\n",last_move_spin);*/
 
 
+ draw_stats_chaste_font();
 
-/*some text drawing*/
- 
-
-  DrawText(gamename,text_x,0,fontsize*2, (Color){255,255,255,255});
-
-
-  //DrawText(movetext,fontsize*14,height-fontsize*6,fontsize, (Color){255,255,255,255});
-
-
-
-  DrawText("Chastity White Rose",text_x,fontsize*10,fontsize, (Color){255,255,255,255});
-  DrawText("River Black Rose",text_x,fontsize*11,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"Score: %d",score);
-  DrawText(text,text_x,fontsize*3,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"Lines: %d",lines_cleared_total);
-  DrawText(text,text_x,fontsize*4,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"This: %c",main_block.id);
-  DrawText(text,text_x,fontsize*5,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"Hold: %c",hold_block.id);
-  DrawText(text,text_x,fontsize*6,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"Move: %d",moves);
-  DrawText(text,text_x,fontsize*7,fontsize, (Color){255,255,255,255});
-
-  sprintf(text,"Back to Back: %d",back_to_back);
-  DrawText(text,text_x,fontsize*8,fontsize, (Color){255,255,255,255});
-
-  /*DrawTexture(texture, width/2 - texture.width/2, height/2 - texture.height/2, WHITE);*/
 
   EndDrawing();
 
@@ -354,66 +400,10 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 }
 
 
-int main(int argc, char **argv)
+void welcome_screen()
 {
 
- /*process command line arguments*/
- int x=1;
- while(x<argc)
- {
-  printf("argv[%i]=%s\n",x,argv[x]);
-
-  if(strcmp(argv[x],"-longboi")==0)
-  {
-   printf("Long Boi mode activated! Only the I blocks will spawn!\n");
-   blocks_used=1;
-  }
- 
-  x++;
- }
-
- InitWindow(width,height,"Chastity's Game");
- SetTargetFPS(60);
-
- //texture=LoadTexture("textures/star_face.png");
-
- InitAudioDevice();      // Initialize audio device
-
- //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
- //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
-
- //PlaySound(sound);
-
- /*open the file to record moves*/
- sprintf(filename,"omovelog.txt");
- fp=fopen(filename,"wb+");
- if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
-
- sprintf(filename,"imovelog.txt");
- fp_input=fopen(filename,"rb+");
- if(fp_input==NULL)
- {
-  printf("Failed to open input file \"%s\".\n",filename);
-  printf("This is not an error. It just means input is keyboard only. \"%s\".\n",filename);
- }
- else
- {
-  printf("input file \"%s\" is opened.\n",filename);
-  printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
- }
-
- /*the name of the game depends on the blocks_used variable*/
- if(blocks_used==1)
- { 
-  sprintf(gamename,"Long Boi");
- }
- else
- {
-  sprintf(gamename,"Chaste Tris");
- }
-
 /*load a font before any text is drawn*/
-//Font font = LoadFontEx("./font/Hack-Regular.ttf", 32, 0, 250);
 
 font = LoadFont("./font/Hack-Regular.ttf");
 
@@ -448,11 +438,105 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  EndDrawing();
 }
-/*optionally, close the window and end program after start screen*/
+
+}
+
+/* this function is meant to load fonts from images and display them as a welcome screen*/
+void welcome_screen_chaste_font_hello()
+{
+ //chaste_font_load(); /*call the function to load my custom bitmap font*/
+
+/*before the game actually runs, optionally display a start screen*/
+while(!WindowShouldClose()) /*loop runs until key pressed*/
+{
+ if(IsKeyPressed(KEY_ENTER)){break;}
+ BeginDrawing();
+ ClearBackground((Color){255,0,0,255});
+ chaste_font_draw_string("Hello World!\nI am:\n\nChastity\nWhite\nRose",100,100);
+ EndDrawing();
+}
+
+}
+
+
+
+int main(int argc, char **argv)
+{
+
+ /*process command line arguments*/
+ int x=1;
+ while(x<argc)
+ {
+  printf("argv[%i]=%s\n",x,argv[x]);
+
+  if(strcmp(argv[x],"-longboi")==0)
+  {
+   printf("Long Boi mode activated! Only the I blocks will spawn!\n");
+   blocks_used=1;
+  }
+ 
+  x++;
+ }
+
+ InitWindow(width,height,"Chastity's Game");
+ SetTargetFPS(60);
+
+ //texture=LoadTexture("textures/star_face.png");
+
+ InitAudioDevice();      // Initialize audio device
+
+ //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
+ //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
+
+ //PlaySound(sound);
+
+
+ /*the name of the game depends on the blocks_used variable*/
+ if(blocks_used==1)
+ { 
+  sprintf(gamename,"Long Boi");
+ }
+ else
+ {
+  sprintf(gamename,"Chaste Tris");
+ }
+
+
+
+welcome_screen();
+
+//welcome_screen_chaste_font();
+
+
+/*
+optionally, close the window and end program after start screen
+this is great when testing something that hasn't been debugged
+*/
  //CloseWindow(); return 0;
 
-
 text_x=fontsize*8; /*position of text for game loop*/
+
+
+
+ /*open the file to record moves*/
+ sprintf(filename,"omovelog.txt");
+ fp=fopen(filename,"wb+");
+ if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
+
+ sprintf(filename,"imovelog.txt");
+ fp_input=fopen(filename,"rb+");
+ if(fp_input==NULL)
+ {
+  printf("Failed to open input file \"%s\".\n",filename);
+  printf("This is not an error. It just means input is keyboard only. \"%s\".\n",filename);
+ }
+ else
+ {
+  printf("input file \"%s\" is opened.\n",filename);
+  printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
+ }
+
+ chaste_font_load(); /*call the function to load my custom bitmap font*/
 
  ray_chastetris();
 
