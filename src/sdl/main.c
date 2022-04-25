@@ -29,7 +29,7 @@ FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
 
-#include "sdl_chastetris.h"
+#include "chastetris.h"
 #include "sdl_chastefont.h"
 #include "sdl_input.h"
 #include "sdl_graphics.h"
