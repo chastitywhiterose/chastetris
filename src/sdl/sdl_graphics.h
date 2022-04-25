@@ -73,9 +73,9 @@ void sdl_chastetris()
   y+=1;
  }
 
- 
-  /* Loop until the user closes the window */
 
+ delay=1000/fps; 
+  /* Loop until the user closes the window */
  while(loop)
  {
 
@@ -183,7 +183,14 @@ draw_stats_chaste_font();
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
  next_file_input();
-    
+
+
+  time = SDL_GetTicks();
+  time1 = time+delay;
+  while(time<time1)
+  {
+   time=SDL_GetTicks();
+  }
 
   SDL_UpdateWindowSurface(window);
 

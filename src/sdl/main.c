@@ -15,7 +15,8 @@ SDL_Rect rect;
 int rect_color;
 
 
-int frame=0,lastframe=0,framelimit=30*60*2; /*only used for animation demos*/
+int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
+int time,time1;
 
 char gamename[256];
 int blocks_used=7;
