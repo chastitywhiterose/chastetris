@@ -92,7 +92,10 @@ int main(int argc, char* args[])
  font_32=chaste_font_load("./font/FreeBASIC Font 32.bmp");
  font_64=chaste_font_load("./font/FreeBASIC Font 64.bmp");
 
+ welcome_screen_chaste_font();
+
  main_font=font_64;
+
 
  sdl_chastetris();
 

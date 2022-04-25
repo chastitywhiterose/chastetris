@@ -6,6 +6,55 @@ this header file is meant to contain all the functions which write things to the
 
 
 
+/* this function is now the official welcome screen*/
+void welcome_screen_chaste_font()
+{
+
+ SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
+
+ main_font=font_64;
+
+ text_x=main_font.char_height*1;
+
+ sprintf(text,"%s",gamename);
+ chaste_font_draw_string(text,text_x,main_font.char_height*1);
+
+
+ main_font=font_32;
+
+
+ sprintf(text,"Programming: Chastity White Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*5);
+
+ sprintf(text,"Inspiration:    River Black Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*6);
+
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*8);
+
+ sprintf(text,"Email: chastitywhiterose@gmail.com");
+ chaste_font_draw_string(text,text_x,main_font.char_height*10);
+
+ main_font=font_16;
+
+ sprintf(text,"https://github.com/chastitywhiterose/chastetris");
+ chaste_font_draw_string(text,text_x,main_font.char_height*24);
+
+ main_font=font_8;
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nSDL is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*52);
+
+
+ SDL_UpdateWindowSurface(window); /*update the screen*/
+
+ while(e.type != SDL_KEYUP) /*wait until key is pressed and then released*/
+ {
+  SDL_PollEvent( &e );
+ }
+
+}
+
 /*
 this function draws the stats of the game such as the lines and score using my chaste font routines
 it's in a separate function so that I can switch it out with another function when I feel like it
@@ -78,6 +127,8 @@ void sdl_chastetris()
   /* Loop until the user closes the window */
  while(loop)
  {
+  time = SDL_GetTicks();
+  time1 = time+delay;
 
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
 
@@ -166,13 +217,8 @@ SDL_FillRect(surface,&rect,rect_color);
 
 draw_stats_chaste_font();
 
+ SDL_UpdateWindowSurface(window); /*update the screen*/
 
-
-
-  keyboard();
-
-
- 
  /*
  optionally save frame as file
  make comparison moves>=frame to ensure frames are only saved for successful moves.
@@ -182,19 +228,31 @@ draw_stats_chaste_font();
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
- next_file_input();
+  next_file_input();
+
+ keyboard();
 
 
-  time = SDL_GetTicks();
-  time1 = time+delay;
   while(time<time1)
   {
    time=SDL_GetTicks();
   }
 
-  SDL_UpdateWindowSurface(window);
+   /*while(e.type != SDL_KEYUP)*/
+
+  /*prevent auto repeating keys*/
+   while(e.type == SDL_KEYDOWN)
+   {
+    SDL_PollEvent( &e );
+   }
+
 
  }
 
 }
+
+
+
+
+
 

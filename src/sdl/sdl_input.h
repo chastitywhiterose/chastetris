@@ -13,11 +13,6 @@ void keyboard()
 
    key=e.key.keysym.sym;
 
-   while(e.type == SDL_KEYDOWN)
-   {
-    SDL_PollEvent( &e );
-   }
-
    switch(key)
    {
     case SDLK_ESCAPE:
@@ -66,6 +61,7 @@ void keyboard()
     break;
 
    }
+
   }
 
 }
