@@ -498,7 +498,7 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  main_font=font_8;
 
- sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nRaylib is used for the graphics API including rectanges and textures.\nThe font handling is done with Chastity's own font library she wrote and named Chaste Font.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nRaylib is used for the graphics API including rectangles and textures.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
  chaste_font_draw_string(text,text_x,main_font.char_height*52);
 
 
@@ -557,12 +557,18 @@ int main(int argc, char **argv)
   it returns a "chaste_font" structure which is stored in global variable main_font
  */
 
+
  font_8=chaste_font_load("./font/bitmap/FreeBASIC Font 8.png");
  font_16=chaste_font_load("./font/bitmap/FreeBASIC Font 16.png");
  font_32=chaste_font_load("./font/bitmap/FreeBASIC Font 32.png");
  font_64=chaste_font_load("./font/bitmap/FreeBASIC Font 64.png");
- //font_128=chaste_font_load("./font/bitmap/FreeBASIC Font 128.png");
 
+/*
+ font_8=chaste_font_load("./font/bitmap/Tetris Font 8.png");
+ font_16=chaste_font_load("./font/bitmap/Tetris Font 16.png");
+ font_32=chaste_font_load("./font/bitmap/Tetris Font 32.png");
+ font_64=chaste_font_load("./font/bitmap/Tetris Font 64.png");
+*/
 
 
 
