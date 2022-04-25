@@ -33,7 +33,7 @@ Font font;
 int fontsize=height/12;
 int text_x; /*the x position of where text will go*/
 
-#include "ray_chastetris.h"
+#include "chastetris.h"
 #include "ray_chastefont.h"
 
 void keyboard()
@@ -166,9 +166,6 @@ void next_file_input()
   c=ftell(fp_input);
   if(c==604){fseek(fp_input,512,SEEK_SET);}
  */
-
-/*  c=ftell(fp_input);
-  if(c==604){fseek(fp_input,512,SEEK_SET);}*/
 
 }
 
