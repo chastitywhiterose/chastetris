@@ -5,7 +5,8 @@
 
 /*
 font structure
-this isn't currently used in code yet
+
+In the raylib code, this uses a Texture2D. In another graphics library it may be different if ported.
 */
 struct chaste_font
 {
@@ -14,19 +15,14 @@ struct chaste_font
  Texture2D texture; /*the texture of the image of loaded font*/
 };
 
-
+/*global fonts that will be reused many times*/
 struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128;
 
-
-//Texture2D texture_font_8; /*this font is global because it will be reused a lot*/
-
-//int fsize=8; /*size in both width and height for each character*/
-
+/*function to load a font and return a structure with the needed data to draw later*/
 struct chaste_font chaste_font_load(char *s)
 {
  struct chaste_font new_font;
  printf("This function tries to load a font\n");
-
 
  new_font.texture=LoadTexture(s);
  /*by default,font size is detected by original image height*/
@@ -46,31 +42,6 @@ struct chaste_font chaste_font_load(char *s)
 
  return new_font;
 }
-
-
-
-
-/*
- this function successfully draws a character from the loaded font
- arguments are: character, character x pos, character y pos
-*/
-void chaste_font_draw_char(int c,int cx,int cy)
-{
- int x,y;
- //printf("The character to print is '%c'\n",c);
-
- x=(c-' ')*main_font.char_width;
- y=0*main_font.char_height;
- //printf("X=%d Y=%d\n",x,y);
-
- Rectangle rect_source = {x,y,main_font.char_width,main_font.char_height};
- Vector2 pos = {cx,cy}; /*coordinates of where char will be drawn*/
-
-
-DrawTextureRec(main_font.texture, rect_source, pos, (Color){255,255,255,255});
-
-}
-
 
 
 /*
