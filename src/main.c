@@ -401,7 +401,7 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  main_font=font_8;
 
- sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nRaylib is used for the graphics API including rectangles and textures.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nRaylib is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
  chaste_font_draw_string(text,text_x,main_font.char_height*52);
 
 
