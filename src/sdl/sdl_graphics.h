@@ -228,24 +228,24 @@ draw_stats_chaste_font();
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
-  next_file_input();
+  /*next_file_input();*/
 
  keyboard();
 
-
-  while(time<time1)
-  {
-   time=SDL_GetTicks();
-  }
+ while(time<time1)
+ {
+  time=SDL_GetTicks();
+ }
 
    /*while(e.type != SDL_KEYUP)*/
 
   /*prevent auto repeating keys*/
+/*
    while(e.type == SDL_KEYDOWN)
    {
     SDL_PollEvent( &e );
    }
-
+*/
 
  }
 

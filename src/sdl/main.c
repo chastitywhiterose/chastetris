@@ -104,6 +104,12 @@ int main(int argc, char* args[])
 
  SDL_DestroyWindow(window);
  SDL_Quit();
+
+ SDL_FreeSurface(font_8.surface);
+ SDL_FreeSurface(font_16.surface);
+ SDL_FreeSurface(font_32.surface);
+ SDL_FreeSurface(font_64.surface);
+
  return 0;
 }
 

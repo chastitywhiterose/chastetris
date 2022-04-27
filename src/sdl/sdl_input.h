@@ -7,7 +7,7 @@ void keyboard()
  int key;
  SDL_PollEvent( &e );
   if( e.type == SDL_QUIT ){loop=0; printf("X clicked! This program will close!\n");}
-  if (e.type == SDL_KEYDOWN)
+  if (e.type == SDL_KEYDOWN && e.key.repeat==0)
   {
 
 

@@ -12,7 +12,7 @@ struct chaste_font
 {
  int char_width; /*width of a char*/
  int char_height; /*height of a char*/
- SDL_Surface *texture; /*the texture of the image of loaded font*/
+ SDL_Surface *surface; /*the surface of the image of loaded font*/
 };
 
 /*global fonts that will be reused many times*/
@@ -24,13 +24,13 @@ struct chaste_font chaste_font_load(char *s)
  struct chaste_font new_font;
  printf("This function tries to load a font\n");
 
- new_font.texture=SDL_LoadBMP(s);
+ new_font.surface=SDL_LoadBMP(s);
 
- if(new_font.texture==NULL){printf( "SDL could not load image! SDL_Error: %s\n",SDL_GetError());return new_font;}
+ if(new_font.surface==NULL){printf( "SDL could not load image! SDL_Error: %s\n",SDL_GetError());return new_font;}
 
  /*by default,font size is detected by original image height*/
- new_font.char_width=new_font.texture->h;
- new_font.char_height=new_font.texture->h;
+ new_font.char_width=new_font.surface->h;
+ new_font.char_height=new_font.surface->h;
 
  if(new_font.char_height==0)
  {
@@ -64,20 +64,17 @@ void chaste_font_draw_string(char *s,int cx,int cy)
   {
    x=(c-' ')*main_font.char_width;
    y=0*main_font.char_height;
-/*   rect_source = struct SDL_Rect {x,y,main_font.char_width,main_font.char_height};*/
 
    rect_source.x=x;
    rect_source.y=y;
    rect_source.w=main_font.char_width;
    rect_source.h=main_font.char_height;
 
-/*   DrawTextureRec(main_font.texture, rect_source, pos, (Color){255,255,255,255});*/
+   rect_dest=rect_source;
+   rect_dest.x=cx;
+   rect_dest.y=cy;
 
-  rect_dest=rect_source;
-  rect_dest.x=cx;
-  rect_dest.y=cy;
-
-   SDL_BlitSurface(main_font.texture,&rect_source,surface,&rect_dest);
+   SDL_BlitSurface(main_font.surface,&rect_source,surface,&rect_dest);
    cx+=main_font.char_width;
   }
   i++;
