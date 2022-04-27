@@ -31,22 +31,18 @@ void keyboard()
 
 
     /*the main 4 directions*/
-    case SDLK_KP_8:
     case SDLK_UP:
     case SDLK_w:
      tetris_move_up();
     break;
-    case SDLK_KP_2:
     case SDLK_DOWN:
     case SDLK_s:
      tetris_move_down();
     break;
-    case SDLK_KP_4:
     case SDLK_LEFT:
     case SDLK_a:
     tetris_move_left();
     break;
-    case SDLK_KP_6:
     case SDLK_RIGHT:
     case SDLK_d:
      tetris_move_right();

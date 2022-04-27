@@ -217,7 +217,6 @@ SDL_FillRect(surface,&rect,rect_color);
 
 draw_stats_chaste_font();
 
- SDL_UpdateWindowSurface(window); /*update the screen*/
 
  /*
  optionally save frame as file
@@ -228,24 +227,32 @@ draw_stats_chaste_font();
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
-  /*next_file_input();*/
+  next_file_input();
 
  keyboard();
+
+ SDL_UpdateWindowSurface(window); /*update the screen*/
+
+
+   /*
+while(e.type != SDL_KEYUP)
+while(e.type == SDL_KEYDOWN)
+*/
+
+  /*prevent auto repeating keys*/
+
+/*   while(e.type != SDL_KEYUP)
+   {
+    SDL_PollEvent( &e );
+   }
+*/
 
  while(time<time1)
  {
   time=SDL_GetTicks();
  }
 
-   /*while(e.type != SDL_KEYUP)*/
 
-  /*prevent auto repeating keys*/
-
-/*   while(e.type == SDL_KEYDOWN)
-   {
-    SDL_PollEvent( &e );
-   }
-*/
 
  }
 
