@@ -240,8 +240,8 @@ draw_stats_chaste_font();
    /*while(e.type != SDL_KEYUP)*/
 
   /*prevent auto repeating keys*/
-/*
-   while(e.type == SDL_KEYDOWN)
+
+/*   while(e.type == SDL_KEYDOWN)
    {
     SDL_PollEvent( &e );
    }
