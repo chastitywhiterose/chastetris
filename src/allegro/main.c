@@ -32,7 +32,7 @@ FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
 
-int frame=0;
+int frame=0,fps;
 
 #include "chastetris.h"
 #include "allegro_chastefont.h"
@@ -64,8 +64,12 @@ int main(int argc, char **argv)
   return -1;
  }
 
- al_set_new_window_title("Chastity's Game using Allegro");
 
+ al_set_new_display_refresh_rate(30);
+ fps=al_get_new_display_refresh_rate();
+ printf("fps:%d\n",fps);
+
+ al_set_new_window_title("Chastity's Game using Allegro");
  display=al_create_display(width,height);
  if(!display){fprintf(stderr,"failed to create display!\n");return -1;}
 
