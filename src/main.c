@@ -411,6 +411,31 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 }
 
 
+/* this function is now the official title screen*/
+void title_screen_chaste_font()
+{
+
+/*before the game actually runs, optionally display a start screen*/
+while(!WindowShouldClose()) /*loop runs until key pressed*/
+{
+ if(IsKeyPressed(KEY_ENTER)){break;}
+ BeginDrawing();
+ ClearBackground((Color){0,0,0,255});
+
+ main_font=font_128;
+
+ text_x=main_font.char_height*2;
+
+ sprintf(text,"Chaste\n Tris");
+ chaste_font_draw_string(text,text_x,main_font.char_height*1);
+
+
+ EndDrawing();
+}
+
+}
+
+
 
 int main(int argc, char **argv)
 {
@@ -460,23 +485,21 @@ int main(int argc, char **argv)
   it returns a "chaste_font" structure which is stored in global variable main_font
  */
 
-
- font_8=chaste_font_load("./font/bitmap/FreeBASIC Font 8.png");
- font_16=chaste_font_load("./font/bitmap/FreeBASIC Font 16.png");
- font_32=chaste_font_load("./font/bitmap/FreeBASIC Font 32.png");
- font_64=chaste_font_load("./font/bitmap/FreeBASIC Font 64.png");
+ font_8=chaste_font_load("./font/FreeBASIC Font 8.png");
+ font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
+ font_32=chaste_font_load("./font/FreeBASIC Font 32.png");
+ font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
+ font_128=chaste_font_load("./font/FreeBASIC Font 128.png");
 
 /*
- font_8=chaste_font_load("./font/bitmap/Tetris Font 8.png");
- font_16=chaste_font_load("./font/bitmap/Tetris Font 16.png");
- font_32=chaste_font_load("./font/bitmap/Tetris Font 32.png");
- font_64=chaste_font_load("./font/bitmap/Tetris Font 64.png");
+ font_8=chaste_font_load("./font/Tetris Font 8.png");
+ font_16=chaste_font_load("./font/Tetris Font 16.png");
+ font_32=chaste_font_load("./font/Tetris Font 32.png");
+ font_64=chaste_font_load("./font/Tetris Font 64.png");
+ font_128=chaste_font_load("./font/Tetris Font 128.png");
 */
 
-
-
-
-
+/*title_screen_chaste_font();*/
 welcome_screen_chaste_font();
 
 
