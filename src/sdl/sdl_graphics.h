@@ -247,6 +247,8 @@ while(e.type == SDL_KEYDOWN)
    }
 */
 
+
+
  while(time<time1)
  {
   time=SDL_GetTicks();

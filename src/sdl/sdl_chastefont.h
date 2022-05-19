@@ -7,6 +7,7 @@
 font structure
 
 In the raylib code, this uses a Texture2D. In another graphics library it may be different if ported.
+In the SDL version, a surface is used.
 */
 struct chaste_font
 {
@@ -41,7 +42,6 @@ struct chaste_font chaste_font_load(char *s)
   printf("Font loaded correctly\n");
   printf("Size of loaded font is %d\n",new_font.char_height);
  }
-
 
  return new_font;
 }
