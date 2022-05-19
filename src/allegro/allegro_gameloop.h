@@ -57,7 +57,7 @@ void welcome_screen_chaste_font()
 }
 
 
-/*this function is an Allegry port of the keyboard function from the Raylib version of Chaste Tris*/
+/*this function is an Allegro port of the keyboard function from the Raylib version of Chaste Tris*/
 void keyboard()
 {
  int key;
@@ -323,7 +323,7 @@ al_draw_filled_rectangle(grid_offset_x+grid_width*block_size, 0*block_size, grid
 
  /*end of drawing code for grid*/
 
-draw_stats_chaste_font();
+ draw_stats_chaste_font();
 
 
  /*
