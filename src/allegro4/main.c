@@ -21,7 +21,7 @@ int move_id;
 FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
-int frame=0,fps;
+int frame=0,fps=60,rest_time;
 
 #include "chastetris.h"
 #include "allegro4_keyboard.h"
@@ -35,6 +35,9 @@ int main(void)
 
    /* set up the keyboard handler */
    install_keyboard();
+   
+   install_timer();  /*set up timer in case we use it later*/
+   rest_time=1000/fps;
    
    set_color_depth(32);
 
@@ -108,11 +111,8 @@ int main(void)
   chaste_font_draw_string(text,0,main_font.char_height*2);
 */
 
-
+welcome_screen_chaste_font();
 allegro4_chastetris();
-
-   /* wait for a key press */
-   /*readkey();*/
    
 
    return 0;

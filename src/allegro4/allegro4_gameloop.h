@@ -1,8 +1,53 @@
 /*
 allegro 4 gameloop
 
-This file contains only the main gameloop
+This file contains only the main gameloop and a few other tools
 */
+
+/* this function is now the official welcome screen*/
+void welcome_screen_chaste_font()
+{
+ clear_to_color(screen, makecol(0,0,0));
+
+ main_font=font_64;
+
+ text_x=main_font.char_height*2;
+
+ sprintf(text,"%s","Chaste\n Tris");
+ chaste_font_draw_string(text,text_x,main_font.char_height/2*1);
+
+ main_font=font_16;
+
+ text_x=main_font.char_width*2;
+
+
+ sprintf(text,"Programming: Chastity White Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*12);
+
+ sprintf(text,"Inspiration:    River Black Rose");
+ chaste_font_draw_string(text,text_x,main_font.char_height*13);
+
+
+ sprintf(text,"Email: chastitywhiterose@gmail.com");
+ chaste_font_draw_string(text,text_x,main_font.char_height*15);
+ 
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*17);
+
+ main_font=font_8;
+
+ sprintf(text,"https://github.com/chastitywhiterose/chastetris");
+ chaste_font_draw_string(text,text_x,main_font.char_height*40);
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\nAllegro is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on.");
+ chaste_font_draw_string(text,text_x,main_font.char_height*50);
+
+ /* wait for a key press */
+ readkey();
+
+}
+
+
 
 
 /*
@@ -40,15 +85,16 @@ void allegro4_chastetris()
   }
   y+=1;
  }
+ 
+  chaste_checker();
 
   /* Loop until the user closes the window */
  loop=1;
  while(loop)
  {
 
-  clear_to_color(screen, makecol(0,0,0));
+/*  clear_to_color(screen, makecol(0,0,0));*/
   
-  chaste_checker();
 
  /*make backup of entire grid*/
   temp_grid=main_grid;
@@ -135,10 +181,18 @@ rect_color=makecol(255, 255, 255);
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
-/*  next_file_input();*/
+ if(!keypressed())
+ {
+   next_file_input();
+ }
 
- key_ascii=readkey();
- keyboard();
+ if(keypressed())
+ {
+  key_ascii=readkey();
+  keyboard();
+ }
+ 
+ rest(rest_time);
 
 
  }
