@@ -22,7 +22,7 @@ struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128;
 struct chaste_font chaste_font_load(char *s)
 {
  struct chaste_font new_font;
- printf("This function tries to load a font\n");
+ printf("Loading font '%s'\n",s);
 
  new_font.bitmap=al_load_bitmap(s);
 
