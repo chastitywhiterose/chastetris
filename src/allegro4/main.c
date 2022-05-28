@@ -4,25 +4,31 @@
 #include <stdlib.h>
 #include <allegro.h>
 
-#include "allegro4_chastefont.h"
-
 int width=640,height=480;
 int driver=GFX_AUTODETECT_WINDOWED;
 
+#include "allegro4_chastefont.h"
+#include "allegro4_chastegraphics.h"
 
-BITMAP *the_image;
-PALETTE the_palette;
-char filename[256]; /*filename that may be used at some point*/
-char text[256]; /*usually used to store text that will be drawn*/
+int loop=1; /*determine whether the game is running or not*/
+char gamename[256];
+int blocks_used=7;
 
+char text[0x200]; /*where text is stored before being written*/
+int text_x; /*the x position of where text will go*/
+int move_id;
+
+FILE *fp; /*to save a file of moves played*/
+char filename[256]; /*name of move log file*/
+FILE *fp_input; /*file to get input from instead of the keyboard*/
+int frame=0,fps;
+
+#include "chastetris.h"
+#include "allegro4_keyboard.h"
+#include "allegro4_gameloop.h"
 
 int main(void)
 {
- int x,y;
- int rect_size; /*size of squares*/
- int radius; /*size of circle*/
-
-
  /* you should always do this at the start of Allegro programs */
  if (allegro_init() != 0)
       return 1;
@@ -42,16 +48,47 @@ int main(void)
    /* set the color palette */
    /*set_palette(desktop_palette);*/
 
-   /* clear the screen to white */
-   clear_to_color(screen, makecol(0, 255, 255));
+   /* clear the screen to black */
+   clear_to_color(screen, makecol(0,0,0));
+   
+   clear_to_color(screen, makecol(0,255,0)); /*green*/
+   
+   /*
+    Now that the graphics mode is set and the background color chosen, it's important to open the input and output files.
+    If they are not open, weird crashes happen because fputc is called on most keypresses expecting to write to omovelog.txt .
+   */
 
-   radius=height/2;
-   x=width/2;y=height/2;
-   circlefill(screen, x, y, radius,makecol(255,0,255));
+/*open the file to record moves*/
+ sprintf(filename,"omovelog.txt");
+ fp=fopen(filename,"wb+");
+ if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
 
-   rect_size=height/3;
-   x=width/2-rect_size/2;y=height/2;
-   rectfill(screen,x,y,x+rect_size,y+rect_size,makecol(255,255,0));   
+ sprintf(filename,"imovelog.txt");
+ fp_input=fopen(filename,"rb+");
+ if(fp_input==NULL)
+ {
+  printf("Failed to open input file \"%s\".\n",filename);
+  printf("This is not an error. It just means input is keyboard only. \"%s\".\n",filename);
+ }
+ else
+ {
+  printf("input file \"%s\" is opened.\n",filename);
+  printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
+ }
+
+ /*the name of the game depends on the blocks_used variable*/
+ if(blocks_used==1)
+ { 
+  sprintf(gamename,"Long Boi");
+ }
+ else
+ {
+  sprintf(gamename,"Chaste Tris");
+ }
+
+   
+   
+   
    
    /*next step is to load some fonts*/
 
@@ -61,21 +98,22 @@ int main(void)
  font_64=chaste_font_load("./font/FreeBASIC Font 64.tga");
  font_128=chaste_font_load("./font/FreeBASIC Font 128.tga");
  
- main_font=font_64; /*select which loaded font to use*/
+/*   circle_and_square();*/
+   
+   /*chaste_checker();*/
 
- x=main_font.char_width*2;
- sprintf(text,"Circle");
- chaste_font_draw_string(text,x,main_font.char_height*2);
+/*
+  main_font=font_64;
+  sprintf(text,"%d",height/24);
+  chaste_font_draw_string(text,0,main_font.char_height*2);
+*/
 
-main_font=font_16;
- 
- x=main_font.char_width*16;
- sprintf(text,"Square");
- chaste_font_draw_string(text,x,main_font.char_height*20);
 
+allegro4_chastetris();
 
    /* wait for a key press */
-   readkey();
+   /*readkey();*/
+   
 
    return 0;
 }
