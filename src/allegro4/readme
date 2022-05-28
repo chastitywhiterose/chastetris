@@ -1,0 +1,2 @@
+The Allegro library used to support DOS and other older operating systems. For this reason I am trying to learn the old style of Allegro which is very different from Allegro 5.
+The goal is to theoretically make games that run even under DOS on extremely old hardware or at least in emulators.
