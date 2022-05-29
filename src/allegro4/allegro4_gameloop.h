@@ -51,6 +51,43 @@ void welcome_screen_chaste_font()
 
 
 /*
+this function draws the stats of the game such as the lines and score using my chaste font routines
+it's in a separate function so that I can switch it out with another function when I feel like it
+*/
+void draw_stats_chaste_font()
+{
+ main_font=font_8;
+
+ text_x=main_font.char_height*1;
+
+
+ chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
+
+ sprintf(text,"Score:%d",score);
+ chaste_font_draw_string(text,text_x,main_font.char_height*3);
+
+ sprintf(text,"Lines:%d",lines_cleared_total);
+ chaste_font_draw_string(text,text_x,main_font.char_height*4);
+
+  sprintf(text,"This:%c",main_block.id);
+  chaste_font_draw_string(text,text_x,main_font.char_height*5);
+
+  sprintf(text,"Hold:%c",hold_block.id);
+  chaste_font_draw_string(text,text_x,main_font.char_height*6);
+
+
+  sprintf(text,"Move:%d",moves);
+  chaste_font_draw_string(text,text_x,main_font.char_height*7);
+
+  sprintf(text,"B2B:%d",back_to_back);
+  chaste_font_draw_string(text,text_x,main_font.char_height*8);
+
+}
+
+
+
+
+/*
 this is a function which is called by main after window is created. It is the game loop.
 */
 void allegro4_chastetris()
@@ -63,6 +100,7 @@ void allegro4_chastetris()
 
  int block_size=height/grid_height;
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ int border_size=8; /*set custom border width alternative to block_size*/
  
  grid_offset_x=(width-(20/2*block_size))/2;
 
@@ -86,14 +124,15 @@ void allegro4_chastetris()
   y+=1;
  }
  
-  chaste_checker();
+ clear_to_color(screen, makecol(0,0,0));
+/*  chaste_checker();*/
 
   /* Loop until the user closes the window */
  loop=1;
  while(loop)
  {
 
-/*  clear_to_color(screen, makecol(0,0,0));*/
+
   
 
  /*make backup of entire grid*/
@@ -148,9 +187,7 @@ void allegro4_chastetris()
 
 rect_color=makecol(r, g, b);
 
-/*al_draw_filled_rectangle(grid_offset_x+x*block_size, y*block_size, grid_offset_x+(x+1)*block_size, (y+1)*block_size, rect_color);*/
-
-rectfill(screen,grid_offset_x+x*block_size, y*block_size, grid_offset_x+(x+1)*block_size, (y+1)*block_size, rect_color);
+ rectfill(screen,grid_offset_x+x*block_size, y*block_size, grid_offset_x+(x+1)*block_size-1, (y+1)*block_size-1, rect_color);
 
    x+=1;
   }
@@ -158,18 +195,24 @@ rectfill(screen,grid_offset_x+x*block_size, y*block_size, grid_offset_x+(x+1)*bl
  }
 
 
-rect_color=makecol(255, 255, 255);
+rect_color=makecol(127, 127, 127);
 
- /*draw the boundary walls*/
+ /*draw the boundary walls using block_size as the width. This was the first method.*/
 
-/*al_draw_filled_rectangle(grid_offset_x-block_size, 0*block_size, block_size, height, rect_color);*/
+/*rectfill(screen,grid_offset_x-block_size, 0*block_size, grid_offset_x-1, height-1, rect_color);
+rectfill(screen,grid_offset_x+grid_width*block_size, 0*block_size, grid_offset_x+grid_width*block_size+block_size-1, height-1, rect_color);*/
 
-/*al_draw_filled_rectangle(grid_offset_x+grid_width*block_size, 0*block_size, grid_offset_x+grid_width*block_size+block_size, height, rect_color);*/
+/*rect_color=makecol(0, 0, 255);*/
+
+ /*draw the boundary walls using border_size as the width. This was the second method. It allows more space for text*/
+rectfill(screen,grid_offset_x-border_size, 0*block_size, grid_offset_x-1, height-1, rect_color);
+rectfill(screen,grid_offset_x+grid_width*block_size, 0*block_size, grid_offset_x+grid_width*block_size+border_size-1, height-1, rect_color);
+
 
 
  /*end of drawing code for grid*/
 
-/* draw_stats_chaste_font();*/
+ draw_stats_chaste_font();
 
 
  /*
