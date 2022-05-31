@@ -1,0 +1,8 @@
+The ability to read commands from a file instead of the keyboard is a rather unique feature that I have not seen in other games.
+This is one of the central features of Chaste Tris that sets it apart from other Tetris style games.
+
+I decided to use this folder to host my favorite movelog files. All you need to do is download one and then make sure it is named "imovelog.txt" before launching the game.
+Then, as soon as you hit enter and get past the title screen, the game will automatically play from the file until the end. Then you can still play normally after it finishes.
+
+However, the DOS version does not have replay ability due to the complex problems I had with file input and output when making it.
+Most people will be playing the official Windows release.
