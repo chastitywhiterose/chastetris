@@ -7,40 +7,44 @@ This file contains only the main gameloop and a few other tools
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
+ int fontsize=8;
+ int color=makecol(255,255,255);
  clear_to_color(screen, makecol(0,0,0));
 
- main_font=font_64;
 
- text_x=main_font.char_height*2;
+ text_x=fontsize*1;
 
  sprintf(text,"%s","Chaste\n Tris");
- chaste_font_draw_string(text,text_x,main_font.char_height/2*1);
 
- main_font=font_16;
+ textout_ex(screen, font, text, text_x,fontsize*1, color,-1);
 
- text_x=main_font.char_width*2;
+
+
+ text_x=fontsize*2;
 
 
  sprintf(text,"Programming: Chastity White Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*12);
+ textout_ex(screen, font, text, text_x,fontsize*12, color,-1);
 
  sprintf(text,"Inspiration:    River Black Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*13);
+ textout_ex(screen, font, text, text_x,fontsize*13, color,-1);
 
 
  sprintf(text,"Email: chastitywhiterose@gmail.com");
- chaste_font_draw_string(text,text_x,main_font.char_height*15);
+
+ textout_ex(screen, font, text, text_x,fontsize*15, color,-1);
  
  sprintf(text,"Press Enter to Begin game.");
- chaste_font_draw_string(text,text_x,main_font.char_height*17);
 
- main_font=font_8;
+ textout_ex(screen, font, text, text_x,fontsize*17, color,-1);
 
  sprintf(text,"https://github.com/chastitywhiterose/chastetris");
- chaste_font_draw_string(text,text_x,main_font.char_height*40);
+
+ textout_ex(screen, font, text, text_x,fontsize*20, color,-1);
 
  sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\nAllegro is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on.");
- chaste_font_draw_string(text,text_x,main_font.char_height*50);
+
+ textout_ex(screen, font, text, text_x,fontsize*25, color,-1);
 
  /* wait for a key press */
  readkey();
@@ -56,31 +60,34 @@ it's in a separate function so that I can switch it out with another function wh
 */
 void draw_stats_chaste_font()
 {
- main_font=font_8;
+ int color=makecol(255,255,255);
+ int fontsize=8;
 
- text_x=main_font.char_height*1;
+ text_x=fontsize*1;
 
 
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
+
+ textout_ex(screen, font, gamename, text_x,fontsize*1, color,-1);
+
 
  sprintf(text,"Score:%d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*3);
+ textout_ex(screen, font, text, text_x,fontsize*3, color,-1);
 
  sprintf(text,"Lines:%d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*4);
+ textout_ex(screen, font, text, text_x,fontsize*4, color,-1);
 
   sprintf(text,"This:%c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*5);
+  textout_ex(screen, font, text, text_x,fontsize*5, color,-1);
+
 
   sprintf(text,"Hold:%c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
+  textout_ex(screen, font, text, text_x,fontsize*6, color,-1);
 
   sprintf(text,"Move:%d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
+ textout_ex(screen, font, text, text_x,fontsize*7, color,-1);
 
   sprintf(text,"B2B:%d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
+ textout_ex(screen, font, text, text_x,fontsize*8, color,-1);
 
 }
 
@@ -124,14 +131,14 @@ void allegro4_chastetris()
   y+=1;
  }
  
- clear_to_color(screen, makecol(0,0,0));
-/*  chaste_checker();*/
 
   /* Loop until the user closes the window */
  loop=1;
  while(loop)
  {
 
+/*  chaste_checker();*/
+ clear_to_color(screen, makecol(0,0,0));
 
   
 
@@ -223,20 +230,9 @@ rectfill(screen,grid_offset_x+grid_width*block_size, 0*block_size, grid_offset_x
 
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
- /*optionally, get input from another file instead of keyboard if I have this enabled.*/
- if(!keypressed())
- {
-   next_file_input();
- }
-
- if(keypressed())
- {
+  /*wait for keypress and act accordingly*/
   key_ascii=readkey();
   keyboard();
- }
- 
- rest(rest_time);
-
 
  }
 

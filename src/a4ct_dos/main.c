@@ -1,16 +1,30 @@
 /*
  Chaste Tris DOS version
  Using Allegro 4
+
+ This version is heavily modified from the Linux version I first made
+ with Allegro 4. The 640x480 resolution was used in it but sadly did not
+ work properly when using it under DOS.
+
+ Instead it selects a GFX_SAFE mode and everything has
+ been redesigned with this view in mind.
+ For some reason, this is 320x200.
+
+ Additionally all file input/output has been removed. It was too
+ slow for a DOS environment. Now there are no timers at all.
+ Things only happen when a key is pressed.
+
+ Also, my own font routines are not included.
+ The functions built into Allegro are faster.
+
 */
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <allegro.h>
 
-int width=640,height=480;
-int driver=GFX_AUTODETECT;
+int width,height; /*will be set later*/
 
-#include "a4font.h"
 #include "a4graph.h"
 
 int loop=1; /*determine whether the game is running or not*/
@@ -21,9 +35,7 @@ char text[0x200]; /*where text is stored before being written*/
 int text_x; /*the x position of where text will go*/
 int move_id;
 
-FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
-FILE *fp_input; /*file to get input from instead of the keyboard*/
 int frame=0,fps=60,rest_time;
 
 #include "ct.h"
@@ -39,48 +51,23 @@ int main(void)
    /* set up the keyboard handler */
    install_keyboard();
    
-   install_timer();  /*set up timer in case we use it later*/
-   rest_time=1000/fps;
-   
-   set_color_depth(32);
+   /*set_color_depth(32);*/
+
+   printf("Attempting to open a graphics mode.");
 
    /* set a graphics mode */
-   if(set_gfx_mode(driver,width,height,0,0)!=0)
+   if(set_gfx_mode(GFX_SAFE,0,0,0,0)!=0)
    {
     allegro_message("Unable to set any graphic mode\n%s\n", allegro_error);
     return 1;
    }
 
-   /* set the color palette */
-   /*set_palette(desktop_palette);*/
+width=screen->w;
+height=screen->h;
 
-   /* clear the screen to black */
-   clear_to_color(screen, makecol(0,0,0));
-   
-   clear_to_color(screen, makecol(0,255,0)); /*green*/
-   
-   /*
-    Now that the graphics mode is set and the background color chosen, it's important to open the input and output files.
-    If they are not open, weird crashes happen because fputc is called on most keypresses expecting to write to omovelog.txt .
-   */
+/* set the color palette */
+/*   set_palette(desktop_palette);*/
 
-/*open the file to record moves*/
- sprintf(filename,"omovelog.txt");
- fp=fopen(filename,"wb+");
- if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
-
- sprintf(filename,"imovelog.txt");
- fp_input=fopen(filename,"rb+");
- if(fp_input==NULL)
- {
-  printf("Failed to open input file \"%s\".\n",filename);
-  printf("This is not an error. It just means input is keyboard only. \"%s\".\n",filename);
- }
- else
- {
-  printf("input file \"%s\" is opened.\n",filename);
-  printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
- }
 
  /*the name of the game depends on the blocks_used variable*/
  if(blocks_used==1)
@@ -93,20 +80,9 @@ int main(void)
  }
 
    
-   
-   
-   
-   /*next step is to load some fonts*/
-
- font_8=chaste_font_load("./font/F8.tga");
- font_16=chaste_font_load("./font/F16.tga");
- font_32=chaste_font_load("./font/F32.tga");
- font_64=chaste_font_load("./font/F64.tga");
- font_128=chaste_font_load("./font/F128.tga");
  
-/*   circle_and_square();*/
    
-   /*chaste_checker();*/
+/*   chaste_checker();*/
 
 /*
   main_font=font_64;
@@ -114,16 +90,20 @@ int main(void)
   chaste_font_draw_string(text,0,main_font.char_height*2);
 */
 
-welcome_screen_chaste_font();
+/*welcome_screen_chaste_font();*/
 allegro4_chastetris();
 
 /*
-Set screen back to text more before ending program
-If this is not done, it will cause problems!
+Set screen back to text more before ending program.
 */
 set_gfx_mode(GFX_TEXT,0,0,0,0);
 
-   return 0;
+/* printf("width=%d\n",width);
+ printf("height=%d\n",height);*/
+
+ printf("Thank you for playing Chaste Tris for DOS");
+
+ return 0;
 }
 
 END_OF_MAIN()

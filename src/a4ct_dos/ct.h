@@ -1,4 +1,10 @@
-/*chastity tetris*/
+/*
+ Chastity Tetris (Chaste Tris)
+
+ This file is modified for the DOS version specifically.
+ To fit within memory and disk space requirements for very old
+ machines, all code that reads or writes files has been removed.
+*/
 
 /*Part 1: Declaring variables and constants.*/
 
@@ -495,7 +501,6 @@ void tetris_move_down()
 
  last_move_fail=0; /*because moving down is always a valid operation, the fail variable should be set to 0*/
 
- fputc(move_id,fp); /*moving down is always a valid move either for setting a block or moving it down*/
 }
 
 
@@ -508,7 +513,6 @@ void tetris_move_up()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -526,7 +530,6 @@ void tetris_move_right()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -543,8 +546,8 @@ void tetris_move_left()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
- }
+}
+
  else
  {
   main_block=temp_block;
@@ -587,7 +590,7 @@ void block_rotate_right_basic()
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
+ 
  }
 
 }
@@ -627,7 +630,7 @@ temp_block=main_block;
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
+  
  }
 
 }
@@ -653,15 +656,13 @@ void block_hold()
   main_block.x=main_block.spawn_x;
   main_block.y=main_block.spawn_y;
  }
- fputc(move_id,fp);
+ 
 }
 
 struct tetris_grid save_grid;
 int saved_moves; /*number of valid moves*/
 int saved_frame;  /*current animation frame*/
 int saved_back_to_back; /*back to back score bonus*/
-
-int move_log_position;
 
 int saved_block_type;
 
@@ -696,8 +697,6 @@ void tetris_save_state()
  saved_lines_cleared_total=lines_cleared_total;
  saved_back_to_back=back_to_back;
 
- move_log_position=ftell(fp); /*save position in the move log file*/
-
  printf("Game Saved at move %d\n",moves);
  save_exist=1;
 }
@@ -708,7 +707,6 @@ void tetris_save_state()
 */
 void tetris_load_state()
 {
-
  if(save_exist==0)
  {
   printf("No save exists yet.\n");
@@ -729,12 +727,8 @@ void tetris_load_state()
  lines_cleared_total=saved_lines_cleared_total;
  back_to_back=saved_back_to_back;
 
- fseek(fp,move_log_position,SEEK_SET);
-
  printf("Game Loaded at move %d\n",moves);
 
 }
-
-
 
 
