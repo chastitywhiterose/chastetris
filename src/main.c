@@ -7,6 +7,7 @@ const int width = 1280;
 const int height = 720;
 
 Color ray_block_color={255,255,255,255};
+Color ray_border_color={127,127,127,255};
 
 Texture2D texture; /*used when textures are used*/
 Sound sound; /*main sound played*/
@@ -35,6 +36,8 @@ int text_x; /*the x position of where text will go*/
 
 #include "chastetris.h"
 #include "ray_chastefont.h"
+#include "ray_chastegraph.h"
+
 
 void keyboard()
 {
@@ -172,37 +175,6 @@ void next_file_input()
 
 
 
-/*
-this function draws the stats of the game such as the lines and score using my chaste font routines
-it's in a separate function so that I can switch it out with another function when I feel like it
-*/
-void draw_stats_chaste_font()
-{
- text_x=main_font.char_height*7;
-
-
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
-
- sprintf(text,"Score: %d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*3);
-
- sprintf(text,"Lines: %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*4);
-
-  sprintf(text,"This: %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*5);
-
-  sprintf(text,"Hold: %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
-
-  sprintf(text,"Move: %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
-
-  sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
-
-}
 
 
 
@@ -218,10 +190,16 @@ void ray_chastetris()
 
  int block_size=height/grid_height;
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ int border_size=12; /*set custom border width alternative to block_size*/
+ 
+ grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
+ /*if centered, alternate stats function is needed*/
+ 
+ stats_func=draw_stats_chaste_font_centered;
 
  radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
-
-
+ 
+ 
  printf("block_size==%d\n",block_size);
 
  chastetris_info();
@@ -250,6 +228,7 @@ while(!WindowShouldClose())
   BeginDrawing();
 
   ClearBackground((Color){0,0,0,255});
+  //chaste_checker();
 
  /*make backup of entire grid*/
   temp_grid=main_grid;
@@ -316,10 +295,14 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
  }
 
 
- /*draw the boundary walls*/
+ /*draw the boundary walls original style*/
+//DrawRectangle(grid_offset_x-block_size,0*block_size,block_size,height,ray_border_color);
+//DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,ray_border_color);
 
-DrawRectangle(grid_offset_x-block_size,0*block_size,block_size,height,(Color){255,255,255,255});
-DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,(Color){255,255,255,255});
+ /*draw the boundary walls original style*/
+DrawRectangle(grid_offset_x-border_size,0*block_size,border_size,height,ray_border_color);
+DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,height,ray_border_color);
+
 
  /*end of drawing code for grid*/
 
@@ -327,7 +310,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height
 /*printf("last_move_spin==%d\n",last_move_spin);*/
 
 
- draw_stats_chaste_font();
+  stats_func();
 
 
   EndDrawing();
@@ -460,7 +443,7 @@ int main(int argc, char **argv)
 
  //texture=LoadTexture("textures/star_face.png");
 
- InitAudioDevice();      // Initialize audio device
+ //InitAudioDevice();      // Initialize audio device
 
  //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
  //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
@@ -499,8 +482,8 @@ int main(int argc, char **argv)
  font_128=chaste_font_load("./font/Tetris Font 128.png");
 */
 
-/*title_screen_chaste_font();*/
-welcome_screen_chaste_font();
+//title_screen_chaste_font();
+//welcome_screen_chaste_font();
 
 
 /*
