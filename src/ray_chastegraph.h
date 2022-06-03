@@ -81,21 +81,22 @@ void chaste_checker()
  
  
  void draw_stats_chaste_font_centered()
-{
- main_font=font_64;
+ {
+  int seconds,minutes;
+  main_font=font_64;
 
- //text_x=main_font.char_height*1/2;
- text_x=32;
+  //text_x=main_font.char_height*1/2;
+  text_x=32;
 
- chaste_font_draw_string("Chaste\n Tris",text_x,32);
+  chaste_font_draw_string("Chaste\n Tris",text_x,32);
  
- main_font=font_32;
+  main_font=font_32;
 
- sprintf(text,"Score %d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*6);
+  sprintf(text,"Score %d",score);
+  chaste_font_draw_string(text,text_x,main_font.char_height*6);
 
- sprintf(text,"Lines %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*7);
+  sprintf(text,"Lines %d",lines_cleared_total);
+  chaste_font_draw_string(text,text_x,main_font.char_height*7);
 
   sprintf(text,"This: %c",main_block.id);
   chaste_font_draw_string(text,text_x,main_font.char_height*8);
@@ -109,9 +110,15 @@ void chaste_checker()
 
   sprintf(text,"B2B %d",back_to_back);
   chaste_font_draw_string(text,text_x,main_font.char_height*11);
+  
+  time(&time1);
+  
+  seconds=time1-time0;
+  minutes=seconds/60;
+  seconds%=60;
+  
+  sprintf(text,"Time %d:%02ld",minutes,seconds);
+  chaste_font_draw_string(text,text_x,main_font.char_height*13);
 
-}
+ }
 
- 
- 
- 

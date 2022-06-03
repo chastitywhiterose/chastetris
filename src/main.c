@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include <raylib.h>
 
 const int width = 1280;
@@ -23,6 +24,8 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 
 
 int frame=0,framelimit=1,fps=60;
+
+time_t time0,time1;
 
 char gamename[256];
 int blocks_used=7;
@@ -220,6 +223,7 @@ void ray_chastetris()
   y+=1;
  }
 
+time(&time0); /*get time before the game starts using time function*/
  
   /* Loop until the user closes the window */
 
@@ -483,8 +487,7 @@ int main(int argc, char **argv)
 */
 
 //title_screen_chaste_font();
-//welcome_screen_chaste_font();
-
+welcome_screen_chaste_font();
 
 /*
 optionally, close the window and end program after start screen
@@ -516,7 +519,6 @@ text_x=fontsize*8; /*position of text for game loop*/
 
  main_font=font_64; /*font should be size 64 before game loop*/
 
-
  ray_chastetris();
 
  if(fp!=NULL){fclose(fp);}
@@ -526,6 +528,12 @@ text_x=fontsize*8; /*position of text for game loop*/
  //UnloadSound(sound1);     // Unload sound data
 
  
+ 
+ //clock_time1 = clock();
+  //printf("Game ran for %d\n", (float) (clock_time1-clock_time) /CLOCKS_PER_SEC );
+  
+  time(&time1);
+  printf("Game ran for %d Seconds.\n",time1-time0);
 
  return 0;
 }
