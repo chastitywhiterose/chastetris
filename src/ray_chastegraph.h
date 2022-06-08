@@ -14,31 +14,40 @@ void draw_stats_chaste_font()
 
  chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
 
- sprintf(text,"Score: %d",score);
+ sprintf(text,"Score %d",score);
  chaste_font_draw_string(text,text_x,main_font.char_height*3);
 
- sprintf(text,"Lines: %d",lines_cleared_total);
+ sprintf(text,"Lines %d",lines_cleared_total);
  chaste_font_draw_string(text,text_x,main_font.char_height*4);
 
-  sprintf(text,"This: %c",main_block.id);
+  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string(text,text_x,main_font.char_height*5);
 
-  sprintf(text,"Hold: %c",hold_block.id);
+  sprintf(text,"Hold %c",hold_block.id);
   chaste_font_draw_string(text,text_x,main_font.char_height*6);
 
 
-  sprintf(text,"Move: %d",moves);
+  sprintf(text,"Move %d",moves);
   chaste_font_draw_string(text,text_x,main_font.char_height*7);
 
-  sprintf(text,"B2B: %d",back_to_back);
+  sprintf(text,"B2B %d",back_to_back);
   chaste_font_draw_string(text,text_x,main_font.char_height*8);
+  
+  
+  time(&time1);
+  
+  seconds=time1-time0;
+  minutes=seconds/60;
+  seconds%=60;
+  
+  sprintf(text,"Time %d:%02d",minutes,seconds);
+  chaste_font_draw_string(text,text_x,main_font.char_height*9);
+
 
 }
 
 
-/*a function pointer that points to whichever function I currently use to get the points
- for the next polygon drawn. This is for conveniently testing new functions.
-*/
+/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
 void (*stats_func)()=draw_stats_chaste_font;
 
 
@@ -82,7 +91,6 @@ void chaste_checker()
  
  void draw_stats_chaste_font_centered()
  {
-  int seconds,minutes;
   main_font=font_64;
 
   //text_x=main_font.char_height*1/2;
@@ -117,7 +125,7 @@ void chaste_checker()
   minutes=seconds/60;
   seconds%=60;
   
-  sprintf(text,"Time %d:%02ld",minutes,seconds);
+  sprintf(text,"Time %d:%02d",minutes,seconds);
   chaste_font_draw_string(text,text_x,main_font.char_height*13);
 
  }

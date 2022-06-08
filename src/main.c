@@ -26,6 +26,7 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 int frame=0,framelimit=1,fps=60;
 
 time_t time0,time1;
+int seconds,minutes;
 
 char gamename[256];
 int blocks_used=7;
@@ -48,7 +49,7 @@ void keyboard()
  {
   move_id='Z';
   sprintf(movetext,"Left Rotate");
-  printf("%s\n",movetext);
+/*  printf("%s\n",movetext);*/
   block_rotate_left_basic();
   //printf("last_move_fail==%d\n",last_move_fail);
  }
@@ -56,7 +57,7 @@ void keyboard()
  {
   move_id='X';
   sprintf(movetext,"Right Rotate");
-  printf("%s\n",movetext);
+/*  printf("%s\n",movetext);*/
   block_rotate_right_basic();
   //printf("last_move_fail==%d\n",last_move_fail);
  }
@@ -65,7 +66,7 @@ void keyboard()
  {
   move_id='C';
   sprintf(movetext,"Block Hold");
-  printf("%s\n",movetext);
+  /*printf("%s\n",movetext);*/
   block_hold();
  }
 
@@ -73,14 +74,14 @@ void keyboard()
  {
   move_id='A';
   sprintf(movetext,"Left Move");
-  printf("%s\n",movetext);
+/*  printf("%s\n",movetext);*/
   tetris_move_left();
  }
  if(IsKeyPressed(KEY_S)||IsKeyPressed(KEY_DOWN))
  {
   move_id='S';
   sprintf(movetext,"Down Move");
-  printf("%s\n",movetext);
+/*  printf("%s\n",movetext);*/
   tetris_move_down();
  }
  
@@ -88,14 +89,14 @@ void keyboard()
  {
   move_id='W';
   sprintf(movetext,"Up Move");
-  printf("%s\n",movetext);
+  /*printf("%s\n",movetext);*/
   tetris_move_up();
  }
  if(IsKeyPressed(KEY_D)||IsKeyPressed(KEY_RIGHT))
  {
   move_id='D';
   sprintf(movetext,"Right Move");
-  printf("%s\n",movetext);
+/*  printf("%s\n",movetext);*/
   tetris_move_right();
  }
 
@@ -177,9 +178,22 @@ void next_file_input()
 
 
 
+/*more global variables to be defined before game loop function*/
+int block_size;
+int border_size;
+int grid_offset_x;
 
 
+/*
+sets up the variables before the game loop so that the Tetris field is in the center
+*/
+void screen_setup_centered()
+{
+ grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
+ border_size=12;
+ stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
 
+}
 
 
 /*
@@ -191,14 +205,16 @@ void ray_chastetris()
  int x=0,y=0;
  //int *p=main_grid.array;
 
- int block_size=height/grid_height;
- int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
- int border_size=12; /*set custom border width alternative to block_size*/
+ /*the original graphics style on first Steam release*/
+ block_size=height/grid_height;
+ grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ border_size=block_size; /*set custom border width alternative to block_size*/
+ stats_func=draw_stats_chaste_font; 
  
- grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
- /*if centered, alternate stats function is needed*/
+ /*if the following function is called, screen is centered. Otherwise use old style.*/
+ screen_setup_centered();
  
- stats_func=draw_stats_chaste_font_centered;
+
 
  radius=block_size/2; //radius of circle if drawing circles instead of squares for the blocks.
  
@@ -533,7 +549,7 @@ text_x=fontsize*8; /*position of text for game loop*/
   //printf("Game ran for %d\n", (float) (clock_time1-clock_time) /CLOCKS_PER_SEC );
   
   time(&time1);
-  printf("Game ran for %d Seconds.\n",time1-time0);
+  printf("Game ran for %ld Seconds.\n",time1-time0);
 
  return 0;
 }
