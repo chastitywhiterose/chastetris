@@ -51,41 +51,7 @@ void draw_stats_chaste_font()
 void (*stats_func)()=draw_stats_chaste_font;
 
 
-/*
-Chaste Checker, also known originally as Chastity Checker from my BBM library,has been revived
-This is an extremely fast checkerboard drawing routine.
-*/
-void chaste_checker()
-{
- int x,y;
- int rect_size;
- Color colors[2];
- int index,index1;
- 
- colors[0]=(Color){0,0,0,255};
- colors[1]=(Color){255,255,255,255};
- 
- rect_size=16;
- 
- index=0;
- 
- y=0;
- while(y<height)
- {
-  index1=index;
-  x=0;
-  while(x<width)
-  {
-/*   rectfill(screen,x,y,x+rect_size,y+rect_size,colors[index]);*/
-   DrawRectangle(x,y,rect_size,rect_size,colors[index]);
-   index^=1; 
-   x+=rect_size;
-  }
-  index=index1^1;
-   
-  y+=rect_size;
-  }
- }
+
  
  
  
@@ -106,10 +72,10 @@ void chaste_checker()
   sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string(text,text_x,main_font.char_height*7);
 
-  sprintf(text,"This: %c",main_block.id);
+  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string(text,text_x,main_font.char_height*8);
 
-  sprintf(text,"Hold: %c",hold_block.id);
+  sprintf(text,"Hold %c",hold_block.id);
   chaste_font_draw_string(text,text_x,main_font.char_height*9);
 
 
@@ -129,4 +95,80 @@ void chaste_checker()
   chaste_font_draw_string(text,text_x,main_font.char_height*13);
 
  }
+ 
+ 
+int rect_size=16; /*global variable to determine size of checkerboard squares*/
+ 
+ /*
+Chaste Checker, also known originally as Chastity Checker from my BBM library,has been revived
+This is an extremely fast checkerboard drawing routine.
+*/
+void chaste_checker()
+{
+ int x,y;
+
+ Color colors[2];
+ int index,index1;
+ 
+ colors[0]=(Color){0,0,0,255};
+ colors[1]=(Color){255,255,255,255};
+
+ index=0;
+ 
+ y=0;
+ while(y<height)
+ {
+  index1=index;
+  x=0;
+  while(x<width)
+  {
+   DrawRectangle(x,y,rect_size,rect_size,colors[index]);
+   index^=1; 
+   x+=rect_size;
+  }
+  index=index1^1;
+   
+  y+=rect_size;
+  }
+ }
+ 
+/*only Chastity knows what these do*/
+int anim_counter=0;
+int check_start_x=0,check_start_y=0;
+int check_start_x1=0,check_start_y1=0;
+ 
+  /*
+Chaste Checker, also known originally as Chastity Checker from my BBM library,has been revived
+This is an extremely fast checkerboard drawing routine.
+*/
+void chaste_checker_part()
+{
+ int x,y;
+
+ Color colors[2];
+ int index,index1;
+ 
+ colors[0]=(Color){0,0,0,255};
+ colors[1]=(Color){255,255,255,255};
+
+ index=0;
+ 
+ y=check_start_y;
+ while(y<height)
+ {
+  index1=index;
+  x=check_start_x;
+  while(x<width)
+  {
+   DrawRectangle(x,y,rect_size,rect_size,colors[index]);
+   index^=1; 
+   x+=rect_size;
+  }
+  index=index1^1;
+   
+  y+=rect_size;
+  }
+ }
+
+ 
 

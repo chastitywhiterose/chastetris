@@ -241,14 +241,38 @@ void ray_chastetris()
 
 time(&time0); /*get time before the game starts using time function*/
  
-  /* Loop until the user closes the window */
+ /*
+  This section is setting up initial partial checkerboard variables for a checkerboard animation
+ */
+ rect_size=16;
+ anim_counter=0;
 
-while(!WindowShouldClose())
+ 
+ check_start_x1=grid_offset_x+grid_width*block_size+border_size;
+ check_start_y1=0;
+ 
+ check_start_x=check_start_x1;
+ check_start_y=check_start_y1;
+
+
+while(!WindowShouldClose())   /* Loop until the user closes the window */
+
  {
   BeginDrawing();
 
   ClearBackground((Color){0,0,0,255});
-  //chaste_checker();
+  
+  /*do checker to part of the screen*/
+  chaste_checker_part();
+//  check_start_x--;
+  check_start_y--;
+  anim_counter++;
+  if(anim_counter==rect_size*2)
+  {
+//   check_start_x=check_start_x1;
+   check_start_y=check_start_y1;
+   anim_counter=0;
+  }
 
  /*make backup of entire grid*/
   temp_grid=main_grid;
