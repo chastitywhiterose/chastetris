@@ -42,6 +42,8 @@ int text_x; /*the x position of where text will go*/
 #include "ray_chastefont.h"
 #include "ray_chastegraph.h"
 
+#include "ray_chaste_opener.h"
+
 
 void keyboard()
 {
@@ -112,6 +114,14 @@ void keyboard()
   tetris_save_state();
  }
  
+ /*for printing grid array as text*/
+ if(IsKeyPressed(KEY_G))
+ {
+  move_id='C';
+  /*sprintf(movetext,"Block Hold");*/
+  /*printf("%s\n",movetext);*/
+  grid_print();
+ }
 
 }
 
@@ -224,6 +234,7 @@ void ray_chastetris()
  chastetris_info();
 
  spawn_block();
+ 
 
 
  /*first empty the grid*/
@@ -238,6 +249,10 @@ void ray_chastetris()
   }
   y+=1;
  }
+ 
+/*optionally set up grid with something else instead of empty*/
+//grid_init();
+
 
 time(&time0); /*get time before the game starts using time function*/
  
@@ -558,6 +573,7 @@ text_x=fontsize*8; /*position of text for game loop*/
 
 
  main_font=font_64; /*font should be size 64 before game loop*/
+ 
 
  ray_chastetris();
 

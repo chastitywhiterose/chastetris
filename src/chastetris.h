@@ -347,13 +347,22 @@ void tetris_clear_lines()
    score+=300;back_to_back=0;
   }
  }
- if(lines_cleared==3){score+=500;back_to_back=0;}
+ if(lines_cleared==3)
+ {
+  if(last_move_spin==1)
+  {
+   if(back_to_back>0){score+=2400;}
+   else{score+=1600;}
+   back_to_back++;
+  }
+  else {score+=500;back_to_back=0;}
+ }
+ 
  if(lines_cleared==4)
  {
   if(back_to_back>0){score+=1200;}
   else{score+=800;}
   back_to_back++;
-
  }
 
  if(lines_cleared!=0)
@@ -552,6 +561,44 @@ void tetris_move_left()
 }
 
 
+/*
+fancy right rotation system for T blocks only
+does not actually rotate. Rather tries to move a T block into another valid spot and simulate SRS rules
+*/
+void block_rotate_right_fancy_t()
+{
+
+ if(main_block.id!='T')
+ {
+  printf("Block is not T. No action will be taken.");
+ }
+
+ int x=0,y=0;
+ 
+ x=main_block.x;
+ y=main_block.y;
+
+
+ main_block.x=x-1;
+ main_block.y=y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail)
+ {
+  printf("First fancy T Block spin attempt failed.");
+  
+  main_block.x=x-1;
+  main_block.y=y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail)
+  {
+   printf("Second fancy T Block spin attempt failed.");
+  }
+
+ }
+
+}
+
+
 /*basic (non SRS) rotation system*/
 void block_rotate_right_basic()
 {
@@ -582,12 +629,57 @@ void block_rotate_right_basic()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
+  /*if basic rotation failed, try fancier*/
+  block_rotate_right_fancy_t();
+ }
+ if(last_move_fail)
+ {
+  /*if it still failed, revert block to before rotation*/
   main_block=temp_block;
  }
  else
  {
   last_move_spin=1;
   fputc(move_id,fp);
+ }
+
+}
+
+
+
+/*
+fancy left rotation system for T blocks only
+does not actually rotate. Rather tries to move a T block into another valid spot and simulate SRS rules
+*/
+void block_rotate_left_fancy_t()
+{
+
+ if(main_block.id!='T')
+ {
+  printf("Block is not T. No action will be taken.");
+ }
+
+ int x=0,y=0;
+ 
+ x=main_block.x;
+ y=main_block.y;
+
+
+ main_block.x=x+1;
+ main_block.y=y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail)
+ {
+  printf("First fancy T Block spin attempt failed.");
+  
+  main_block.x=x+1;
+  main_block.y=y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail)
+  {
+   printf("Second fancy T Block spin attempt failed.");
+  }
+
  }
 
 }
@@ -622,6 +714,12 @@ temp_block=main_block;
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
+  /*if basic rotation failed, try fancier*/
+  block_rotate_left_fancy_t();
+ }
+ if(last_move_fail)
+ {
+  /*if it still failed, revert block to before rotation*/
   main_block=temp_block;
  }
  else

@@ -1,0 +1,30 @@
+When play testing my game I often have it save frames. I have a special command I use to turn the bmp frames into a video file to upload.
+
+The "-r 30" means 30 frames per second. Usually this is what I want but sometimes I do 60 for very fast animations.
+
+ffmpeg -r 30 -f image2 -i o/%08d.bmp -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p o/video.mp4
+
+or for png files:
+ffmpeg -r 30 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p o/video.mp4
+
+The "-r 30" means 30 frames per second. Usually this is what I want but sometimes I do 60 for very fast animations.
+
+Useful links:
+
+https://trac.ffmpeg.org/wiki/Slideshow
+https://trac.ffmpeg.org/wiki/Encode/H.264
+https://trac.ffmpeg.org/wiki/Encode/H.265
+https://trac.ffmpeg.org/wiki/Encode/AV1
+https://trac.ffmpeg.org/wiki/Encode/VP9
+
+https://ffmpeg.org/general.html#Image-Formats
+https://imagemagick.org/script/magick.php
+https://imagemagick.org/script/command-line-options.php#size
+
+example of adding audio to a series of frames
+
+ffmpeg -i music/faded.m4a -r 60 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p -shortest o/video.mp4
+
+60 fps is usually best for chaste tris videos
+
+ffmpeg -r 60 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p o/video.mp4
