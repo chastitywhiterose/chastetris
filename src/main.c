@@ -386,6 +386,7 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 
  //if(moves>=frame) { TakeScreenshot_frame(); } 
 
+
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
  next_file_input();
 

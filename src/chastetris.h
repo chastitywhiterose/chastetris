@@ -584,14 +584,14 @@ void block_rotate_right_fancy_t()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
-  printf("First fancy T Block spin attempt failed.");
+  //printf("First fancy T Block spin attempt failed.");
   
   main_block.x=x-1;
   main_block.y=y+2;
   last_move_fail=tetris_check_move();
   if(last_move_fail)
   {
-   printf("Second fancy T Block spin attempt failed.");
+   //printf("Second fancy T Block spin attempt failed.");
   }
 
  }
@@ -670,14 +670,14 @@ void block_rotate_left_fancy_t()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
-  printf("First fancy T Block spin attempt failed.");
+  //printf("First fancy T Block spin attempt failed.");
   
   main_block.x=x+1;
   main_block.y=y+2;
   last_move_fail=tetris_check_move();
   if(last_move_fail)
   {
-   printf("Second fancy T Block spin attempt failed.");
+   //printf("Second fancy T Block spin attempt failed.");
   }
 
  }
