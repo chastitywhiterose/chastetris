@@ -570,7 +570,7 @@ void block_rotate_right_fancy_t()
 
  if(main_block.id!='T')
  {
-  printf("Block is not T. No action will be taken.");
+  printf("Block is not T. No action will be taken.");return;
  }
 
  int x=0,y=0;
@@ -656,7 +656,7 @@ void block_rotate_left_fancy_t()
 
  if(main_block.id!='T')
  {
-  printf("Block is not T. No action will be taken.");
+  printf("Block is not T. No action will be taken.");return;
  }
 
  int x=0,y=0;
