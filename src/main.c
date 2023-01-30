@@ -14,6 +14,8 @@ Texture2D texture; /*used when textures are used*/
 Sound sound; /*main sound played*/
 Sound sound1; /*others sounds played*/
 
+Sound music; /*main music played*/
+
 
 
 int radius; //used for circles sometimes
@@ -122,6 +124,25 @@ void keyboard()
   /*printf("%s\n",movetext);*/
   grid_print();
  }
+ 
+ 
+ /*for printing grid array as text*/
+ if(IsKeyPressed(KEY_M))
+ {
+  if(IsSoundPlaying(music))
+  {
+   printf("Music is playing. It will be stopped now.\n");
+   StopSound(music);
+  }
+  else
+  {
+   printf("Music is not playing. It will be started now.\n");
+   PlaySound(music);
+  }
+  
+
+ }
+
 
 }
 
@@ -503,12 +524,15 @@ int main(int argc, char **argv)
 
  //texture=LoadTexture("textures/star_face.png");
 
- //InitAudioDevice();      // Initialize audio device
+ InitAudioDevice();      // Initialize audio device
 
  //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
  //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
 
- //PlaySound(sound);
+
+ music = LoadSound("./music/music.mp3"); //load the main music
+
+//PlaySound(music);
 
 
  /*the name of the game depends on the blocks_used variable*/
@@ -574,6 +598,9 @@ text_x=fontsize*8; /*position of text for game loop*/
 
 
  main_font=font_64; /*font should be size 64 before game loop*/
+
+
+ PlaySound(music); //start playing music just before game begins
  
 
  ray_chastetris();
