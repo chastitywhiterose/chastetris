@@ -500,11 +500,27 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
+ Sound music_title=LoadSound("./music/music_title.mp3"); //load the main music("./music/music_title.mp3");
+ PlaySound(music_title);
+
 
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
 {
  if(IsKeyPressed(KEY_ENTER)){break;}
+ if(IsKeyPressed(KEY_M))
+ {
+  if(IsSoundPlaying(music_title))
+  {
+   printf("Music is playing. It will be stopped now.\n");
+   StopSound(music_title);
+  }
+  else
+  {
+   printf("Music is not playing. It will be started now.\n");
+   PlaySound(music_title);
+  }
+ }
  BeginDrawing();
  ClearBackground((Color){0,0,0,255});
 
@@ -514,7 +530,6 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  sprintf(text,"%s",gamename);
  chaste_font_draw_string(text,text_x,main_font.char_height*1);
-
 
  main_font=font_32;
 
@@ -531,6 +546,10 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  sprintf(text,"Email: chastitywhiterose@gmail.com");
  chaste_font_draw_string(text,text_x,main_font.char_height*10);
 
+ sprintf(text,"Do You Know Da Wae?");
+ chaste_font_draw_string(text,text_x,main_font.char_height*16);
+ 
+
  main_font=font_16;
 
  sprintf(text,"https://github.com/chastitywhiterose/chastetris");
@@ -544,6 +563,8 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  EndDrawing();
 }
+
+ StopSound(music_title); //stop title music before game begins
 
 }
 

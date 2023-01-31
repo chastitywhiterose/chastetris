@@ -1,0 +1,16 @@
+Chaste Tris License
+
+At this time, because I am new to the world of game development and publishing, I do not know of an existing license that accurately matches the vision I have for this game. As such, the following is my own words of what I want users to be able to do with this game.
+
+I wish to license users of this game to play and learn the mechanics of how it works and to be able to modify it provided they have the technical knowledge to be able to do it. This will include the ability to access the source code which will be provided on my github repository.
+
+I want to encourage development of similar games by other programmers because it is a great way to learn the fundamentals of computer programming and all that goes into it. I want to have open communication from those who enjoy playing it and/or have improvements that they can make or that I can possibly implement.
+
+This license may be modified as necessary to adapt to unforeseen technical and legal situations as they arise but will always retain the basic goal of keeping old block style puzzle games alive.
+
+Also, should anyone from the Tetris Company find my game or ever reply to the email I sent them about it, I will be willing to work out a deal with them and stay within their legal guidelines with the exception that I will not remove my game from the internet under any circumstances.
+
+There is much more I can say. Do not hesitate to email me with more questions:
+
+chastitywhiterose@gmail.com
+
