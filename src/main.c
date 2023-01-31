@@ -41,6 +41,9 @@ int fontsize=height/12;
 int text_x; /*the x position of where text will go*/
 
 #include "chastetris.h"
+#include "ray_gamesave.h"
+#include "ray_polygon.h"
+
 #include "ray_chastefont.h"
 #include "ray_chastegraph.h"
 
@@ -139,9 +142,69 @@ void keyboard()
    printf("Music is not playing. It will be started now.\n");
    PlaySound(music);
   }
-  
-
  }
+  
+  /*save states*/
+ if(IsKeyPressed(KEY_I))
+ {
+  save_gamesave();
+ }
+ if(IsKeyPressed(KEY_P))
+ {
+  load_gamesave();
+ }
+
+ if(IsKeyPressed(KEY_ZERO))
+ {
+  save_index=0;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_ONE))
+ {
+  save_index=1;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_TWO))
+ {
+  save_index=2;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_THREE))
+ {
+  save_index=3;
+  printf("State %d selected.\n",save_index);
+ }
+  if(IsKeyPressed(KEY_FOUR))
+ {
+  save_index=4;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_FIVE))
+ {
+  save_index=5;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_SIX))
+ {
+  save_index=6;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_SEVEN))
+ {
+  save_index=7;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_EIGHT))
+ {
+  save_index=8;
+  printf("State %d selected.\n",save_index);
+ }
+ if(IsKeyPressed(KEY_NINE))
+ {
+  save_index=9;
+  printf("State %d selected.\n",save_index);
+ }
+ 
 
 
 }
@@ -391,6 +454,10 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 
 
   stats_func();
+  
+  //polygon_draw();
+  polygon_draw_lines();
+  main_polygon.radians+=1;
 
 
   EndDrawing();
@@ -595,13 +662,23 @@ text_x=fontsize*8; /*position of text for game loop*/
   printf("input file \"%s\" is opened.\n",filename);
   printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
  }
-
-
  main_font=font_64; /*font should be size 64 before game loop*/
 
+/*savestate initialization*/
+x=0;
+while(x<10)
+{
+ state[save_index].exist=0; /*save states should not exist at beginning of game*/
+ x++;
+}
 
  PlaySound(music); //start playing music just before game begins
  
+ init_polygon(); /*setup the polygon initial variables*/
+ /*change a few polygon things for this game*/
+ main_polygon.radius=height/6;
+ main_polygon.cx=width*3/16;
+ main_polygon.cy=height*13/16;
 
  ray_chastetris();
 
