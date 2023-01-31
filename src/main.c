@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <raylib.h>
+#include <math.h>
 
 const int width = 1280;
 const int height = 720;
@@ -456,8 +457,13 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
   stats_func();
   
   //polygon_draw();
-  polygon_draw_lines();
-  main_polygon.radians+=1;
+  //polygon_draw_lines();
+  
+  
+  //chaste_polygon_draw();
+  chaste_polygon_draw_star();
+  
+  main_polygon.radians+=PI/180;
 
 
   EndDrawing();
@@ -679,6 +685,8 @@ while(x<10)
  main_polygon.radius=height/6;
  main_polygon.cx=width*3/16;
  main_polygon.cy=height*13/16;
+ main_polygon.sides=5;
+ main_polygon.step=2;
 
  ray_chastetris();
 
