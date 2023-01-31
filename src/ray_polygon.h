@@ -86,23 +86,22 @@ The polygon is filled.
 void chaste_polygon_draw()
 {
  int i,i1;
- Vector2 center;
- center=(Vector2){main_polygon.cx,main_polygon.cy};
  chaste_polygon_points();
  
  i=0;
  while(i<main_polygon.sides)
  {
   polygon_vectors[i]=(Vector2){polygon_xpoints[i],polygon_ypoints[i]};
-   i+=1;
+  i+=1;
  }
  
  i=0;
  while(i<main_polygon.sides)
  {
   i1=(i+1)%main_polygon.sides;
-  DrawTriangle(polygon_vectors[i],center,polygon_vectors[i1],main_polygon.color);
-  //DrawTriangleLines(polygon_vectors[i],center,polygon_vectors[i1],main_polygon.color); //only the outline, not filled
+  //DrawTriangle(polygon_vectors[i],(Vector2){main_polygon.cx,main_polygon.cy},polygon_vectors[i1],main_polygon.color); //filled polygon
+  //DrawTriangleLines(polygon_vectors[i],(Vector2){main_polygon.cx,main_polygon.cy},polygon_vectors[i1],main_polygon.color); //outline with lines to center
+  DrawLineV(polygon_vectors[i],polygon_vectors[i1],main_polygon.color); //outline only with outer points
   i++;
  }
 }
@@ -113,37 +112,36 @@ void chaste_polygon_draw()
 /*
 polygon
 
-The polygon is filled. 
+The star polygon is filled. 
 */
 void chaste_polygon_draw_star()
 {
  int i,i1;
- Vector2 center;
- center=(Vector2){main_polygon.cx,main_polygon.cy};
  chaste_polygon_points();
  
  i=0;
  while(i<main_polygon.sides)
  {
   polygon_vectors[i]=(Vector2){polygon_xpoints[i],polygon_ypoints[i]};
-   i+=1;
+  i+=1;
  }
  
  i=0;
  while(i<main_polygon.sides)
  {
   i1=(i+main_polygon.step)%main_polygon.sides;
-  DrawTriangle(polygon_vectors[i],center,polygon_vectors[i1],main_polygon.color);
-  //DrawTriangleLines(polygon_vectors[i],center,polygon_vectors[i1],main_polygon.color); //only the outline, not filled
+  //DrawTriangle(polygon_vectors[i],(Vector2){main_polygon.cx,main_polygon.cy},polygon_vectors[i1],main_polygon.color); //filled star polygon
+  //DrawTriangleLines(polygon_vectors[i],center,polygon_vectors[i1],main_polygon.color); //outline with lines to center
+  DrawLineV(polygon_vectors[i],polygon_vectors[i1],main_polygon.color); //outline only with outer points
   i++;
  }
 }
 
 
 
-
+//examples from the raylib cheatsheet for reminders on what I am doing
 //void DrawTriangle(Vector2 v1, Vector2 v2, Vector2 v3, Color color);
 //    void DrawTriangleFan(Vector2 *points, int pointCount, Color color);    // Draw a triangle fan defined by points (first vertex is the center)
 //    void DrawTriangleStrip(Vector2 *points, int pointCount, Color color);  // Draw a triangle strip defined by points
-
+//DrawLineV(Vector2 startPos, Vector2 endPos, Color color);
 
