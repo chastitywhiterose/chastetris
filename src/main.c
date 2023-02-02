@@ -12,10 +12,12 @@ Color ray_block_color={255,255,255,255};
 Color ray_border_color={127,127,127,255};
 
 Texture2D texture; /*used when textures are used*/
-Sound sound; /*main sound played*/
-Sound sound1; /*others sounds played*/
+//Sound sound; /*main sound played*/
+//Sound sound1; /*others sounds played*/
 
-Sound music; /*main music played*/
+Sound music[3]; /*array of music which can be loaded into*/
+int music_index=0;
+int music_on=1; /*whether music should be on*/
 
 
 
@@ -133,15 +135,17 @@ void keyboard()
  /*for printing grid array as text*/
  if(IsKeyPressed(KEY_M))
  {
-  if(IsSoundPlaying(music))
+  if(IsSoundPlaying(music[music_index]))
   {
    printf("Music is playing. It will be stopped now.\n");
-   StopSound(music);
+   StopSound(music[music_index]);
+   music_on=0;
   }
   else
   {
    printf("Music is not playing. It will be started now.\n");
-   PlaySound(music);
+   PlaySound(music[music_index]);
+   music_on=1;
   }
  }
   
@@ -223,7 +227,7 @@ void TakeScreenshot_frame()
 
 /*
 this function gets input from a previous log file and autoplays the moves from  it.
-this is a highly experimental feature and probably won't be in the published game
+this enables tool assisted speedruns!
 */
 void next_file_input()
 {
@@ -469,6 +473,13 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
   EndDrawing();
 
   keyboard();
+  
+  /*if music has stopped playing then go to next track*/
+  if(music_on && !IsSoundPlaying(music[music_index]))
+  {
+   music_index=(music_index+1)%3;
+   PlaySound(music[music_index]);
+  }
 
 
  
@@ -500,8 +511,8 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
- Sound music_title=LoadSound("./music/music_title.mp3"); //load the main music("./music/music_title.mp3");
- PlaySound(music_title);
+ music_index=0; 
+ PlaySound(music[music_index]);
 
 
 /*before the game actually runs, optionally display a start screen*/
@@ -510,15 +521,15 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  if(IsKeyPressed(KEY_ENTER)){break;}
  if(IsKeyPressed(KEY_M))
  {
-  if(IsSoundPlaying(music_title))
+  if(IsSoundPlaying(music[music_index]))
   {
    printf("Music is playing. It will be stopped now.\n");
-   StopSound(music_title);
+   StopSound(music[music_index]);
   }
   else
   {
    printf("Music is not playing. It will be started now.\n");
-   PlaySound(music_title);
+   PlaySound(music[music_index]);
   }
  }
  BeginDrawing();
@@ -564,7 +575,7 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  EndDrawing();
 }
 
- StopSound(music_title); //stop title music before game begins
+ StopSound(music[music_index]); //stop title music before game begins
 
 }
 
@@ -623,11 +634,10 @@ int main(int argc, char **argv)
  //sound = LoadSound("./audio/respectfully.mp3"); //load the audio
  //sound1 = LoadSound("./audio/deluxe_spa_package.mp3"); //load the audio
 
-
- music = LoadSound("./music/music.mp3"); //load the main music
-
-//PlaySound(music);
-
+ /*load all music before game starts*/
+ music[0]=LoadSound("./music/Tetris_Gift_from_Moscow_OC_ReMix.mp3"); //load the main music("./music/music_title.mp3");
+ music[1]=LoadSound("./music/Tetris_T-Spin_OC_ReMix.mp3"); //load the main music
+ music[2]=LoadSound("./music/Chrono_Trigger_Protector_in_Green_OC_ReMix.mp3"); //load the main music
 
  /*the name of the game depends on the blocks_used variable*/
  if(blocks_used==1)
@@ -699,7 +709,6 @@ while(x<10)
  x++;
 }
 
- PlaySound(music); //start playing music just before game begins
  
  init_polygon(); /*setup the polygon initial variables*/
  /*change a few polygon things for this game*/
@@ -708,6 +717,9 @@ while(x<10)
  main_polygon.cy=height*13/16;
  main_polygon.sides=5;
  main_polygon.step=2;
+
+ music_index=1; 
+ PlaySound(music[music_index]); //start playing music just before game begins
 
  ray_chastetris();
 
