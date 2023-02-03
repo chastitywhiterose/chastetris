@@ -1,0 +1,13 @@
+Chastity's personal notes on compiling Raylib games under Windows.
+
+If gcc of installed Raylib is already in the path, use this:
+
+gcc -o main.exe main.c C:\raylib\raylib\src\raylib.rc.data -s -static -Os -std=c99 -Wall -IC:\raylib\raylib\src -lraylib -lopengl32 -lgdi32 -lwinmm
+
+But if it is not in the path, the system path can be temporarily set before running the command.
+
+SET PATH=C:\raylib\w64devkit\bin
+
+gcc -o main.exe main.c C:\raylib\raylib\src\raylib.rc.data -s -static -Os -std=c99 -Wall -IC:\raylib\raylib\src -lraylib -lopengl32 -lgdi32 -lwinmm
+
+Now that I have figured it out, I am going to provide a batch file named "chastemake.bat" on github for Chaste Tris and Chaste Puyo. This allows anyone else to compile the games themselves as long as they do have Raylib installed already.
