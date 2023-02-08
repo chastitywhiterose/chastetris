@@ -42,8 +42,8 @@ end
 
 --this function draws to the screen every frame
 function love.draw()
- love.graphics.setColor(1, 0, 0)
- love.graphics.print("Hello World!", 400, 400)
+ love.graphics.setColor(1, 1, 1)
+ love.graphics.print("Chaste Tris Love2D", 100, 10)
  love.graphics.setColor(0, 1, 0)
  rect.x=100;
  love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
@@ -74,7 +74,7 @@ function love.draw()
    do
     if(main_block.array[x+y*max_block_width]~=0) then
      if( temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]~=0 )then
-      print("Error. Something here");
+      print("Error. Something already here");
      else
       temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_block.id;
       --print(temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width].."theid");
@@ -95,13 +95,26 @@ function love.draw()
    p=temp_grid.array[x+y*grid_width];
    --print("x="..x.." y="..y.." p="..tostring(p));
    if(p==nil)then
-    love.graphics.setColor(0.5, 1, 1)
+    love.graphics.setColor(0.5,0.5,0.5)
     print("nil pixel error");
     print(temp_grid.array[x+y*grid_width]);
     elseif(p=='I') then
-    love.graphics.setColor(0, 1, 1)
+    love.graphics.setColor(0, 1, 1);
+    elseif(p=='T') then
+    love.graphics.setColor(1, 0, 1);
+    elseif(p=='Z') then
+    love.graphics.setColor(1, 0, 0);
+    elseif(p=='J') then
+    love.graphics.setColor(0, 0, 1);
+    elseif(p=='O') then
+    love.graphics.setColor(1, 1, 0);
+    elseif(p=='L') then
+    love.graphics.setColor(1, 0.5, 0);
+    elseif(p=='S') then
+    love.graphics.setColor(0, 1, 0);
+
     else
-    love.graphics.setColor(1, 1, 1)
+    love.graphics.setColor(1, 1, 1);
    end
    
   love.graphics.rectangle("fill",grid_offset_x+x*block_size,y*block_size,block_size,block_size);
@@ -127,16 +140,20 @@ function love.keypressed(k)
   love.event.quit()
  end
  
- if k == 'right' then
+ if k == 'right' or k=='d' then
   tetris_move_right();
  end
  
- if k == 'left' then
+ if k == 'left' or k=='a' then
   tetris_move_left();
  end
+
+ if k == 'up' or k=='w' then
+ tetris_move_up();
+ end
  
-  if k == 'down' then
-  tetris_move_down();
+ if k == 'down' or k=='s' then
+ tetris_move_down();
  end
  
 end
