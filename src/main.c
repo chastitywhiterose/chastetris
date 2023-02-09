@@ -705,7 +705,7 @@ text_x=fontsize*8; /*position of text for game loop*/
 x=0;
 while(x<10)
 {
- state[save_index].exist=0; /*save states should not exist at beginning of game*/
+ state[x].exist=0; /*save states should not exist at beginning of game*/
  x++;
 }
 

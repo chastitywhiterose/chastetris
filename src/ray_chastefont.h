@@ -1,7 +1,8 @@
-/*chastity font*/
-
-
-
+/*
+ Chastity font
+ 
+ This file has some functions for loading and drawing my custom bitmap fonts and defines a font structure that I created which makes use of Raylib textures.
+ */
 
 /*
 font structure
@@ -63,12 +64,9 @@ void chaste_font_draw_string(char *s,int cx,int cy)
    Rectangle rect_source = {x,y,main_font.char_width,main_font.char_height};
    Vector2 pos = {cx,cy}; /*coordinates of where char will be drawn*/
    DrawTextureRec(main_font.texture, rect_source, pos, (Color){255,255,255,255});
-   cx+=main_font.char_width;;
+   cx+=main_font.char_width;
   }
   i++;
  }
 }
-
-
-
 
