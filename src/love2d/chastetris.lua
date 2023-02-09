@@ -34,14 +34,21 @@ temp_block.y=0;
 temp_block.width_used=4;
 temp_block.id=0;
 
-max_block_width=4; --max width of a tetris block is 4
 
+--hold block object
+hold_block={}; --just create empty object here.
+hold_block.array={}; --another function will provide its values on first call
+
+
+max_block_width=4; --max width of a tetris block is 4
+hold_used=0; --whether a block is held for later use
 
 block_type=0;
 blocks_used=7;
 
 --additional game variables required
 moves=0;
+last_move_spin=0;
 lines_cleared=0;
 lines_cleared_last=0;
 lines_cleared_total=0;
@@ -143,11 +150,11 @@ function spawn_block()
  
   if(block_type==4)then
   main_block.id='O';
-  main_block.width_used=3;
+  main_block.width_used=2;
+  main_block.array[0+0*max_block_width]=1;
   main_block.array[0+1*max_block_width]=1;
+  main_block.array[1+0*max_block_width]=1;
   main_block.array[1+1*max_block_width]=1;
-  main_block.array[1+1*max_block_width]=1;
-  main_block.array[2+1*max_block_width]=1;
  end
  
   if(block_type==5)then
@@ -155,8 +162,8 @@ function spawn_block()
   main_block.width_used=3;
   main_block.array[0+1*max_block_width]=1;
   main_block.array[1+1*max_block_width]=1;
-  main_block.array[1+1*max_block_width]=1;
   main_block.array[2+1*max_block_width]=1;
+  main_block.array[2+0*max_block_width]=1;
  end
  
   if(block_type==6)then
@@ -164,8 +171,8 @@ function spawn_block()
   main_block.width_used=3;
   main_block.array[0+1*max_block_width]=1;
   main_block.array[1+1*max_block_width]=1;
-  main_block.array[1+1*max_block_width]=1;
-  main_block.array[2+1*max_block_width]=1;
+  main_block.array[1+0*max_block_width]=1;
+  main_block.array[2+0*max_block_width]=1;
  end
  
  main_block.x=math.floor((grid_width-main_block.width_used)/2);
@@ -244,7 +251,7 @@ function tetris_move_right()
  last_move_fail=tetris_check_move();
  if(last_move_fail==0)
  then
-  print("move right succeeded");
+  --print("move right succeeded");
   moves=moves+1;
  else
   print("move right error");
@@ -262,7 +269,7 @@ function tetris_move_left()
  last_move_fail=tetris_check_move();
  if(last_move_fail==0)
  then
-  print("move left succeeded");
+  --print("move left succeeded");
   moves=moves+1;
  else
   print("move left error");
@@ -278,7 +285,7 @@ function tetris_move_up()
  last_move_fail=tetris_check_move();
  if(last_move_fail==0)
  then
-  print("move up succeeded");
+  --print("move up succeeded");
  else
   print("move up error");
   main_block.y=temp_block.y;
@@ -294,7 +301,7 @@ function tetris_move_down()
  last_move_fail=tetris_check_move();
  if(last_move_fail==0)
  then
-  print("move down succeeded");
+  --print("move down succeeded");
  else
   --print("move down error");
   main_block.y=temp_block.y;
@@ -353,3 +360,296 @@ function tetris_set_block()
 
 
 end
+
+
+
+
+
+function block_rotate_right_fancy_t()
+
+ if(main_block.id~='T')
+ then
+  print("Block is not T. No action will be taken.");return;
+ end
+
+
+ temp_block.x=main_block.x;
+ temp_block.y=main_block.y;
+
+ main_block.x=temp_block.x-1;
+ main_block.y=temp_block.y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail~=0)
+ then
+  print("First fancy T Block spin attempt failed.");
+  
+  main_block.x=temp_block.x-1;
+  main_block.y=temp_block.y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail~=0)
+  then
+   print("Second fancy T Block spin attempt failed.");
+  end
+
+ end
+
+end
+
+
+
+
+
+
+
+function block_rotate_right_basic()
+
+ --copy the block array to a temp block array
+ y=0;
+ while(y<max_block_width)
+ do
+  x=0;
+  while(x<max_block_width)
+  do
+   temp_block.array[x+y*max_block_width]=main_block.array[x+y*max_block_width];
+   x=x+1;
+  end
+  y=y+1;
+ end
+
+ --copy it from top to bottom to right to left(my own genius rotation trick)
+ --same as in the left rotation function but x,y and x1,y1 are swapped in the assignment
+
+ x1=main_block.width_used;
+ y=0;
+ while(y<main_block.width_used)
+ do
+  x1=x1-1;
+  y1=0;
+  x=0;
+  while(x<main_block.width_used)
+  do
+   main_block.array[x1+y1*max_block_width]=temp_block.array[x+y*max_block_width];
+   x=x+1;
+   y1=y1+1;
+  end
+  y=y+1;
+ end
+
+ --if rotation caused collision, restore to the backup before rotate.
+ last_move_fail=tetris_check_move();
+ if(last_move_fail~=0)
+ then
+  --if basic rotation failed, try fancier
+  block_rotate_right_fancy_t();
+ end
+ if(last_move_fail~=0)
+ then
+ 
+  --if rotate still failed, revert block to before rotation*/
+   y=0;
+  while(y<max_block_width)
+  do
+   x=0;
+   while(x<max_block_width)
+   do
+    main_block.array[x+y*max_block_width]=temp_block.array[x+y*max_block_width];
+    x=x+1;
+   end
+   y=y+1;
+  end
+  
+  --also restore coordinates if fancy spin functions modified them
+  main_block.x=temp_block.x;
+  main_block.y=temp_block.y;
+  
+ else
+  last_move_spin=1;
+ end
+
+end
+
+
+
+
+
+
+function block_rotate_left_fancy_t()
+
+ if(main_block.id~='T')
+ then
+  print("Block is not T. No action will be taken.");return;
+ end
+
+
+ temp_block.x=main_block.x;
+ temp_block.y=main_block.y;
+
+ main_block.x=temp_block.x+1;
+ main_block.y=temp_block.y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail~=0)
+ then
+  print("First fancy T Block spin attempt failed.");
+  
+  main_block.x=temp_block.x+1;
+  main_block.y=temp_block.y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail~=0)
+  then
+   print("Second fancy T Block spin attempt failed.");
+  end
+
+ end
+
+end
+
+
+
+
+function block_rotate_left_basic()
+
+ --copy the block array to a temp block array
+ y=0;
+ while(y<max_block_width)
+ do
+  x=0;
+  while(x<max_block_width)
+  do
+   temp_block.array[x+y*max_block_width]=main_block.array[x+y*max_block_width];
+   x=x+1;
+  end
+  y=y+1;
+ end
+
+ --copy it from top to bottom to right to left(my own genius rotation trick)
+ --same as in the right rotation function but x,y and x1,y1 are swapped in the assignment
+
+ x1=main_block.width_used;
+ y=0;
+ while(y<main_block.width_used)
+ do
+  x1=x1-1;
+  y1=0;
+  x=0;
+  while(x<main_block.width_used)
+  do
+   main_block.array[x+y*max_block_width]=temp_block.array[x1+y1*max_block_width];
+   x=x+1;
+   y1=y1+1;
+  end
+  y=y+1;
+ end
+
+ --if rotation caused collision, restore to the backup before rotate.
+ last_move_fail=tetris_check_move();
+ if(last_move_fail~=0)
+ then
+  --if basic rotation failed, try fancier
+  block_rotate_left_fancy_t();
+ end
+ if(last_move_fail~=0)
+ then
+ 
+  --if rotate still failed, revert block to before rotation*/
+   y=0;
+  while(y<max_block_width)
+  do
+   x=0;
+   while(x<max_block_width)
+   do
+    main_block.array[x+y*max_block_width]=temp_block.array[x+y*max_block_width];
+    x=x+1;
+   end
+   y=y+1;
+  end
+  
+  --also restore coordinates if fancy spin functions modified them
+  main_block.x=temp_block.x;
+  main_block.y=temp_block.y;
+  
+ else
+  last_move_spin=1;
+ end
+
+end
+
+
+
+
+
+
+
+--this function has to be longer in Lua because Lua objects are copied by reference rather than value like C structs
+function block_hold()
+
+ if(hold_used==0) --just store block if nothing there
+ then
+  print("hold block used first time.");
+  
+ --copy the block array to hold block array
+  y=0;
+  while(y<max_block_width)
+  do
+   x=0;
+   while(x<max_block_width)
+   do
+    hold_block.array[x+y*max_block_width]=main_block.array[x+y*max_block_width];
+    x=x+1;
+   end
+   y=y+1;
+  end
+  
+  --copy all relevant values
+  hold_block.spawn_x=main_block.spawn_x;
+  hold_block.spawn_y=main_block.spawn_y;
+  hold_block.width_used=main_block.width_used;
+  hold_block.id=main_block.id;
+  
+  tetris_next_block();
+  spawn_block();
+  hold_used=1;
+ 
+ else
+ 
+  print("Swap with previous hold block.");
+  
+  --swap the block arrays with my standard x,y double loop
+  y=0;
+  while(y<max_block_width)
+  do
+   x=0;
+   while(x<max_block_width)
+   do
+    temp_block.array[x+y*max_block_width]=hold_block.array[x+y*max_block_width];
+    hold_block.array[x+y*max_block_width]=main_block.array[x+y*max_block_width];
+    main_block.array[x+y*max_block_width]=temp_block.array[x+y*max_block_width];
+    x=x+1;
+   end
+   y=y+1;
+  end
+  
+  temp_block.spawn_x=hold_block.spawn_x;
+  temp_block.spawn_y=hold_block.spawn_y;
+  temp_block.width_used=hold_block.width_used;
+  temp_block.id=hold_block.id;
+  
+  hold_block.spawn_x=main_block.spawn_x;
+  hold_block.spawn_y=main_block.spawn_y;
+  hold_block.width_used=main_block.width_used;
+  hold_block.id=main_block.id;
+  
+  main_block.spawn_x=temp_block.spawn_x;
+  main_block.spawn_y=temp_block.spawn_y;
+  main_block.width_used=temp_block.width_used;
+  main_block.id=temp_block.id;
+
+  --set main back to what it's spawn place would be in standard tetris games
+  main_block.x=main_block.spawn_x;
+  main_block.y=main_block.spawn_y;
+ end
+
+end
+
+
+
+

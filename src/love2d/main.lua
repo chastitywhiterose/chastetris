@@ -9,8 +9,10 @@ require "chastetris"
  print("block size="..block_size);
 
 
-grid_offset_x=(width-(20/2*block_size))/2;
+grid_offset_x=math.floor( (width-(20/2*block_size)) / 2 );
 print(grid_offset_x.."=grid_offsex_x");
+
+border_size=12; --size of borders on sides of field
 
 p=0; --temporary pixel variable
 
@@ -36,20 +38,25 @@ function love.load()
  spawn_block();
  
  
-
+ --set up the font
+  font_size=32;
+  mainFont = love.graphics.newFont("font/noto/NotoMono-Regular.ttf", font_size);
+  --mainFont = love.graphics.newFont("font/noto/NotoSansMono-Regular.ttf", font_size);
+  --mainFont = love.graphics.newFont("font/noto/NotoSansMono-Bold.ttf", font_size);
+  love.graphics.setFont(mainFont); --make all text functions use this font
+  
+  last_key=0;
 
 end
 
 --this function draws to the screen every frame
 function love.draw()
  love.graphics.setColor(1, 1, 1)
- love.graphics.print("Chaste Tris Love2D", 100, 10)
- love.graphics.setColor(0, 1, 0)
- rect.x=100;
- love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
- love.graphics.setColor(0, 0, 1)
- rect.x=400;
- --love.graphics.rectangle("fill", rect.x, rect.y, rect.width, rect.height)
+ love.graphics.print("Chaste Tris Love2D", font_size*1, font_size*0)
+
+ love.graphics.print("Key="..last_key, font_size*1, font_size*21)
+
+
  
  --create an empty temp grid which is copy of main grid
  y=0;
@@ -114,7 +121,7 @@ function love.draw()
     love.graphics.setColor(0, 1, 0);
 
     else
-    love.graphics.setColor(1, 1, 1);
+    love.graphics.setColor(0, 0, 0);
    end
    
   love.graphics.rectangle("fill",grid_offset_x+x*block_size,y*block_size,block_size,block_size);
@@ -129,13 +136,24 @@ function love.draw()
     --print("y="..y);
 
  end
+ 
+ love.graphics.setColor(0.5, 0.5, 0.5);
+ love.graphics.rectangle("fill",grid_offset_x-border_size,0*block_size,border_size,height); --left border
+  love.graphics.rectangle("fill",grid_offset_x+grid_width*block_size,0*block_size,border_size,height); --right border
+ 
+-- DrawRectangle(grid_offset_x-border_size,0*block_size,border_size,height,ray_border_color);
+--DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,height,ray_border_color);
 
   
   end
     
 --function to handle what happens when a key is pressed.
 function love.keypressed(k)
- print("key="..k)
+
+ --print("key="..k)
+ last_key=k;
+
+
  if k == 'escape' then
   love.event.quit()
  end
@@ -154,6 +172,17 @@ function love.keypressed(k)
  
  if k == 'down' or k=='s' then
  tetris_move_down();
+ end
+ 
+ if k == 'z' then
+  block_rotate_left_basic();
+ end
+ if k == 'x' then
+  block_rotate_right_basic();
+ end
+ 
+ if k == 'c' then
+  block_hold();
  end
  
 end
