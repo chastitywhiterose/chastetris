@@ -4,6 +4,7 @@ width = 1280;
 height = 720;
 
 require "chastetris"
+require "gamesave"
 
  block_size=height/grid_height;
  print("block size="..block_size);
@@ -45,14 +46,20 @@ function love.load()
   --mainFont = love.graphics.newFont("font/noto/NotoSansMono-Bold.ttf", font_size);
   love.graphics.setFont(mainFont); --make all text functions use this font
   
-  last_key=0;
+  last_key=' ';
+  
+  gamesave_init();
 
-end
+end --end of love.load
 
 --this function draws to the screen every frame
 function love.draw()
  love.graphics.setColor(1, 1, 1)
  love.graphics.print("Chaste Tris Love2D", font_size*1, font_size*0)
+ love.graphics.print("Score="..score, font_size*1, font_size*2)
+ love.graphics.print("Lines="..lines_cleared_total, font_size*1, font_size*3)
+ love.graphics.print("Hold="..hold_block.id, font_size*1, font_size*4)
+
 
  love.graphics.print("Key="..last_key, font_size*1, font_size*21)
 
@@ -184,6 +191,16 @@ function love.keypressed(k)
  if k == 'c' then
   block_hold();
  end
+ 
+ 
+ if k == 'i' then
+  save_gamesave();
+ end
+ 
+ if k == 'p' then
+  load_gamesave();
+ end
+ 
  
 end
 

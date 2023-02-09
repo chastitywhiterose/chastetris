@@ -38,6 +38,7 @@ temp_block.id=0;
 --hold block object
 hold_block={}; --just create empty object here.
 hold_block.array={}; --another function will provide its values on first call
+hold_block.id='none';
 
 
 max_block_width=4; --max width of a tetris block is 4
@@ -52,6 +53,8 @@ last_move_spin=0;
 lines_cleared=0;
 lines_cleared_last=0;
 lines_cleared_total=0;
+score=0;
+back_to_back=0;
 
 
 function tetris_clear_block()
@@ -348,11 +351,11 @@ function tetris_set_block()
 
 
 
- --tetris_clear_lines();
+ tetris_clear_lines();
 
  if(lines_cleared_last>0)
  then
-  --tetris_fall_lines();
+  tetris_fall_lines();
  end
 
  tetris_next_block();
@@ -652,4 +655,201 @@ end
 
 
 
+
+
+
+
+
+
+
+
+
+
+--the function to clear the lines
+function tetris_clear_lines()
+
+ lines_cleared=0;
+
+ y=grid_height;
+ while(y>0)
+ do
+  y=y-1;
+
+  xcount=0;
+  x=0;
+  while(x<grid_width)
+  do
+   if(main_grid.array[x+y*grid_width]~=0)
+   then
+    xcount=xcount+1;
+   end
+   x=x+1;
+  end
+
+  --print("row %d xcount %d\n",y,xcount);
+
+  if(xcount==grid_width)
+  then
+   y1=y;
+
+   --print("row %d line clear attempt.\n",y);
+
+   x1=0;
+   while(x1<grid_width)
+   do
+    main_grid.array[x1+y1*grid_width]=0;
+
+    x1=x1+1;
+   end
+   
+  
+   lines_cleared=lines_cleared+1;
+  end
+
+ end
+
+
+ lines_cleared_total=lines_cleared_total+lines_cleared;
+
+ print("this line clear: %d\n",lines_cleared);
+ print("total lines cleared: %d\n",lines_cleared_total);
+
+ --/*scoring section*/
+ if(lines_cleared==1)
+ then
+  if(last_move_spin==1)
+  then
+   if(back_to_back>0)
+   then
+    score=score+1200;
+   else
+   score=score+800;
+   end
+   back_to_back=back_to_back+1;
+  
+  else
+   score=score+100;back_to_back=0;
+  end
+ end
+ 
+ if(lines_cleared==2)
+ then
+  if(last_move_spin==1)
+  then
+   if(back_to_back>0)
+   then
+    score=score+1800;
+   else
+    score=score+1200;
+   end
+   back_to_back=back_to_back+1;
+  else
+  
+   score=score+300;back_to_back=0;
+  end
+ end
+ 
+ if(lines_cleared==3)
+ then
+  if(last_move_spin==1)
+  then
+   if(back_to_back>0)
+   then
+    score=score+2400;
+   else
+    score=score+1600;
+   end
+   back_to_back=back_to_back+1;
+  
+  else
+   score=score+500;back_to_back=0;
+   end
+ end
+ 
+ if(lines_cleared==4)
+ then
+  if(back_to_back>0)
+  then
+   score=score+1200;
+  else
+   score=score+800;
+  end
+  back_to_back=back_to_back+1;
+ end
+
+ if(lines_cleared~=0)
+ then
+  lines_cleared_last=lines_cleared;
+ end
+
+end
+
+
+
+
+--lines fall down to previously cleared line spaces
+
+function tetris_fall_lines()
+
+ --print("Time to make lines fall");
+
+ y=grid_height;
+ while(y>0)
+ do
+  y=y-1;
+
+  xcount=0;
+  x=0;
+  while(x<grid_width)
+  do
+   if(main_grid.array[x+y*grid_width]~=0)
+   then
+    xcount=xcount+1;
+   end
+   x=x+1;
+  end
+
+  --print("row "..y.." xcount "..xcount);
+
+  if(xcount==0)
+  then
+   -- print("row %d is empty\n",y);
+
+   --/*find first non empty row above empty row*/
+   y1=y;
+   while(y1>0)
+   do
+    y1=y1-1;
+    xcount=0;
+    x=0;
+    while(x<grid_width)
+    do
+     if(main_grid.array[x+y1*grid_width]~=0)
+     then
+      xcount=xcount+1;
+     end
+     x=x+1;
+    end
+    if(xcount>0)
+    then
+     -- printf("row %d is not empty. Will copy to row %d.\n",y1,y);
+
+     x=0;
+     while(x<grid_width)
+     do
+      main_grid.array[x+y*grid_width]=main_grid.array[x+y1*grid_width];
+      main_grid.array[x+y1*grid_width]=0;
+      x=x+1;
+     end
+     break;
+     
+    end
+    
+   end
+
+  end
+
+ end
+
+end
 
