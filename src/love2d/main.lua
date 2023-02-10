@@ -48,7 +48,7 @@ function love.load()
   
   last_key=' ';
   
-  gamesave_init();
+  gamesave_init(); --create empty save state objects
 
 end --end of love.load
 
@@ -201,6 +201,46 @@ function love.keypressed(k)
   load_gamesave();
  end
  
+ if k == '0' then
+  save_index=0;
+  print("State "..save_index.." selected.");
+ end
+ if k == '1' then
+  save_index=1;
+  print("State "..save_index.." selected.");
+ end
+ if k == '2' then
+  save_index=2;
+  print("State "..save_index.." selected.");
+ end
+ if k == '3' then
+  save_index=3;
+  print("State "..save_index.." selected.");
+ end
+ if k == '4' then
+  save_index=4;
+  print("State "..save_index.." selected.");
+ end
+ if k == '5' then
+  save_index=5;
+  print("State "..save_index.." selected.");
+ end
+ if k == '6' then
+  save_index=6;
+  print("State "..save_index.." selected.");
+ end
+ if k == '7' then
+  save_index=7;
+  print("State "..save_index.." selected.");
+ end
+ if k == '8' then
+  save_index=8;
+  print("State "..save_index.." selected.");
+ end
+ if k == '9' then
+  save_index=9;
+  print("State "..save_index.." selected.");
+ end
  
 end
 

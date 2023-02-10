@@ -58,6 +58,21 @@ function save_gamesave()
    end
    y=y+1;
   end
+  
+  --save additional parts of main and hold blocks
+  state[save_index].main_block.x=main_block.x;
+  state[save_index].main_block.y=main_block.y;
+  state[save_index].main_block.spawn_x=main_block.spawn_x;
+  state[save_index].main_block.spawn_y=main_block.spawn_y;
+  state[save_index].main_block.width_used=main_block.width_used;
+  state[save_index].main_block.id=main_block.id;
+  
+  state[save_index].hold_block.x=hold_block.x;
+  state[save_index].hold_block.y=hold_block.y;
+  state[save_index].hold_block.spawn_x=hold_block.spawn_x;
+  state[save_index].hold_block.spawn_y=hold_block.spawn_y;
+  state[save_index].hold_block.width_used=hold_block.width_used;
+  state[save_index].hold_block.id=hold_block.id;
 
 
  state[save_index].block_type=block_type;
@@ -118,6 +133,21 @@ function load_gamesave()
    y=y+1;
   end
 
+
+  --load additional parts of main and hold blocks
+  main_block.x=state[save_index].main_block.x;
+  main_block.y=state[save_index].main_block.y;
+  main_block.spawn_x=state[save_index].main_block.spawn_x;
+  main_block.spawn_y=state[save_index].main_block.spawn_y;
+  main_block.width_used=state[save_index].main_block.width_used;
+  main_block.id=state[save_index].main_block.id;
+  
+  hold_block.x=state[save_index].hold_block.x;
+  hold_block.y=state[save_index].hold_block.y;
+  hold_block.spawn_x=state[save_index].hold_block.spawn_x;
+  hold_block.spawn_y=state[save_index].hold_block.spawn_y;
+  hold_block.width_used=state[save_index].hold_block.width_used;
+  hold_block.id=state[save_index].hold_block.id;
 
  block_type=state[save_index].block_type;
 
