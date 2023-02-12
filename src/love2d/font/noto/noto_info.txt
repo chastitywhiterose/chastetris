@@ -1,0 +1,5 @@
+The font files here were copied from
+
+/usr/share/fonts/truetype/noto/
+
+
