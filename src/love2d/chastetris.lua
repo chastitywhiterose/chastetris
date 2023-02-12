@@ -191,19 +191,19 @@ end
 function pixel_on_grid(x,y)
 
  if(x<0) then
-  print("Error: Negative X");
+  --print("Error: Negative X");
   return 1;
  end;
  if(y<0)then
-  print("Error: Negative Y");
+  --print("Error: Negative Y");
   return 1;
  end
  if(x>=grid_width)then
-  print("Error: X too high.");
+  --print("Error: X too high.");
   return 1;
  end;
  if(y>=grid_height)then
-  print("Error: Y too high.");
+  --print("Error: Y too high.");
   return 1;
  end;
  --if none of the above, return the value at this location
@@ -227,7 +227,7 @@ function tetris_check_move()
    then
     if( pixel_on_grid(main_block.x+x,main_block.y+y)~=0 )
     then
-     print("Error: Block in Way on Move Check.");
+     --print("Error: Block in Way on Move Check.");
      return 1;
     end
    end
@@ -255,9 +255,9 @@ function tetris_move_right()
  if(last_move_fail==0)
  then
   --print("move right succeeded");
-  moves=moves+1;
+  last_move_spin=0;
  else
-  print("move right error");
+  --print("move right error");
   main_block.x=temp_block.x;
  end
 
@@ -273,9 +273,9 @@ function tetris_move_left()
  if(last_move_fail==0)
  then
   --print("move left succeeded");
-  moves=moves+1;
+  last_move_spin=0;
  else
-  print("move left error");
+  --print("move left error");
   main_block.x=temp_block.x;
  end
 
@@ -289,8 +289,9 @@ function tetris_move_up()
  if(last_move_fail==0)
  then
   --print("move up succeeded");
+  last_move_spin=0;
  else
-  print("move up error");
+  --print("move up error");
   main_block.y=temp_block.y;
  end
 
@@ -305,6 +306,7 @@ function tetris_move_down()
  if(last_move_fail==0)
  then
   --print("move down succeeded");
+  last_move_spin=0;
  else
   --print("move down error");
   main_block.y=temp_block.y;
@@ -329,9 +331,6 @@ end
 
 
 function tetris_set_block()
-
-
-
 
   --/*draw block onto grid at it's current location*/
   y=0;
@@ -375,10 +374,6 @@ function block_rotate_right_fancy_t()
   print("Block is not T. No action will be taken.");return;
  end
 
-
- temp_block.x=main_block.x;
- temp_block.y=main_block.y;
-
  main_block.x=temp_block.x-1;
  main_block.y=temp_block.y+1;
  last_move_fail=tetris_check_move();
@@ -405,6 +400,10 @@ end
 
 
 function block_rotate_right_basic()
+
+ --copy x and y of block because fancy spins may change them.
+ temp_block.x=main_block.x;
+ temp_block.y=main_block.y;
 
  --copy the block array to a temp block array
  y=0;
@@ -483,10 +482,6 @@ function block_rotate_left_fancy_t()
   print("Block is not T. No action will be taken.");return;
  end
 
-
- temp_block.x=main_block.x;
- temp_block.y=main_block.y;
-
  main_block.x=temp_block.x+1;
  main_block.y=temp_block.y+1;
  last_move_fail=tetris_check_move();
@@ -510,6 +505,10 @@ end
 
 
 function block_rotate_left_basic()
+
+ --copy x and y of block because fancy spins may change them.
+ temp_block.x=main_block.x;
+ temp_block.y=main_block.y;
 
  --copy the block array to a temp block array
  y=0;
@@ -587,7 +586,7 @@ function block_hold()
 
  if(hold_used==0) --just store block if nothing there
  then
-  print("hold block used first time.");
+  --print("hold block used first time.");
   
  --copy the block array to hold block array
   y=0;
@@ -614,7 +613,7 @@ function block_hold()
  
  else
  
-  print("Swap with previous hold block.");
+  --print("Swap with previous hold block.");
   
   --swap the block arrays with my standard x,y double loop
   y=0;
@@ -711,8 +710,8 @@ function tetris_clear_lines()
 
  lines_cleared_total=lines_cleared_total+lines_cleared;
 
- print("this line clear: %d\n",lines_cleared);
- print("total lines cleared: %d\n",lines_cleared_total);
+ --print("this line clear: %d\n",lines_cleared);
+ --print("total lines cleared: %d\n",lines_cleared_total);
 
  --/*scoring section*/
  if(lines_cleared==1)

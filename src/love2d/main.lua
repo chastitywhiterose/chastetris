@@ -59,7 +59,8 @@ function love.draw()
  love.graphics.print("Score="..score, font_size*1, font_size*2)
  love.graphics.print("Lines="..lines_cleared_total, font_size*1, font_size*3)
  love.graphics.print("Hold="..hold_block.id, font_size*1, font_size*4)
-
+ love.graphics.print("BTB="..back_to_back, font_size*1, font_size*5)
+ love.graphics.print("Moves="..moves, font_size*1, font_size*6)
 
  love.graphics.print("Key="..last_key, font_size*1, font_size*21)
 
