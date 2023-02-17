@@ -56,6 +56,8 @@ lines_cleared_total=0;
 score=0;
 back_to_back=0;
 
+move_log={}; --log of moves should be empty at game start
+
 
 function tetris_clear_block()
 
@@ -236,6 +238,8 @@ function tetris_check_move()
   y=y+1;
  end
 
+ --if the move had no errors then we can add the current move to the movelog and add one to the index
+ move_log[moves]=move_id;
  moves=moves+1;
  return 0;
 
@@ -311,6 +315,10 @@ function tetris_move_down()
   --print("move down error");
   main_block.y=temp_block.y;
   tetris_set_block(); --set the block now that hit bottom
+
+  --move will fail according to function tetris_check_move() but placing a block is a valid move in tetris still
+  --therefore we still add to the movelog and increment moves counter
+  move_log[moves]=move_id;
   moves=moves+1;
  end
 

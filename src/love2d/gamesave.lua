@@ -7,7 +7,7 @@ function gamesave_init()
  x=0;
  while(x<10)
  do
- print("Creating state "..x);
+ --print("Creating state "..x);
  state[x]={};
  state[x].exist=0; --save states should not exist at beginning of game
  x=x+1;
