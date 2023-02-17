@@ -658,6 +658,11 @@ function block_hold()
   main_block.y=main_block.spawn_y;
  end
 
+ --holding a block is always a valid move and must be added to the movelog
+ --pro tip: fewer holds means smaller movelog and move lines cleared per minute
+ move_log[moves]=move_id;
+ moves=moves+1;
+
 end
 
 

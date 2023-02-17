@@ -39,9 +39,63 @@ function love.load()
   
   gamefunc=game_title;
   --gamefunc=game_loop;
-
+  
+  
+  
+  --begin input movelog reading 
+  f=io.open("imovelog.txt","rb");
+  if(f~=nil)
+  then
+   s=f:read("*all");
+   f:close();
+  end
+  --end movelog reading
+  
+  if(s==nil) then
+   print("No input movelog file. Keyboard only this run.");
+   log_length=0;
+  else
+  
+   print("input movelog file loaded");
+   --print(s);
+   print("length of movelog="..#s);
+   
+   log_length=#s;
+  
+  
+   --copy the string to movelog array
+   x=0;
+   sx=1
+   while(sx<=#s)
+   do
+    move_log[x]=string.sub(s,sx,sx);
+    --io.write(string.sub(s,sx,sx));
+    --io.write(move_log[x]);
+    x=x+1;
+    sx=sx+1;
+   end
+  
+  end --end of large if statement
 
 end --end of love.load
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 --this function draws to the screen every frame
 function love.draw()
@@ -61,7 +115,23 @@ function love.keypressed(k)
  end
 
  if k == 'escape' then
-  love.event.quit()
+
+  --begin output movelog writing 
+  f=io.open("omovelog.txt","wb");
+ 
+  --write the movelog to a file
+  x=0;
+  while(x<moves)
+  do
+  --io.write(move_log[x]);
+  f:write(move_log[x]);
+  x=x+1;
+  end
+  
+  f:close();
+  --end movelog writing
+ 
+  love.event.quit(); --end the program
  end
  
   if k == 'up' or k=='w' then
