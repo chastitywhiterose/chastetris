@@ -125,7 +125,6 @@ void keyboard()
  /*for printing grid array as text*/
  if(IsKeyPressed(KEY_G))
  {
-  move_id='C';
   /*sprintf(movetext,"Block Hold");*/
   /*printf("%s\n",movetext);*/
   grid_print();
@@ -682,10 +681,7 @@ this is great when testing something that hasn't been debugged
 text_x=fontsize*8; /*position of text for game loop*/
 
 
- /*open the file to record moves*/
- sprintf(filename,"omovelog.txt");
- fp=fopen(filename,"wb+");
- if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
+
 
  sprintf(filename,"imovelog.txt");
  fp_input=fopen(filename,"rb+");
@@ -722,6 +718,26 @@ while(x<10)
  PlaySound(music[music_index]); //start playing music just before game begins
 
  ray_chastetris();
+ 
+ /*
+  After the game ends, we will attempt to save the movelog to a file.
+  Keeping the movelog in memory and only writing at the end speeds up the program and simplifies things.
+ */
+ 
+  /*open the file to record moves*/
+ sprintf(filename,"omovelog.txt");
+ fp=fopen(filename,"wb+");
+ if(fp==NULL){printf("Failed to create file \"%s\".\n",filename);}
+ else
+ {
+  x=0;
+  while(x<moves)
+  {
+   /*printf("%d %c\n",x,move_log[x]);*/
+   fputc(move_log[x],fp);
+   x++;
+  }
+ }
 
  if(fp!=NULL){fclose(fp);}
  if(fp_input!=NULL){fclose(fp_input);}

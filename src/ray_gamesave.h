@@ -41,7 +41,6 @@ void save_gamesave()
  state[save_index].lines=lines_cleared_total;
  state[save_index].btb=back_to_back;
 
- state[save_index].logpos=ftell(fp); /*save position in the move log file*/
  printf("state %d saved\n",save_index);
  
  state[save_index].exist=1;
@@ -72,8 +71,6 @@ void load_gamesave()
  score=state[save_index].score;
  lines_cleared_total=state[save_index].lines;
  back_to_back=state[save_index].btb;
- 
- fseek(fp,state[save_index].logpos,SEEK_SET);
 
  printf("state %d loaded\n",save_index);
 }

@@ -39,8 +39,10 @@ int moves_tried=0; /*number of attempted moves*/
 int last_move_spin=0; /*was the last move a t spin?*/
 int last_move_fail; /*did the last move fail?*/
 int back_to_back=0;
-
 int score=0;
+
+char move_log[0x1000000]; /*large array to store moves*/
+
 
 int empty_color=0x000000;
 
@@ -249,11 +251,15 @@ int tetris_check_move()
   }
   y+=1;
  }
-
+ 
+ move_log[moves]=move_id;
  moves++; /*move successful*/
  return 0;
 
 }
+
+
+
 
 
 void tetris_clear_screen()
@@ -495,6 +501,7 @@ void tetris_move_down()
   main_block=temp_block;
   /*printf("Block is finished\n");*/
   tetris_set_block();
+  move_log[moves]=move_id;
   moves++; /*moves normally wouldn't be incremented because move check fails but setting a block is actually a valid move.*/
  }
  else
@@ -503,8 +510,6 @@ void tetris_move_down()
  }
 
  last_move_fail=0; /*because moving down is always a valid operation, the fail variable should be set to 0*/
-
- fputc(move_id,fp); /*moving down is always a valid move either for setting a block or moving it down*/
 }
 
 
@@ -517,7 +522,6 @@ void tetris_move_up()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -535,7 +539,6 @@ void tetris_move_right()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -552,7 +555,6 @@ void tetris_move_left()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -640,7 +642,7 @@ void block_rotate_right_basic()
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
+
  }
 
 }
@@ -725,7 +727,6 @@ temp_block=main_block;
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
  }
 
 }
@@ -751,7 +752,8 @@ void block_hold()
   main_block.x=main_block.spawn_x;
   main_block.y=main_block.spawn_y;
  }
- fputc(move_id,fp);
+ move_log[moves]=move_id; /*hold block is always valid move*/
+ moves=moves+1;
 }
 
 struct tetris_grid save_grid;
@@ -794,8 +796,6 @@ void tetris_save_state()
  saved_lines_cleared_total=lines_cleared_total;
  saved_back_to_back=back_to_back;
 
- move_log_position=ftell(fp); /*save position in the move log file*/
-
  printf("Game Saved at move %d\n",moves);
  save_exist=1;
 }
@@ -826,8 +826,6 @@ void tetris_load_state()
  score=saved_score;
  lines_cleared_total=saved_lines_cleared_total;
  back_to_back=saved_back_to_back;
-
- fseek(fp,move_log_position,SEEK_SET);
 
  printf("Game Loaded at move %d\n",moves);
 
