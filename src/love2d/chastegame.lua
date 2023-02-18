@@ -6,8 +6,23 @@ love.graphics.print("Welcome to the Lua port of Chaste Tris. This game has been\
 
 love.graphics.print("Chastity White Rose is the programmer of all code.\nFor questions email her at:\nchastitywhiterose@gmail.com", font_size*1, font_size*8)
 
-love.graphics.print("Press Enter to begin the game.\n\nand may the horse be with you!", font_size*1, font_size*12)
+love.graphics.print("Press Enter to begin the game.\nand may the horse be with you!", font_size*1, font_size*12)
 
+love.graphics.print("Controls: Z,X,C, WASD/arrow keys", font_size*1, font_size*15)
+
+end
+
+--this keyboard function is called only during the title screen to allow starting the game or exiting
+function game_title_keyboard(k)
+
+ if k == 'escape' then
+  love.event.quit(); --end the program
+ end
+
+ if k == 'return' then
+  keyfunc=game_loop_keyboard;
+  gamefunc=game_loop;
+ end
 
 end
 
@@ -137,6 +152,128 @@ love.graphics.setColor(1, 1, 1);
  game_autoplay();
 
 end
+
+
+
+--this keyboard function is called during the game loop
+function game_loop_keyboard(k)
+
+ --print("key="..k)
+ last_key=k;
+
+ if k == 'escape' then
+
+  --begin output movelog writing 
+  f=io.open("omovelog.txt","wb");
+ 
+  --write the movelog to a file
+  x=0;
+  while(x<moves)
+  do
+  --io.write(move_log[x]);
+  f:write(move_log[x]);
+  x=x+1;
+  end
+  
+  f:close();
+  --end movelog writing
+ 
+  love.event.quit(); --end the program
+ end
+ 
+  if k == 'up' or k=='w' then
+  move_id='W';
+  tetris_move_up();
+ end
+ 
+ if k == 'left' or k=='a' then
+  move_id='A';
+  tetris_move_left();
+ end
+
+ if k == 'down' or k=='s' then
+  move_id='S';
+  tetris_move_down();
+ end
+ 
+ if k == 'right' or k=='d' then
+  move_id='D';
+  tetris_move_right();
+ end
+
+ 
+ if k == 'z' then
+  move_id='Z';
+  block_rotate_left_basic();
+ end
+ if k == 'x' then
+  move_id='X';
+  block_rotate_right_basic();
+ end
+ 
+ if k == 'c' then
+  move_id='C';
+  block_hold();
+ end
+ 
+ 
+ if k == 'i' then
+  save_gamesave();
+ end
+ 
+ if k == 'p' then
+  load_gamesave();
+ end
+ 
+ if k == '0' then
+  save_index=0;
+  print("State "..save_index.." selected.");
+ end
+ if k == '1' then
+  save_index=1;
+  print("State "..save_index.." selected.");
+ end
+ if k == '2' then
+  save_index=2;
+  print("State "..save_index.." selected.");
+ end
+ if k == '3' then
+  save_index=3;
+  print("State "..save_index.." selected.");
+ end
+ if k == '4' then
+  save_index=4;
+  print("State "..save_index.." selected.");
+ end
+ if k == '5' then
+  save_index=5;
+  print("State "..save_index.." selected.");
+ end
+ if k == '6' then
+  save_index=6;
+  print("State "..save_index.." selected.");
+ end
+ if k == '7' then
+  save_index=7;
+  print("State "..save_index.." selected.");
+ end
+ if k == '8' then
+  save_index=8;
+  print("State "..save_index.." selected.");
+ end
+ if k == '9' then
+  save_index=9;
+  print("State "..save_index.." selected.");
+ end
+ 
+ if k == 'r' then
+  game_loop_init();
+  print("Game restarted.");
+ end
+ 
+ 
+end
+
 
 
 
