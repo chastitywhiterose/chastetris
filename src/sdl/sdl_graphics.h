@@ -48,7 +48,7 @@ void welcome_screen_chaste_font()
 
  SDL_UpdateWindowSurface(window); /*update the screen*/
 
- while(e.type != SDL_KEYUP) /*wait until key is pressed and then released*/
+ while(e.type != SDL_KEYUP && e.type != SDL_QUIT) /*wait until key is pressed and then released*/
  {
   SDL_PollEvent( &e );
  }
@@ -92,7 +92,7 @@ void (*stats_func)()=draw_stats_chaste_font;
 
 
 
-
+ int fps_current; /*only used when I am debugging the game*/
 
  void draw_stats_chaste_font_centered()
  {
@@ -127,14 +127,33 @@ void (*stats_func)()=draw_stats_chaste_font;
   time(&time1);
   
   seconds=time1-time0; /*subtract current time from start time to get seconds since game started*/
+  
+/*  
+  sprintf(text,"Frame %d",frame);
+  chaste_font_draw_string(text,text_x,main_font.char_height*15);
+  
+  if(seconds!=0)
+  {
+   fps_current=frame/seconds;
+   sprintf(text,"FPS %d",fps_current);
+   chaste_font_draw_string(text,text_x,main_font.char_height*16);
+  }
+*/
+  
   minutes=seconds/60;
   seconds%=60;
   
   sprintf(text,"Time %d:%02d",minutes,seconds);
   chaste_font_draw_string(text,text_x,main_font.char_height*13);
+  
+
+
+
+
 
  }
-
+ 
+ 
 /*more global variables to be defined before game loop function*/
 int block_size;
 int border_size;
@@ -281,33 +300,22 @@ SDL_FillRect(surface,&rect,rect_color);
 
 /*
  set up the rectangle structure with the needed data to square the walls
- this is the original left sided style
 */
-rect.x=grid_offset_x-block_size;
-rect.y=0*block_size;
-rect.w=block_size;
-rect.h=height;
+ rect.x=grid_offset_x-border_size;
+ rect.y=0*block_size;
+ rect.w=border_size;
+ rect.h=height;
 
+ SDL_FillRect(surface,&rect,wall_color);
 
-
-SDL_FillRect(surface,&rect,wall_color);
-
-rect.x=grid_offset_x+grid_width*block_size;
-SDL_FillRect(surface,&rect,wall_color);
+ rect.x=grid_offset_x+grid_width*block_size;
+ SDL_FillRect(surface,&rect,wall_color);
 
 
  /*end of drawing code for grid*/
 
-stats_func();
+ stats_func();
 
-
- /*
- optionally save frame as file
- make comparison moves>=frame to ensure frames are only saved for successful moves.
- use moves<frame to make sure that no frames are ever saved
-*/
-
- /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
   next_file_input();
@@ -317,27 +325,12 @@ stats_func();
  SDL_UpdateWindowSurface(window); /*update the screen*/
 
 
-   /*
-while(e.type != SDL_KEYUP)
-while(e.type == SDL_KEYDOWN)
-*/
-
-  /*prevent auto repeating keys*/
-
-/*   while(e.type != SDL_KEYUP)
-   {
-    SDL_PollEvent( &e );
-   }
-*/
-
-
-
  while(sdl_time<sdl_time1)
  {
   sdl_time=SDL_GetTicks();
  }
 
-
+ frame++;
 
  }
 

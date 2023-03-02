@@ -37,18 +37,6 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 #include "sdl_input.h"
 #include "sdl_graphics.h"
 
-
-
-
-void SDL_Save_Frame()
-{
- char filename[256];
- sprintf(filename,"o/%08d.bmp",frame);
- printf("%s\n",filename);
- SDL_SaveBMP(surface,filename);
-}
-
-
 int main(int argc, char **argv)
 {
 
