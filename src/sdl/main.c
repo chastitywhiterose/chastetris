@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include <SDL.h>
 
 /*
@@ -16,7 +17,9 @@ int rect_color;
 
 
 int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
-int time,time1;
+time_t time0,time1;
+int seconds,minutes; /*to keep track of time*/
+int sdl_time,sdl_time1;
 
 char gamename[256];
 int blocks_used=7;

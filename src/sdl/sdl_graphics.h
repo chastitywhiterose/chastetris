@@ -87,6 +87,73 @@ void draw_stats_chaste_font()
 
 }
 
+/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
+void (*stats_func)()=draw_stats_chaste_font;
+
+
+
+
+
+ void draw_stats_chaste_font_centered()
+ {
+  main_font=font_64;
+
+  /*text_x=main_font.char_height*1/2;*/
+  text_x=32;
+
+  chaste_font_draw_string("Chaste\n Tris",text_x,32);
+ 
+  main_font=font_32;
+
+  sprintf(text,"Score %d",score);
+  chaste_font_draw_string(text,text_x,main_font.char_height*6);
+
+  sprintf(text,"Lines %d",lines_cleared_total);
+  chaste_font_draw_string(text,text_x,main_font.char_height*7);
+
+  sprintf(text,"This %c",main_block.id);
+  chaste_font_draw_string(text,text_x,main_font.char_height*8);
+
+  sprintf(text,"Hold %c",hold_block.id);
+  chaste_font_draw_string(text,text_x,main_font.char_height*9);
+
+
+  sprintf(text,"Move %d",moves);
+  chaste_font_draw_string(text,text_x,main_font.char_height*10);
+
+  sprintf(text,"B2B %d",back_to_back);
+  chaste_font_draw_string(text,text_x,main_font.char_height*11);
+  
+  time(&time1);
+  
+  seconds=time1-time0; /*subtract current time from start time to get seconds since game started*/
+  minutes=seconds/60;
+  seconds%=60;
+  
+  sprintf(text,"Time %d:%02d",minutes,seconds);
+  chaste_font_draw_string(text,text_x,main_font.char_height*13);
+
+ }
+
+/*more global variables to be defined before game loop function*/
+int block_size;
+int border_size;
+int grid_offset_x;
+
+
+/*
+sets up the variables before the game loop so that the Tetris field is in the center.
+This is done because I updated the game later on. This corrects everything before the same loop starts.
+*/
+void screen_setup_centered()
+{
+ grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
+ border_size=12;
+ stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
+
+}
+
+
 
 
 
@@ -97,12 +164,18 @@ void sdl_chastetris()
 {
  int pixel,r,g,b;
  int x=0,y=0;
+ int wall_color;
 
 
- int block_size=height/grid_height;
- int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ block_size=height/grid_height;
+ grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
 
  printf("block_size==%d\n",block_size);
+ 
+ wall_color=SDL_MapRGB(surface->format,127,127,127); /*color the walls of the grid will be*/
+ 
+ /*if the following function is called, screen is centered. Otherwise use old style.*/
+ screen_setup_centered();
 
  chastetris_info();
 
@@ -123,12 +196,16 @@ void sdl_chastetris()
  }
 
 
- delay=1000/fps; 
+ delay=1000/fps;
+ 
+ /*get time before the game starts using standard library time function*/
+ time(&time0);
+ 
   /* Loop until the user closes the window */
  while(loop)
  {
-  time = SDL_GetTicks();
-  time1 = time+delay;
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
 
   SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0,0,0));
 
@@ -198,24 +275,30 @@ SDL_FillRect(surface,&rect,rect_color);
  }
 
 
-rect_color=SDL_MapRGB(surface->format,255,255,255);
+
 
  /*draw the boundary walls*/
 
-/*set up the rectangle structure with the needed data to square the squares*/
+/*
+ set up the rectangle structure with the needed data to square the walls
+ this is the original left sided style
+*/
 rect.x=grid_offset_x-block_size;
 rect.y=0*block_size;
 rect.w=block_size;
 rect.h=height;
-SDL_FillRect(surface,&rect,rect_color);
+
+
+
+SDL_FillRect(surface,&rect,wall_color);
 
 rect.x=grid_offset_x+grid_width*block_size;
-SDL_FillRect(surface,&rect,rect_color);
+SDL_FillRect(surface,&rect,wall_color);
 
 
  /*end of drawing code for grid*/
 
-draw_stats_chaste_font();
+stats_func();
 
 
  /*
@@ -249,9 +332,9 @@ while(e.type == SDL_KEYDOWN)
 
 
 
- while(time<time1)
+ while(sdl_time<sdl_time1)
  {
-  time=SDL_GetTicks();
+  sdl_time=SDL_GetTicks();
  }
 
 
