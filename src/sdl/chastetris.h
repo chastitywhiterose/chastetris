@@ -39,11 +39,11 @@ int moves_tried=0; /*number of attempted moves*/
 int last_move_spin=0; /*was the last move a t spin?*/
 int last_move_fail; /*did the last move fail?*/
 int back_to_back=0;
-
 int score=0;
 
-int empty_color=0x000000;
+char move_log[0x1000000]; /*large array to store moves*/
 
+int empty_color=0x000000;
 
 int lines_cleared=0,lines_cleared_last=0,lines_cleared_total=0;
 
@@ -249,11 +249,15 @@ int tetris_check_move()
   }
   y+=1;
  }
-
+ 
+ move_log[moves]=move_id;
  moves++; /*move successful*/
  return 0;
 
 }
+
+
+
 
 
 void tetris_clear_screen()
@@ -347,13 +351,22 @@ void tetris_clear_lines()
    score+=300;back_to_back=0;
   }
  }
- if(lines_cleared==3){score+=500;back_to_back=0;}
+ if(lines_cleared==3)
+ {
+  if(last_move_spin==1)
+  {
+   if(back_to_back>0){score+=2400;}
+   else{score+=1600;}
+   back_to_back++;
+  }
+  else {score+=500;back_to_back=0;}
+ }
+ 
  if(lines_cleared==4)
  {
   if(back_to_back>0){score+=1200;}
   else{score+=800;}
   back_to_back++;
-
  }
 
  if(lines_cleared!=0)
@@ -486,6 +499,7 @@ void tetris_move_down()
   main_block=temp_block;
   /*printf("Block is finished\n");*/
   tetris_set_block();
+  move_log[moves]=move_id;
   moves++; /*moves normally wouldn't be incremented because move check fails but setting a block is actually a valid move.*/
  }
  else
@@ -494,8 +508,6 @@ void tetris_move_down()
  }
 
  last_move_fail=0; /*because moving down is always a valid operation, the fail variable should be set to 0*/
-
- fputc(move_id,fp); /*moving down is always a valid move either for setting a block or moving it down*/
 }
 
 
@@ -508,7 +520,6 @@ void tetris_move_up()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -526,7 +537,6 @@ void tetris_move_right()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
@@ -543,12 +553,48 @@ void tetris_move_left()
  if(!last_move_fail)
  {
   last_move_spin=0;
-  fputc(move_id,fp);
  }
  else
  {
   main_block=temp_block;
  }
+}
+
+
+/*
+fancy right rotation system for T blocks only
+does not actually rotate. Rather tries to move a T block into another valid spot and simulate SRS rules
+*/
+void block_rotate_right_fancy_t()
+{
+ int x=0,y=0;
+
+ if(main_block.id!='T')
+ {
+  printf("Block is not T. No action will be taken.");return;
+ }
+
+ x=main_block.x;
+ y=main_block.y;
+
+
+ main_block.x=x-1;
+ main_block.y=y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail)
+ {
+  /*printf("First fancy T Block spin attempt failed.");*/
+  
+  main_block.x=x-1;
+  main_block.y=y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail)
+  {
+   /*printf("Second fancy T Block spin attempt failed.");*/
+  }
+
+ }
+
 }
 
 
@@ -582,12 +628,56 @@ void block_rotate_right_basic()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
+  /*if basic rotation failed, try fancier*/
+  block_rotate_right_fancy_t();
+ }
+ if(last_move_fail)
+ {
+  /*if it still failed, revert block to before rotation*/
   main_block=temp_block;
  }
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
+
+ }
+
+}
+
+
+
+/*
+fancy left rotation system for T blocks only
+does not actually rotate. Rather tries to move a T block into another valid spot and simulate SRS rules
+*/
+void block_rotate_left_fancy_t()
+{
+ int x=0,y=0;
+
+ if(main_block.id!='T')
+ {
+  printf("Block is not T. No action will be taken.");return;
+ }
+ 
+ x=main_block.x;
+ y=main_block.y;
+
+
+ main_block.x=x+1;
+ main_block.y=y+1;
+ last_move_fail=tetris_check_move();
+ if(last_move_fail)
+ {
+  /*printf("First fancy T Block spin attempt failed.");*/
+  
+  main_block.x=x+1;
+  main_block.y=y+2;
+  last_move_fail=tetris_check_move();
+  if(last_move_fail)
+  {
+   /*printf("Second fancy T Block spin attempt failed.");*/
+  }
+
  }
 
 }
@@ -622,12 +712,17 @@ temp_block=main_block;
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
+  /*if basic rotation failed, try fancier*/
+  block_rotate_left_fancy_t();
+ }
+ if(last_move_fail)
+ {
+  /*if it still failed, revert block to before rotation*/
   main_block=temp_block;
  }
  else
  {
   last_move_spin=1;
-  fputc(move_id,fp);
  }
 
 }
@@ -653,7 +748,8 @@ void block_hold()
   main_block.x=main_block.spawn_x;
   main_block.y=main_block.spawn_y;
  }
- fputc(move_id,fp);
+ move_log[moves]=move_id; /*hold block is always valid move*/
+ moves=moves+1;
 }
 
 struct tetris_grid save_grid;
@@ -696,8 +792,6 @@ void tetris_save_state()
  saved_lines_cleared_total=lines_cleared_total;
  saved_back_to_back=back_to_back;
 
- move_log_position=ftell(fp); /*save position in the move log file*/
-
  printf("Game Saved at move %d\n",moves);
  save_exist=1;
 }
@@ -728,8 +822,6 @@ void tetris_load_state()
  score=saved_score;
  lines_cleared_total=saved_lines_cleared_total;
  back_to_back=saved_back_to_back;
-
- fseek(fp,move_log_position,SEEK_SET);
 
  printf("Game Loaded at move %d\n",moves);
 
