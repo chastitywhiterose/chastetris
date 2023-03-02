@@ -46,8 +46,23 @@ void SDL_Save_Frame()
 }
 
 
-int main(int argc, char* args[])
+int main(int argc, char **argv)
 {
+
+ /*process command line arguments*/
+ int x=1;
+ while(x<argc)
+ {
+  printf("argv[%i]=%s\n",x,argv[x]);
+
+  if(strcmp(argv[x],"-longboi")==0)
+  {
+   printf("Long Boi mode activated! Only the I blocks will spawn!\n");
+   blocks_used=1;
+  }
+ 
+  x++;
+ }
 
  if(SDL_Init(SDL_INIT_VIDEO)){printf( "SDL could not initialize! SDL_Error: %s\n",SDL_GetError());return -1;}
  window=SDL_CreateWindow( "SDL Chaste Tris",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,SDL_WINDOW_SHOWN );
@@ -58,11 +73,6 @@ int main(int argc, char* args[])
 
  SDL_FillRect(surface,NULL,SDL_MapRGB(surface->format,0x80,0x80,0x80));
  SDL_UpdateWindowSurface(window);
-
- /*open the file to record moves*/
- sprintf(filename,"omovelog.txt");
- fp=fopen(filename,"wb+");
- if(fp==NULL){printf("Failed to create file \"%s\".\n",filename); return 1;}
 
  sprintf(filename,"imovelog.txt");
  fp_input=fopen(filename,"rb+");
@@ -98,6 +108,26 @@ int main(int argc, char* args[])
 
 
  sdl_chastetris();
+ 
+  /*
+  After the game ends, we will attempt to save the movelog to a file.
+  Keeping the movelog in memory and only writing at the end speeds up the program and simplifies things.
+ */
+ 
+  /*open the file to record moves*/
+ sprintf(filename,"omovelog.txt");
+ fp=fopen(filename,"wb+");
+ if(fp==NULL){printf("Failed to create file \"%s\".\n",filename);}
+ else
+ {
+  x=0;
+  while(x<moves)
+  {
+   /*printf("%d %c\n",x,move_log[x]);*/
+   fputc(move_log[x],fp);
+   x++;
+  }
+ }
 
  if(fp!=NULL){fclose(fp);}
  if(fp_input!=NULL){fclose(fp_input);}
