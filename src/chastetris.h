@@ -43,9 +43,7 @@ int score=0;
 
 char move_log[0x1000000]; /*large array to store moves*/
 
-
 int empty_color=0x000000;
-
 
 int lines_cleared=0,lines_cleared_last=0,lines_cleared_total=0;
 
@@ -569,14 +567,13 @@ does not actually rotate. Rather tries to move a T block into another valid spot
 */
 void block_rotate_right_fancy_t()
 {
+ int x=0,y=0;
 
  if(main_block.id!='T')
  {
   printf("Block is not T. No action will be taken.");return;
  }
 
- int x=0,y=0;
- 
  x=main_block.x;
  y=main_block.y;
 
@@ -586,14 +583,14 @@ void block_rotate_right_fancy_t()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
-  //printf("First fancy T Block spin attempt failed.");
+  /*printf("First fancy T Block spin attempt failed.");*/
   
   main_block.x=x-1;
   main_block.y=y+2;
   last_move_fail=tetris_check_move();
   if(last_move_fail)
   {
-   //printf("Second fancy T Block spin attempt failed.");
+   /*printf("Second fancy T Block spin attempt failed.");*/
   }
 
  }
@@ -655,13 +652,12 @@ does not actually rotate. Rather tries to move a T block into another valid spot
 */
 void block_rotate_left_fancy_t()
 {
+ int x=0,y=0;
 
  if(main_block.id!='T')
  {
   printf("Block is not T. No action will be taken.");return;
  }
-
- int x=0,y=0;
  
  x=main_block.x;
  y=main_block.y;
@@ -672,14 +668,14 @@ void block_rotate_left_fancy_t()
  last_move_fail=tetris_check_move();
  if(last_move_fail)
  {
-  //printf("First fancy T Block spin attempt failed.");
+  /*printf("First fancy T Block spin attempt failed.");*/
   
   main_block.x=x+1;
   main_block.y=y+2;
   last_move_fail=tetris_check_move();
   if(last_move_fail)
   {
-   //printf("Second fancy T Block spin attempt failed.");
+   /*printf("Second fancy T Block spin attempt failed.");*/
   }
 
  }
