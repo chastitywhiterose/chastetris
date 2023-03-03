@@ -444,6 +444,7 @@ void tetris_fall_lines()
 /*this function controls whether or not the block index changes.*/
 void tetris_next_block()
 {
+ if(blocks_used==1){return;} /*do nothing if only one block type used*/
  /*optionally increment block type for different block next time.*/
  block_type++;  block_type%=blocks_used;
 }

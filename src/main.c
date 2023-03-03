@@ -44,7 +44,7 @@ int fontsize=height/12;
 int text_x; /*the x position of where text will go*/
 
 #include "chastetris.h"
-#include "ray_gamesave.h"
+#include "chastetris_gamesave.h"
 #include "ray_polygon.h"
 
 #include "ray_chastefont.h"
@@ -446,7 +446,7 @@ DrawRectangle(grid_offset_x+x*block_size,y*block_size,block_size,block_size,ray_
 //DrawRectangle(grid_offset_x-block_size,0*block_size,block_size,height,ray_border_color);
 //DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,block_size,height,ray_border_color);
 
- /*draw the boundary walls original style*/
+ /*draw the boundary walls centered style*/
 DrawRectangle(grid_offset_x-border_size,0*block_size,border_size,height,ray_border_color);
 DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,height,ray_border_color);
 
@@ -531,6 +531,7 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
    PlaySound(music[music_index]);
   }
  }
+ 
  BeginDrawing();
  ClearBackground((Color){0,0,0,255});
 
@@ -619,6 +620,13 @@ int main(int argc, char **argv)
    printf("Long Boi mode activated! Only the I blocks will spawn!\n");
    blocks_used=1;
   }
+  
+  if(strcmp(argv[x],"-tgirl")==0)
+  {
+   printf("T Girl mode activated! Only the T blocks will spawn!\n");
+   block_type=1;
+   blocks_used=1;
+  }
  
   x++;
  }
@@ -638,17 +646,8 @@ int main(int argc, char **argv)
  music[1]=LoadSound("./music/Tetris_T-Spin_OC_ReMix.mp3"); //load the main music
  music[2]=LoadSound("./music/Chrono_Trigger_Protector_in_Green_OC_ReMix.mp3"); //load the main music
 
- /*the name of the game depends on the blocks_used variable*/
- if(blocks_used==1)
- { 
-  sprintf(gamename,"Long Boi");
- }
- else
- {
+
   sprintf(gamename,"Chaste Tris");
- }
-
-
 
  /*
   call the function to load my custom bitmap font.
