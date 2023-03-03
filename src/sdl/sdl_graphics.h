@@ -51,9 +51,15 @@ void welcome_screen_chaste_font()
 
  SDL_UpdateWindowSurface(window); /*update the screen*/
 
- while(e.type != SDL_KEYUP && e.type != SDL_QUIT) /*wait until key is pressed and then released*/
+ loop=1;
+ while(loop)
  {
   SDL_PollEvent( &e );
+  if( e.type == SDL_QUIT ){loop=0;}
+  if(e.type == SDL_KEYUP)
+  {
+   if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
+  }
  }
 
 }
@@ -223,6 +229,7 @@ void sdl_chastetris()
  /*get time before the game starts using standard library time function*/
  time(&time0);
  
+ loop=1;
   /* Loop until the user closes the window */
  while(loop)
  {
