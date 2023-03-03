@@ -33,6 +33,7 @@ char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
 
 #include "chastetris.h"
+#include "chastetris_gamesave.h"
 #include "sdl_chastefont.h"
 #include "sdl_input.h"
 #include "sdl_graphics.h"
@@ -49,6 +50,13 @@ int main(int argc, char **argv)
   if(strcmp(argv[x],"-longboi")==0)
   {
    printf("Long Boi mode activated! Only the I blocks will spawn!\n");
+   blocks_used=1;
+  }
+  
+  if(strcmp(argv[x],"-tgirl")==0)
+  {
+   printf("T Girl mode activated! Only the T blocks will spawn!\n");
+   block_type=1;
    blocks_used=1;
   }
  
@@ -78,15 +86,7 @@ int main(int argc, char **argv)
   printf("Will read commands from this file before keyboard. \"%s\".\n",filename);
  }
 
- /*the name of the game depends on the blocks_used variable*/
- if(blocks_used==1)
- { 
-  sprintf(gamename,"Long Boi");
- }
- else
- {
-  sprintf(gamename,"Chaste Tris");
- }
+ sprintf(gamename,"Chaste Tris");
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
  font_16=chaste_font_load("./font/FreeBASIC Font 16.bmp");

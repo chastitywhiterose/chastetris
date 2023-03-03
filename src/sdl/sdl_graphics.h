@@ -34,6 +34,9 @@ void welcome_screen_chaste_font()
 
  sprintf(text,"Email: chastitywhiterose@gmail.com");
  chaste_font_draw_string(text,text_x,main_font.char_height*10);
+ 
+ sprintf(text,"Do You Know Da Wae?");
+ chaste_font_draw_string(text,text_x,main_font.char_height*16);
 
  main_font=font_16;
 
