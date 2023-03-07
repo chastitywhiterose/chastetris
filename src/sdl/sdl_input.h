@@ -1,5 +1,6 @@
 /*sdl_input.h*/
 
+int log_loop_begin=0; /*special secret variable I am experimenting with*/
 
 /*this function is an SDL port of the keyboard function from the Raylib version of Chaste Tris*/
 void keyboard()
@@ -115,6 +116,26 @@ void keyboard()
     
     
     /*end of save state managing keys*/
+    
+    /*
+     keys after this are for marking special places during the game
+     They do not currently rewind the movelog but are written to it so that when reading from it later I can see those positions
+     This is very much a debugging feature for analyzing Tetris patterns.
+    */
+    
+    case SDLK_LEFTBRACKET:
+     printf("SDLK_LEFTBRACKET:\nBeginning of Loop\n");
+     move_id='[';
+     log_loop_begin=moves;
+     move_log[moves]=move_id;
+     moves++;
+    break;
+    case SDLK_RIGHTBRACKET:
+     printf("SDLK_LEFTBRACKET:\nEnd of Loop. Reset to beginning.\n");
+     move_id=']';
+     move_log[moves]=move_id;
+     moves++;
+    break;
 
    }
 
