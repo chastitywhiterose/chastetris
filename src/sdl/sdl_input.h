@@ -121,6 +121,9 @@ void keyboard()
      keys after this are for marking special places during the game
      They do not currently rewind the movelog but are written to it so that when reading from it later I can see those positions
      This is very much a debugging feature for analyzing Tetris patterns.
+     The idea is that I would write an entirely separate program to then repeat the pattern and create movelogs based on them.
+     Also, they are ignored when the game reads from the input move log.
+     There is no need to worry about manually removing them with a text editor.
     */
     
     case SDLK_LEFTBRACKET:
@@ -184,6 +187,18 @@ void next_file_input()
   if(c=='Z'){block_rotate_left_basic();}
   if(c=='X'){block_rotate_right_basic();}
   if(c=='C'){block_hold();}
+  
+  if(c=='[')
+  {
+   move_log[moves]=c;
+   moves++;
+  }
+  if(c==']')
+  {
+   move_log[moves]=c;
+   moves++;
+  }
+  
  }
 
 
