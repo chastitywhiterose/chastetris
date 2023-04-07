@@ -51,8 +51,8 @@ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*1*scale,scale);
  
  scale=2;
 
- sprintf(text,"https://github.com/chastitywhiterose/chastetris");
- chaste_font_draw_string(text,text_x,main_font.char_height*24);
+ sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
+ 
  
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
 
@@ -83,29 +83,33 @@ it's in a separate function so that I can switch it out with another function wh
 */
 void draw_stats_chaste_font()
 {
- text_x=main_font.char_height*7;
+ int scale=8;
+
+ text_x=main_font.char_width*7*scale;
+ 
 
 
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
+ chaste_font_draw_string(gamename,text_x,main_font.char_height*1*scale);
+ chaste_font_draw_string_scaled(gamename,text_x,main_font.char_height*1*scale,scale);
 
  sprintf(text,"Score: %d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*3);
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*3*scale,scale);
 
  sprintf(text,"Lines: %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*4);
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*4*scale,scale);
 
   sprintf(text,"This: %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*5);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
 
   sprintf(text,"Hold: %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
 
   sprintf(text,"Move: %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
 
   sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
 }
 
@@ -118,33 +122,34 @@ void (*stats_func)()=draw_stats_chaste_font;
 
  void draw_stats_chaste_font_centered()
  {
-  main_font=font_64;
+  int scale=8;
+  main_font=font_8;
 
   /*text_x=main_font.char_height*1/2;*/
   text_x=32;
 
-  chaste_font_draw_string("Chaste\n Tris",text_x,32);
+  chaste_font_draw_string_scaled("Chaste\n Tris",text_x,32,scale);
  
-  main_font=font_32;
+  scale=4;
 
   sprintf(text,"Score %d",score);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
   sprintf(text,"Lines %d",lines_cleared_total);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
 
   sprintf(text,"This %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
   sprintf(text,"Hold %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*9);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
 
   sprintf(text,"Move %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*10);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
   sprintf(text,"B2B %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*11);
+    chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
   
   time(&time1);
   
@@ -161,12 +166,12 @@ void (*stats_func)()=draw_stats_chaste_font;
    chaste_font_draw_string(text,text_x,main_font.char_height*16);
   }
 */
-  
+  hours=minutes/60;
   minutes=seconds/60;
   seconds%=60;
   
-  sprintf(text,"Time %d:%02d",minutes,seconds);
-  chaste_font_draw_string(text,text_x,main_font.char_height*13);
+  sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
   
 
 
@@ -209,6 +214,7 @@ void sdl_chastetris()
 
  block_size=height/grid_height;
  grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ border_size=block_size;
 
  printf("block_size==%d\n",block_size);
   
@@ -294,15 +300,15 @@ void sdl_chastetris()
    g=(pixel&0x00FF00)>>8;
    b=(pixel&0x0000FF);
 
-/*
- printf("x=%d y=%d ",x,y);
- printf("red=%d green=%d blue=%d\n",r,g,b);
-*/
+
+/* printf("x=%d y=%d ",x,y);
+ printf("red=%d green=%d blue=%d\n",r,g,b);*/
+
 
 /*rect_color=SDL_MapRGB(surface->format,r,g,b);*/
 
  SDL_SetRenderDrawColor(renderer,r,g,b,255);
-/* SDL_RenderClear(renderer);*/
+
 
 /*set up the rectangle structure with the needed data to square the squares*/
 rect.x=grid_offset_x+x*block_size;

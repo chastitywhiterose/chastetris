@@ -28,7 +28,7 @@ int rect_color;
 
 int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
 time_t time0,time1;
-int seconds,minutes; /*to keep track of time*/
+int seconds,minutes,hours; /*to keep track of time*/
 int sdl_time,sdl_time1;
 
 char gamename[256];
@@ -105,7 +105,7 @@ int main(int argc, char **argv)
 
  welcome_screen_chaste_font();
 
- main_font=font_64;
+ main_font=font_8;
 
 
  sdl_chastetris();
