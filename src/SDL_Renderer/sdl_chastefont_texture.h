@@ -139,7 +139,6 @@ void chaste_font_draw_string_scaled(char *s,int cx,int cy,int scale)
    rect_dest.w=main_font.char_width*scale;
    rect_dest.h=main_font.char_height*scale;
 
-   /*if(SDL_BlitScaled(main_font.surface,&rect_source,surface,&rect_dest)){printf("Error: %s\n",SDL_GetError());}*/
    if(SDL_RenderCopy(renderer,main_font.texture,&rect_source,&rect_dest)){printf( "RenderCopy Error SDL_Error: %s\n",SDL_GetError());}
    cx+=main_font.char_width*scale;
   }
