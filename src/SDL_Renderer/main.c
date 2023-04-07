@@ -44,6 +44,7 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 
 #include "chastetris.h"
 #include "chastetris_gamesave.h"
+#include "chaste_the_rainbow.h"
 #include "sdl_chastefont_texture.h"
 #include "sdl_input.h"
 #include "sdl_graphics.h"
@@ -99,9 +100,9 @@ int main(int argc, char **argv)
  sprintf(gamename,"Chaste Tris");
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
- font_16=chaste_font_load("./font/FreeBASIC Font 16.bmp");
- font_32=chaste_font_load("./font/FreeBASIC Font 32.bmp");
- font_64=chaste_font_load("./font/FreeBASIC Font 64.bmp");
+
+ chaste_palette_rainbow(40);
+ /*chaste_palette_view();*/
 
  welcome_screen_chaste_font();
 
@@ -138,9 +139,6 @@ int main(int argc, char **argv)
  SDL_Quit();
 
  chaste_font_free(font_8);
- chaste_font_free(font_16);
- chaste_font_free(font_32);
- chaste_font_free(font_64);
 
  return 0;
 }

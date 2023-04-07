@@ -128,7 +128,15 @@ void (*stats_func)()=draw_stats_chaste_font;
   /*text_x=main_font.char_height*1/2;*/
   text_x=32;
 
-  chaste_font_draw_string_scaled("Chaste\n Tris",text_x,32,scale);
+
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
  
   scale=4;
 
