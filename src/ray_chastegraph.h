@@ -57,12 +57,15 @@ void (*stats_func)()=draw_stats_chaste_font;
  
  void draw_stats_chaste_font_centered()
  {
+  int scale=8;
   main_font=font_64;
 
   //text_x=main_font.char_height*1/2;
   text_x=32;
 
   chaste_font_draw_string("Chaste\n Tris",text_x,32);
+  
+
  
   main_font=font_32;
 
@@ -95,6 +98,19 @@ void (*stats_func)()=draw_stats_chaste_font;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
   chaste_font_draw_string(text,text_x,main_font.char_height*13);
+  
+  main_font=font_8;
+  
+    /*rainbow title section*/
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
+  /*end of rainbow title section*/
 
  }
  

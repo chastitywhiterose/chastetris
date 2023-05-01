@@ -512,6 +512,8 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
+ int scale=8;
+
  music_index=0; 
  PlaySound(music[music_index]);
 
@@ -572,6 +574,18 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
 
  sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nRaylib is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
  chaste_font_draw_string(text,text_x,main_font.char_height*52);
+
+
+  chaste_palette_index=chaste_palette_index1;
+  
+  sprintf(text,"%s",gamename);
+  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
 
 
  EndDrawing();
