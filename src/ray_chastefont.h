@@ -183,8 +183,7 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
     sx=rect_source.x;
     while(sx<sx2)
     {
-	 
-	 color=GetImageColor(main_font.image,sx,sy);
+     color=GetImageColor(main_font.image,sx,sy);
      pixel=color.r<<16;
      pixel=pixel|color.g<<8;
      pixel=pixel|color.b;
@@ -193,7 +192,6 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
      /*printf("pixel 0x%06X %d,%d\n",pixel,sx,sy);*/
      if(pixel!=0) /*only if source pixel is nonzero(not black) draw square to destination*/
      {
-      Color color;
       /*set up the rectangle to draw to*/
       rect_dest.x=dx;
       rect_dest.y=dy;
@@ -206,7 +204,7 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
       g=(pixel&0x00FF00)>>8;
       b=(pixel&0x0000FF);
 
-      color=(Color){r,g,b,255};      
+      color=(Color){r,g,b,255};
       DrawRectangle(rect_dest.x,rect_dest.y,rect_dest.w,rect_dest.h,color);
       
       chaste_next_color();
