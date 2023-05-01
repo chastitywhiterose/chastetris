@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #include <time.h>
 #include <raylib.h>
 #include <math.h>
@@ -31,7 +32,7 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 int frame=0,framelimit=1,fps=60;
 
 time_t time0,time1;
-int seconds,minutes;
+int seconds,minutes,hours;
 
 char gamename[256];
 int blocks_used=7;
@@ -45,6 +46,7 @@ int text_x; /*the x position of where text will go*/
 
 #include "chastetris.h"
 #include "chastetris_gamesave.h"
+#include "chaste_the_rainbow.h"
 #include "ray_polygon.h"
 
 #include "ray_chastefont.h"
@@ -658,7 +660,10 @@ int main(int argc, char **argv)
  font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
  font_32=chaste_font_load("./font/FreeBASIC Font 32.png");
  font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
- font_128=chaste_font_load("./font/FreeBASIC Font 128.png");
+ /*font_128=chaste_font_load("./font/FreeBASIC Font 128.png");*/
+ 
+ 
+ /*check_image(font_8.image);*/
 
 /*
  font_8=chaste_font_load("./font/Tetris Font 8.png");
@@ -667,6 +672,9 @@ int main(int argc, char **argv)
  font_64=chaste_font_load("./font/Tetris Font 64.png");
  font_128=chaste_font_load("./font/Tetris Font 128.png");
 */
+
+ chaste_palette_rainbow(40);
+ /*chaste_palette_view();*/
 
 //title_screen_chaste_font();
 welcome_screen_chaste_font();

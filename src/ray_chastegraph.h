@@ -90,8 +90,10 @@ void (*stats_func)()=draw_stats_chaste_font;
   seconds=time1-time0;
   minutes=seconds/60;
   seconds%=60;
+  hours=minutes/60;
+  minutes%=60;
   
-  sprintf(text,"Time %d:%02d",minutes,seconds);
+  sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
   chaste_font_draw_string(text,text_x,main_font.char_height*13);
 
  }

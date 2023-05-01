@@ -13,7 +13,9 @@ struct chaste_font
 {
  int char_width; /*width of a char*/
  int char_height; /*height of a char*/
+ Image image; /*image that will be loaded*/
  Texture2D texture; /*the texture of the image of loaded font*/
+ int pixels[1280*720];
 };
 
 /*global fonts that will be reused many times*/
@@ -22,10 +24,41 @@ struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128,font_pico8;
 /*function to load a font and return a structure with the needed data to draw later*/
 struct chaste_font chaste_font_load(char *s)
 {
+ int x,y; /*coordinates used when loading the pixels into array*/
+ int pixel;
+ Color color;
  struct chaste_font new_font;
  printf("This function tries to load a font\n");
+ 
+ /*load the file into an image*/
+ new_font.image=LoadImage(s);
+ 
+ /*load every pixel in the image into the pixels array to be referenced for the rest of the program*/
+ y=0;
+ while(y<new_font.image.height)
+ {
+  x=0;
+  while(x<new_font.image.width)
+  {
+   color=GetImageColor(new_font.image,x,y);
+   pixel=color.r<<16;
+   pixel=pixel|color.g<<8;
+   pixel=pixel|color.b;
+   
+   new_font.pixels[x+y*new_font.image.width]=pixel;
 
- new_font.texture=LoadTexture(s);
+   /*printf("x=%d,y=%d pixel=%X\n",x,y,pixel);*/
+   x++;
+  }
+  y++;
+ }
+ 
+ /*load the image into a texture*/
+ new_font.texture=LoadTextureFromImage(new_font.image);
+
+ /*Alternatively can load texture directly from file, this was the original way I did it*/
+ /*new_font.texture=LoadTexture(s);*/
+ 
  /*by default,font size is detected by original image height*/
  new_font.char_width=new_font.texture.width/95; /*there are 95 characters in my font files*/
  new_font.char_height=new_font.texture.height;
@@ -44,6 +77,32 @@ struct chaste_font chaste_font_load(char *s)
  return new_font;
 }
 
+
+/*a debugging function only to test the pixels of an image*/
+void check_image(Image image)
+{
+ int x,y;
+ Color color;
+ int pixel;
+
+ y=0;
+ while(y<image.height)
+ {
+  x=0;
+  while(x<image.width)
+  {
+   color=GetImageColor(image,x,y);
+   pixel=color.r<<16;
+   pixel=pixel|color.g<<8;
+   pixel=pixel|color.b;
+
+   printf("x=%d,y=%d pixel=%X\n",x,y,pixel);
+   x++;
+  }
+  y++;
+ }
+
+}
 
 /*
  this function successfully draws a string of characters from the loaded font
