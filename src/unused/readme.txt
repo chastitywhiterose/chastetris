@@ -1,0 +1,1 @@
+This folder contains source files that I once used but that have been replaced by better versions with bugs fixed. However they represent an alternative way of doing something and I may need to look at them again.
