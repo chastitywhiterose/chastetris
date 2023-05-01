@@ -15,7 +15,6 @@ struct chaste_font
  int char_height; /*height of a char*/
  Image image; /*image that will be loaded*/
  Texture2D texture; /*the texture of the image of loaded font*/
- int pixels[1280*720];
 };
 
 /*global fonts that will be reused many times*/
@@ -24,41 +23,16 @@ struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128,font_pico8;
 /*function to load a font and return a structure with the needed data to draw later*/
 struct chaste_font chaste_font_load(char *s)
 {
- int x,y; /*coordinates used when loading the pixels into array*/
- int pixel;
- Color color;
  struct chaste_font new_font;
  printf("This function tries to load a font\n");
  
  /*load the file into an image*/
  new_font.image=LoadImage(s);
- 
- /*load every pixel in the image into the pixels array to be referenced for the rest of the program*/
- y=0;
- while(y<new_font.image.height)
- {
-  x=0;
-  while(x<new_font.image.width)
-  {
-   color=GetImageColor(new_font.image,x,y);
-   pixel=color.r<<16;
-   pixel=pixel|color.g<<8;
-   pixel=pixel|color.b;
-   
-   new_font.pixels[x+y*new_font.image.width]=pixel;
 
-   /*printf("x=%d,y=%d pixel=%X\n",x,y,pixel);*/
-   x++;
-  }
-  y++;
- }
- 
  /*load the image into a texture*/
  new_font.texture=LoadTextureFromImage(new_font.image);
-
- /*Alternatively can load texture directly from file, this was the original way I did it*/
- /*new_font.texture=LoadTexture(s);*/
  
+ /*new_font.texture=LoadTexture(s);*/
  /*by default,font size is detected by original image height*/
  new_font.char_width=new_font.texture.width/95; /*there are 95 characters in my font files*/
  new_font.char_height=new_font.texture.height;
@@ -77,32 +51,6 @@ struct chaste_font chaste_font_load(char *s)
  return new_font;
 }
 
-
-/*a debugging function only to test the pixels of an image*/
-void check_image(Image image)
-{
- int x,y;
- Color color;
- int pixel;
-
- y=0;
- while(y<image.height)
- {
-  x=0;
-  while(x<image.width)
-  {
-   color=GetImageColor(image,x,y);
-   pixel=color.r<<16;
-   pixel=pixel|color.g<<8;
-   pixel=pixel|color.b;
-
-   printf("x=%d,y=%d pixel=%X\n",x,y,pixel);
-   x++;
-  }
-  y++;
- }
-
-}
 
 /*
  this function successfully draws a string of characters from the loaded font
@@ -183,15 +131,13 @@ void chaste_font_draw_string_scaled(char *s,int cx,int cy,int scale)
 
 
 
-
-
-
-
 /*rectangle structure meant to replace the one in SDL*/
 struct chaste_rect
 {
  int x,y,w,h;
 };
+
+
 
 
 
@@ -201,15 +147,10 @@ this uses direct pixel access of the source font surface to draw only when the s
 void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
 {
  int x,y,i,c,cx_start=cx;
- uint32_t *ssp; /*ssp is short for Source Surface Pointer*/
  int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
+ Color color;
  uint32_t pixel,r,g,b; /*pixel that will be read from*/
- int source_surface_width;
  struct chaste_rect rect_source,rect_dest;
-
- source_surface_width=main_font.image.width;
-
- ssp=(uint32_t*)main_font.pixels;
   
  i=0;
  while(s[i]!=0)
@@ -242,9 +183,12 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
     sx=rect_source.x;
     while(sx<sx2)
     {
-     pixel=ssp[sx+sy*source_surface_width];
-
-      pixel&=0xFFFFFF;
+	 
+	 color=GetImageColor(main_font.image,sx,sy);
+     pixel=color.r<<16;
+     pixel=pixel|color.g<<8;
+     pixel=pixel|color.b;
+     pixel&=0xFFFFFF;
      
      /*printf("pixel 0x%06X %d,%d\n",pixel,sx,sy);*/
      if(pixel!=0) /*only if source pixel is nonzero(not black) draw square to destination*/
@@ -281,4 +225,3 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
  }
 
 }
-
