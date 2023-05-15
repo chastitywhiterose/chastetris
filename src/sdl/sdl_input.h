@@ -6,7 +6,7 @@ int log_loop_begin=0; /*special secret variable I am experimenting with*/
 void keyboard()
 {
  int key;
- SDL_PollEvent( &e );
+
   if( e.type == SDL_QUIT ){loop=0; printf("X clicked! This program will close!\n");}
   if (e.type == SDL_KEYDOWN && e.key.repeat==0)
   {

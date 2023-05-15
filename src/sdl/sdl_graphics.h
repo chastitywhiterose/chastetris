@@ -330,7 +330,11 @@ SDL_FillRect(surface,&rect,rect_color);
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
   next_file_input();
 
- keyboard();
+ /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
+  keyboard();
+ }
 
  SDL_UpdateWindowSurface(window); /*update the screen*/
 
