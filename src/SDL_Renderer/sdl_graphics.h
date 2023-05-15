@@ -174,9 +174,11 @@ void (*stats_func)()=draw_stats_chaste_font;
    chaste_font_draw_string(text,text_x,main_font.char_height*16);
   }
 */
-  hours=minutes/60;
+  
   minutes=seconds/60;
   seconds%=60;
+  hours=minutes/60;
+  minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
@@ -362,7 +364,11 @@ SDL_RenderFillRect(renderer,&rect);
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
   next_file_input();
 
- keyboard();
+ /*test for events and only process if they exist*/
+ while(SDL_PollEvent(&e))
+ {
+  keyboard();
+ }
 
  SDL_RenderPresent(renderer);
 
