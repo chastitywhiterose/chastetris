@@ -10,24 +10,37 @@ this header file is meant to contain all the functions which write things to the
 void welcome_screen_chaste_font()
 {
  int scale=8;
+ main_font=font_8;
+ text_x=main_font.char_height*1*scale;
+
+ delay=1000/fps;
+
+ loop=1;
+ while(loop)
+ {
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
 
  SDL_SetRenderDrawColor(renderer,0,0,0,255);
  SDL_RenderClear(renderer);
 
- main_font=font_8;
-
- text_x=main_font.char_height*1*scale;
-
+ scale=8;
  sprintf(text,"%s",gamename);
  
-chaste_font_draw_string_scaled(text,text_x,main_font.char_height*1*scale,scale);
+ /*chaste_font_draw_string_scaled(text,text_x,64,scale);*/
 
-/* main_font=font_32;*/
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
 
  scale=4;
 
  sprintf(text,"Programming: Chastity White Rose");
-/* chaste_font_draw_string(text,text_x,main_font.char_height*5);*/
  
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
 
@@ -47,16 +60,11 @@ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*1*scale,scale);
  
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*20*scale,scale);
 
- /*main_font=font_16;*/
- 
  scale=2;
 
  sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
  
- 
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
-
- main_font=font_8;
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
 
  sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nSDL is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
  
@@ -64,17 +72,23 @@ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*1*scale,scale);
  
  SDL_RenderPresent(renderer);
 
- loop=1;
- while(loop)
+ /*time loop used to slow the game down so users can see it*/
+ while(sdl_time<sdl_time1)
  {
-  SDL_PollEvent( &e );
-  if( e.type == SDL_QUIT ){loop=0;}
-  if(e.type == SDL_KEYUP)
-  {
-   if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
-  }
+  sdl_time=SDL_GetTicks();
  }
 
+  /*test for events and only process if they exist*/
+  while(SDL_PollEvent(&e))
+  {
+   if(e.type == SDL_QUIT){loop=0;}
+   if(e.type == SDL_KEYUP)
+   {
+    if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
+   }
+  }
+  
+ }
 }
 
 /*
@@ -214,7 +228,7 @@ void screen_setup_centered()
 
 
 /*
-this is a function which is called by main after window is created. It is the game loop.
+this is a function which is called by main after window is created. It contains the game loop.
 */
 void sdl_chastetris()
 {
@@ -372,7 +386,7 @@ SDL_RenderFillRect(renderer,&rect);
 
  SDL_RenderPresent(renderer);
 
-
+ /*time loop used to slow the game down so users can see it*/
  while(sdl_time<sdl_time1)
  {
   sdl_time=SDL_GetTicks();
