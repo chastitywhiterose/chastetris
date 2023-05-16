@@ -1,5 +1,5 @@
 Chaste Tris 2
-Also known as Chaste Tris: SDL_Rendere
+Also known as Chaste Tris: SDL_Renderer
 
 This project is a modernized version of the SDL port of Chaste Tris. The original version which was written with SDL is a perfect Tetris game, and is itself ported from my first version written with Raylib.
 However, it was made using only software rendering by use of the SDL_Surface structure. This is a perfectly good way to do a simple Tetris style game. However I wanted to challenge myself by learning to use the modern textures and renderer that SDL2 provides.
