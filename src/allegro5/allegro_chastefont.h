@@ -55,12 +55,9 @@ struct chaste_font chaste_font_load(char *s)
  this function successfully draws a string of characters from the loaded font
  arguments are: character pointer, character x pos, character y pos
 */
-
-
 void chaste_font_draw_string(char *s,int cx,int cy)
 {
  int x,y,i,c,cx_start=cx;
-
  i=0;
  while(s[i]!=0)
  {
@@ -70,15 +67,34 @@ void chaste_font_draw_string(char *s,int cx,int cy)
   {
    x=(c-' ')*main_font.char_width;
    y=0*main_font.char_height;
-   /*printf("char '%c' at %d,%d\n",c,cx,cy);*/
    al_draw_bitmap_region(main_font.bitmap,x,y,main_font.char_width,main_font.char_height,cx,cy,0);
    cx+=main_font.char_width;
   }
   i++;
  }
-
 }
 
 
 
 
+/*can draw a scaled version of the main font*/
+void chaste_font_draw_string_scaled(char *s,int cx,int cy,int scale)
+{
+ int x,y,i,c,cx_start=cx;
+ i=0;
+ while(s[i]!=0)
+ {
+  c=s[i];
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height*scale;}
+  else
+  {
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+
+al_draw_scaled_bitmap(main_font.bitmap,x,y,main_font.char_width,main_font.char_height,cx,cy,main_font.char_width*scale,main_font.char_height*scale,0);
+
+   cx+=main_font.char_width*scale;
+  }
+  i++;
+ }
+}

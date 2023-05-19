@@ -4,41 +4,48 @@
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
+ int scale=8;
+ main_font=font_8;
+ text_x=main_font.char_height*1*scale;
 
  al_clear_to_color(al_map_rgb(0, 0, 0));
 
- main_font=font_64;
-
- text_x=main_font.char_height*1;
-
+ scale=8;
  sprintf(text,"%s",gamename);
- chaste_font_draw_string(text,text_x,main_font.char_height*1);
+ 
+ chaste_font_draw_string_scaled(text,text_x,64,scale);
 
-
- main_font=font_32;
-
+ scale=4;
 
  sprintf(text,"Programming: Chastity White Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*5);
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
 
  sprintf(text,"Inspiration:    River Black Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*6);
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
  sprintf(text,"Press Enter to Begin game.");
- chaste_font_draw_string(text,text_x,main_font.char_height*8);
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
  sprintf(text,"Email: chastitywhiterose@gmail.com");
- chaste_font_draw_string(text,text_x,main_font.char_height*10);
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
+ 
+ sprintf(text,"Do You Know Da Wae?");
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*20*scale,scale);
 
- main_font=font_16;
+ scale=2;
 
- sprintf(text,"https://github.com/chastitywhiterose/chastetris");
- chaste_font_draw_string(text,text_x,main_font.char_height*24);
+ sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
 
- main_font=font_8;
-
- sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nAllegro is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
- chaste_font_draw_string(text,text_x,main_font.char_height*52);
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nAllegro is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
+ 
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*52,2);
 
  al_flip_display(); /*update the screen*/
 
