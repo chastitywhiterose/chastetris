@@ -61,6 +61,60 @@ void keyboard()
     tetris_save_state();
    break;
 
+    /*keys after this are for other save states*/
+    
+    case ALLEGRO_KEY_I:
+     save_gamesave();
+    break;
+    case ALLEGRO_KEY_P:
+     load_gamesave();
+    break;
+
+   case ALLEGRO_KEY_0:
+    save_index=0;
+    printf("State %d selected.\n",save_index);
+   break;
+   case ALLEGRO_KEY_1:
+    save_index=1;
+    printf("State %d selected.\n",save_index);
+   break;
+   case ALLEGRO_KEY_2:
+    save_index=2;
+    printf("State %d selected.\n",save_index);
+   break;
+   case ALLEGRO_KEY_3:
+    save_index=3;
+    printf("State %d selected.\n",save_index);
+   break;
+  case ALLEGRO_KEY_4:
+   save_index=4;
+   printf("State %d selected.\n",save_index);
+   break;
+  case ALLEGRO_KEY_5:
+   save_index=5;
+   printf("State %d selected.\n",save_index);
+  break;
+  case ALLEGRO_KEY_6:
+   save_index=6;
+   printf("State %d selected.\n",save_index);
+  break;
+  case ALLEGRO_KEY_7:
+   save_index=7;
+   printf("State %d selected.\n",save_index);
+  break;
+  case ALLEGRO_KEY_8:
+   save_index=8;
+   printf("State %d selected.\n",save_index);
+  break;
+  case ALLEGRO_KEY_9:
+   save_index=9;
+   printf("State %d selected.\n",save_index);
+  break;
+    
+    
+    /*end of save state managing keys*/
+
+
   }
 
  }
