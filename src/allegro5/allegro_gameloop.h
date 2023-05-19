@@ -70,38 +70,55 @@ void welcome_screen_chaste_font()
 
 
 
-/*
-this function draws the stats of the game such as the lines and score using my chaste font routines
-it's in a separate function so that I can switch it out with another function when I feel like it
-*/
-void draw_stats_chaste_font()
-{
- text_x=main_font.char_height*7;
+ void draw_stats_chaste_font_centered()
+ {
+  int scale=8;
+  main_font=font_8;
+
+  /*text_x=main_font.char_height*1/2;*/
+  text_x=32;
+
+  chaste_font_draw_string_scaled("Chaste\n Tris",text_x,32,scale);
+
+ 
+  scale=4;
+
+  sprintf(text,"Score %d",score);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
+
+  sprintf(text,"Lines %d",lines_cleared_total);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
+
+  sprintf(text,"This %c",main_block.id);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
+
+  sprintf(text,"Hold %c",hold_block.id);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
 
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
+  sprintf(text,"Move %d",moves);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
- sprintf(text,"Score: %d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*3);
+  sprintf(text,"B2B %d",back_to_back);
+    chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
+  
+/*subtract current time from start time to get seconds since game started*/
 
- sprintf(text,"Lines: %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*4);
+/*  time(&time1);
+  
+  seconds=time1-time0; 
+  
+  
+  minutes=seconds/60;
+  seconds%=60;
+  hours=minutes/60;
+  minutes%=60;
+  
+  sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
+*/  
 
-  sprintf(text,"This: %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*5);
-
-  sprintf(text,"Hold: %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
-
-  sprintf(text,"Move: %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
-
-  sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
-
-}
-
+ }
 
 
 
@@ -119,6 +136,11 @@ void allegro_chastetris()
 
  int block_size=height/grid_height;
  int grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ int border_size;
+
+ grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
+ border_size=12;
+
 
  printf("block_size==%d\n",block_size);
 
@@ -209,18 +231,15 @@ al_draw_filled_rectangle(grid_offset_x+x*block_size, y*block_size, grid_offset_x
  }
 
 
-rect_color=al_map_rgb(255, 255, 255);
-
  /*draw the boundary walls*/
+ rect_color=al_map_rgb(127, 127, 127);
+ al_draw_filled_rectangle(grid_offset_x-border_size, 0*block_size, grid_offset_x, height, rect_color);
 
-al_draw_filled_rectangle(grid_offset_x-block_size, 0*block_size, block_size, height, rect_color);
-
-al_draw_filled_rectangle(grid_offset_x+grid_width*block_size, 0*block_size, grid_offset_x+grid_width*block_size+block_size, height, rect_color);
-
+ al_draw_filled_rectangle(grid_offset_x+grid_width*block_size, 0*block_size,  grid_offset_x+grid_width*block_size+border_size, height, rect_color);
 
  /*end of drawing code for grid*/
 
- draw_stats_chaste_font();
+ draw_stats_chaste_font_centered();
 
 
  /*

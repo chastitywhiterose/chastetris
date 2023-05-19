@@ -133,10 +133,10 @@ int main(int argc, char **argv)
 /*next step is to load some fonts*/
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.png");
- font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
+/* font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
  font_32=chaste_font_load("./font/FreeBASIC Font 32.png");
  font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
- font_128=chaste_font_load("./font/FreeBASIC Font 128.png");
+ font_128=chaste_font_load("./font/FreeBASIC Font 128.png");*/
 
 
 
