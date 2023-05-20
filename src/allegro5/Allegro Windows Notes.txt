@@ -1,0 +1,31 @@
+These are my notes on compiling programs written with Allegro5 on Windows
+
+First I needed to download a binary release for Windows.
+
+https://github.com/liballeg/allegro5/releases
+
+The file I downloaded was:
+
+allegro-x86_64-w64-mingw32-gcc-12.1.0-posix-seh-static-5.2.8.0.zip
+
+That's because I need it to work on a 64 bit CPU and statically linked to avoid DLL hell on Windows. My first attempts at compiling through msys2 did not go well.
+
+Then what I did was copy the extracted files into my existing w64devkit that I have already been using to compile my SDL programs on Windows. It worked well enough for SDL.
+
+I merged them into the root w64devkit folder.
+
+I then rewrote my SDL compiling script to point to different paths and linker commands.
+
+It looks like this:
+
+---
+
+SET DEVKIT=C:\w64devkit
+SET COMPILER_PATH=%DEVKIT%\bin
+SET PATH=%COMPILER_PATH%;
+
+gcc -Wall -ansi -pedantic main.c -o main -I%DEVKIT%\include -L%DEVKIT%\lib -lallegro -lallegro_primitives -lallegro_image && main
+
+---
+
+I wasn't able to figure out the actual static linking so it did require 3 DLL files to be present with the executable to run. However I am satisfied and can always learn more about how to static link with Allegro later. 
