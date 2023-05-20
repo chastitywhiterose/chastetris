@@ -98,3 +98,100 @@ al_draw_scaled_bitmap(main_font.bitmap,x,y,main_font.char_width,main_font.char_h
   i++;
  }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+this uses direct pixel access of the source font surface to draw only when the source pixel is not black. But this one is "special" because it can optionally change the color for each scaled pixel!
+*/
+void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
+{
+ int x,y,i,c,cx_start=cx;
+ int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
+ ALLEGRO_COLOR color; /*color read from source image*/
+ int pixel,r,g,b; /*32 bit pixel and color components*/
+  
+ i=0;
+ while(s[i]!=0)
+ {
+  c=s[i];
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height*scale;}
+  else
+  {
+   x=(c-' ')*main_font.char_width;
+   y=0*main_font.char_height;
+ 
+   sx2=x+main_font.char_width;
+   sy2=y+main_font.char_height;
+   
+   dx=cx;
+   dy=cy;
+   
+   sy=y;
+   while(sy<sy2)
+   {
+    dx=cx;
+    sx=x;
+    while(sx<sx2)
+    {
+
+     color=al_get_pixel(main_font.bitmap, sx, sy);
+     al_unmap_rgb(color,&r,&g,&b);
+     pixel=(r<<16)|(g<<8)|b;
+     
+     /*pixel&=0xFFFFFF;*/
+     
+     if(pixel!=0) /*only if source pixel is nonzero(not black) draw square to destination*/
+     {
+      /*printf("pixel 0x%06X %d,%d\n",pixel,sx,sy);*/
+
+      pixel=chaste_palette[chaste_palette_index];
+      
+      r=(pixel&0xFF0000)>>16;
+      g=(pixel&0x00FF00)>>8;
+      b=(pixel&0x0000FF);
+      
+      color=al_map_rgb(r, g, b);
+
+      al_draw_filled_rectangle(dx,dy,dx+scale,dy+scale,color);
+      
+      chaste_next_color();
+     }
+     
+     sx++;
+     dx+=scale;
+    }
+    sy++;
+    dy+=scale;
+   }
+   cx+=main_font.char_width*scale;
+  }
+  i++;
+ }
+}
+
+
+

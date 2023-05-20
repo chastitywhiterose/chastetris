@@ -36,6 +36,7 @@ int frame=0,fps;
 
 #include "chastetris.h"
 #include "chastetris_gamesave.h"
+#include "chaste_the_rainbow.h"
 #include "allegro_chastefont.h"
 #include "allegro_input.h"
 #include "allegro_gameloop.h"
@@ -92,7 +93,7 @@ int main(int argc, char **argv)
  }
 
 
- al_set_new_display_refresh_rate(30);
+ al_set_new_display_refresh_rate(60);
  fps=al_get_new_display_refresh_rate();
  printf("fps:%d\n",fps);
 
@@ -138,7 +139,8 @@ int main(int argc, char **argv)
  font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
  font_128=chaste_font_load("./font/FreeBASIC Font 128.png");*/
 
-
+ chaste_palette_rainbow(40);
+ /*chaste_palette_view();*/
 
 
  screenbitmap=al_get_backbuffer(display);

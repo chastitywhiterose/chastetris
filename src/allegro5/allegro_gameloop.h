@@ -8,12 +8,25 @@ void welcome_screen_chaste_font()
  main_font=font_8;
  text_x=main_font.char_height*1*scale;
 
+ loop=1;
+ while(loop)
+ {
+
  al_clear_to_color(al_map_rgb(0, 0, 0));
 
  scale=8;
  sprintf(text,"%s",gamename);
  
- chaste_font_draw_string_scaled(text,text_x,64,scale);
+  /*chaste_font_draw_string_scaled(text,text_x,64,scale);*/
+
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
 
  scale=4;
 
@@ -49,9 +62,6 @@ void welcome_screen_chaste_font()
 
  al_flip_display(); /*update the screen*/
 
- loop=1;
- while(loop)
- {
   /*test for events and only process if they exist*/
   while(al_get_next_event(event_queue, &ev))
   {
@@ -61,6 +71,7 @@ void welcome_screen_chaste_font()
     if(ev.keyboard.keycode==ALLEGRO_KEY_ENTER){loop=0;}
    }
   }
+
  }
 
 }
@@ -79,6 +90,15 @@ void welcome_screen_chaste_font()
   text_x=32;
 
   chaste_font_draw_string_scaled("Chaste\n Tris",text_x,32,scale);
+
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
 
  
   scale=4;
