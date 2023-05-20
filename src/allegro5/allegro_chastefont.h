@@ -132,7 +132,11 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
  int x,y,i,c,cx_start=cx;
  int sx,sy,sx2,sy2,dx,dy; /*x,y coordinates for both source and destination*/
  ALLEGRO_COLOR color; /*color read from source image*/
- int pixel,r,g,b; /*32 bit pixel and color components*/
+ unsigned int pixel; /*32 bit pixel*/
+ unsigned char r,g,b; /*color components*/
+
+ /*lock bitmap for reading only. speeds things up*/
+ al_lock_bitmap(main_font.bitmap,ALLEGRO_PIXEL_FORMAT_ANY, ALLEGRO_LOCK_READONLY);
   
  i=0;
  while(s[i]!=0)
@@ -191,6 +195,7 @@ void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
   }
   i++;
  }
+ al_unlock_bitmap(main_font.bitmap);
 }
 
 

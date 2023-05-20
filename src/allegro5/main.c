@@ -32,7 +32,16 @@ FILE *fp; /*to save a file of moves played*/
 char filename[256]; /*name of move log file*/
 FILE *fp_input; /*file to get input from instead of the keyboard*/
 
-int frame=0,fps;
+int frame=0,fps=60;
+time_t time0,time1;
+int seconds,minutes,hours; /*to keep track of time*/
+
+double al_time,al_time1,delay; /*allegro time variables to control framerate*/
+
+/*
+unlike SDL which has time represented in milliseconds as integers, Allegro uses a number of seconds as double floating point type. For this reason, in the gameloop: "delay=1.0/fps" because the proper delay would be one second divided by the frames per second
+This allows me to control the framerate exactly as I need to.
+*/
 
 #include "chastetris.h"
 #include "chastetris_gamesave.h"
@@ -93,8 +102,8 @@ int main(int argc, char **argv)
  }
 
 
- al_set_new_display_refresh_rate(60);
- fps=al_get_new_display_refresh_rate();
+ /*al_set_new_display_refresh_rate(0);*/
+ /*fps=al_get_new_display_refresh_rate();*/
  printf("fps:%d\n",fps);
 
  al_set_new_window_title("Chastity's Game using Allegro");
@@ -134,10 +143,7 @@ int main(int argc, char **argv)
 /*next step is to load some fonts*/
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.png");
-/* font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
- font_32=chaste_font_load("./font/FreeBASIC Font 32.png");
- font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
- font_128=chaste_font_load("./font/FreeBASIC Font 128.png");*/
+
 
  chaste_palette_rainbow(40);
  /*chaste_palette_view();*/
@@ -177,6 +183,8 @@ int main(int argc, char **argv)
 
  if(fp!=NULL){fclose(fp);}
  if(fp_input!=NULL){fclose(fp_input);}
+
+al_destroy_bitmap(font_8.bitmap);
 
  al_destroy_display(display);
  al_destroy_event_queue(event_queue);

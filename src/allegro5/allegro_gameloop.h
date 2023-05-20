@@ -124,7 +124,7 @@ void welcome_screen_chaste_font()
   
 /*subtract current time from start time to get seconds since game started*/
 
-/*  time(&time1);
+  time(&time1);
   
   seconds=time1-time0; 
   
@@ -136,7 +136,7 @@ void welcome_screen_chaste_font()
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
-*/  
+ 
 
  }
 
@@ -182,12 +182,18 @@ void allegro_chastetris()
   y+=1;
  }
 
+ delay=1.0/fps; /*1 second divided by frames per second*/
 
+ /*get time before the game starts using standard library time function*/
+ time(&time0);
 
   /* Loop until the user closes the window */
  loop=1;
  while(loop)
  {
+
+  al_time = al_get_time();
+  al_time1 = al_time+delay;
 
   al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -271,9 +277,6 @@ al_draw_filled_rectangle(grid_offset_x+x*block_size, y*block_size, grid_offset_x
  /*if(moves>=frame) { TakeScreenshot_frame(); } */
 
 
-
- al_flip_display(); /*update the screen*/
-
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/
  next_file_input();
 
@@ -282,6 +285,16 @@ al_draw_filled_rectangle(grid_offset_x+x*block_size, y*block_size, grid_offset_x
  {
   keyboard();
  }
+
+
+ al_flip_display(); /*update the screen*/
+
+ /*time loop used to slow the game down so users can see it*/
+ while(al_time<al_time1)
+ {
+  al_time=al_get_time();
+ }
+
 
  }
 
