@@ -102,6 +102,7 @@ int main(int argc, char **argv)
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
 
  chaste_palette_rainbow(40);
+ /*chaste_palette_rainbow_pastel(80);*/
  /*chaste_palette_view();*/
 
  welcome_screen_chaste_font();

@@ -185,3 +185,43 @@ void chaste_palette_make(int bpp)
 
 
 
+
+/*
+ Function based off what my mom called pastel colors. It cycles through yellow,cyan,magenta.
+
+ This function attempts to make a rainbow using the integer n passed to it using degrees of red,green,blue.
+ It seems that the number of colors is equal to 3*n. This means that if n is 20, you get 3*20==60;
+ The max value n can be is 255 which gives 765 colors! My personal favorite is n=80 because 240 colors is really convenient for fitting under the 256 color gif limit.
+*/
+void chaste_palette_rainbow_pastel(int n)
+{
+ int x,color;
+ int red=n,green=n,blue=0;
+ x=0;
+
+ while(blue<n)
+ {
+  color=255*red/n;color*=256;color+=255*green/n;color*=256;color+=255*blue/n;chaste_palette[x]=color;
+  x++;
+  blue++;
+  red--;
+ }
+ while(red<n)
+ {
+  color=255*red/n;color*=256;color+=255*green/n;color*=256;color+=255*blue/n;chaste_palette[x]=color;
+  x++;
+  red++;
+  green--;
+ }
+ while(green<n)
+ {
+  color=255*red/n;color*=256;color+=255*green/n;color*=256;color+=255*blue/n;chaste_palette[x]=color;
+  x++;
+  green++;
+  blue--;
+ }
+
+ chaste_palette_length=x;
+ chaste_palette_index=0;
+}
+

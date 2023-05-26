@@ -213,7 +213,7 @@ int grid_offset_x;
 
 /*
 sets up the variables before the game loop so that the Tetris field is in the center.
-This is done because I updated the game later on. This corrects everything before the same loop starts.
+This is done because I updated the game later on. This corrects everything before the game loop starts.
 */
 void screen_setup_centered()
 {
