@@ -33,8 +33,9 @@ struct chaste_font chaste_font_load(char *s)
  /*load bitmap to temporary surface*/
  temp_surface=SDL_LoadBMP(s);
 
- /*convert to RGBA32 pixel format for easy handling for later functions*/
- new_font.surface=SDL_ConvertSurfaceFormat(temp_surface, SDL_PIXELFORMAT_RGBA32, 0);
+ /*convert to BGRA32 pixel format for easy handling for later functions*/
+ new_font.surface=SDL_ConvertSurfaceFormat(temp_surface, SDL_PIXELFORMAT_BGRA32, 0);
+ SDL_FreeSurface(temp_surface);
 
  if(new_font.surface==NULL){printf( "SDL could not load image! SDL_Error: %s\n",SDL_GetError());return new_font;}
  new_font.texture=SDL_CreateTextureFromSurface(renderer,new_font.surface);
