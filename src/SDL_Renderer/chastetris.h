@@ -425,9 +425,7 @@ void tetris_fall_lines()
     }
     if(xcount>0)
     {
-/*     printf("row %d is not empty. Will copy to row %d.\n",y1,y);*/
-
-     x=0;
+     /*printf("row %d is not empty. Will copy to row %d.\n",y1,y);*/
 
      x=0;
      while(x<grid_width)

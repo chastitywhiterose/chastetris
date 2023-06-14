@@ -89,44 +89,8 @@ void welcome_screen_chaste_font()
  }
 }
 
-/*
-this function draws the stats of the game such as the lines and score using my chaste font routines
-it's in a separate function so that I can switch it out with another function when I feel like it
-*/
-void draw_stats_chaste_font()
-{
- int scale=8;
-
- text_x=main_font.char_width*7*scale;
- 
 
 
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1*scale);
- chaste_font_draw_string_scaled(gamename,text_x,main_font.char_height*1*scale,scale);
-
- sprintf(text,"Score: %d",score);
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*3*scale,scale);
-
- sprintf(text,"Lines: %d",lines_cleared_total);
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*4*scale,scale);
-
-  sprintf(text,"This: %c",main_block.id);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
-
-  sprintf(text,"Hold: %c",hold_block.id);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
-
-
-  sprintf(text,"Move: %d",moves);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
-
-  sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
-
-}
-
-/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
-void (*stats_func)()=draw_stats_chaste_font;
 
 
 
@@ -138,8 +102,9 @@ void (*stats_func)()=draw_stats_chaste_font;
   main_font=font_8;
 
   /*text_x=main_font.char_height*1/2;*/
-  text_x=32;
+  text_x=16;
 
+  scale=width/130;
 
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
@@ -150,38 +115,35 @@ void (*stats_func)()=draw_stats_chaste_font;
    chaste_palette_index1=0;
   }
  
-  scale=4;
+  scale=width/360;
 
   sprintf(text,"Score %d",score);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
-
-  sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
 
-  sprintf(text,"This %c",main_block.id);
+  sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
-  sprintf(text,"Hold %c",hold_block.id);
+  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
-  sprintf(text,"Move %d",moves);
+  sprintf(text,"Hold %c",hold_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
-  sprintf(text,"B2B %d",back_to_back);
+  sprintf(text,"Move %d",moves);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
 
-  sprintf(text,"Combo %d",combo);
+  sprintf(text,"B2B %d",back_to_back);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
+  sprintf(text,"Combo %d",combo);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
 
   
   time(&time1);
   
   seconds=time1-time0; /*subtract current time from start time to get seconds since game started*/
   
-/*  
-  sprintf(text,"Frame %d",frame);
-  chaste_font_draw_string(text,text_x,main_font.char_height*15);
-  
+/* 
   if(seconds!=0)
   {
    fps_current=frame/seconds;
@@ -196,14 +158,15 @@ void (*stats_func)()=draw_stats_chaste_font;
   minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*14*scale,scale);
-  
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*15*scale,scale);
 
-
-
-
+  /*sprintf(text,"Frame %d",frame);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);*/
 
  }
+
+/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
+void (*stats_func)()=draw_stats_chaste_font_centered;
  
  
 /*more global variables to be defined before game loop function*/
@@ -221,12 +184,7 @@ void screen_setup_centered()
  grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
  border_size=12;
  stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
-
 }
-
-
-
-
 
 /*
 this is a function which is called by main after window is created. It contains the game loop.
@@ -292,7 +250,7 @@ void sdl_chastetris()
    {
     if(main_block.array[x+y*max_block_width]!=0)
     {
-     if( temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]!=0 )
+     if(temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]!=0)
      {
       printf("Error: Block in Way\n");
 
