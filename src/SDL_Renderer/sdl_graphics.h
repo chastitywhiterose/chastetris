@@ -4,8 +4,6 @@ sdl_graphics.h
 this header file is meant to contain all the functions which write things to the screen
 */
 
-
-
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
@@ -123,7 +121,7 @@ void draw_stats_chaste_font()
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
 
   sprintf(text,"B2B: %d",back_to_back);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
 }
 
@@ -166,12 +164,15 @@ void (*stats_func)()=draw_stats_chaste_font;
   sprintf(text,"Hold %c",hold_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
-
   sprintf(text,"Move %d",moves);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
   sprintf(text,"B2B %d",back_to_back);
-    chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
+
+  sprintf(text,"Combo %d",combo);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
   
   time(&time1);
   
@@ -195,7 +196,7 @@ void (*stats_func)()=draw_stats_chaste_font;
   minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*14*scale,scale);
   
 
 
@@ -242,7 +243,7 @@ void sdl_chastetris()
 
  printf("block_size==%d\n",block_size);
   
- /*if the following function is called, screen is centered. Otherwise use old style.*/
+ /*if the following function is called, screen is centered. Otherwise use old left side style.*/
  screen_setup_centered();
 
  chastetris_info();
