@@ -9,7 +9,7 @@ void welcome_screen_chaste_font()
 {
  int scale=8;
  main_font=font_8;
- text_x=main_font.char_height*1*scale;
+ text_x=width/100;
 
  delay=1000/fps;
 
@@ -22,13 +22,13 @@ void welcome_screen_chaste_font()
  SDL_SetRenderDrawColor(renderer,0,0,0,255);
  SDL_RenderClear(renderer);
 
- scale=8;
+ scale=width/100;
  sprintf(text,"%s",gamename);
  
  /*chaste_font_draw_string_scaled(text,text_x,64,scale);*/
 
   chaste_palette_index=chaste_palette_index1;
-  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
   
   chaste_palette_index1++;
   if(chaste_palette_index1>=chaste_palette_length)
@@ -36,37 +36,32 @@ void welcome_screen_chaste_font()
    chaste_palette_index1=0;
   }
 
- scale=4;
+ scale=width/300;
 
  sprintf(text,"Programming: Chastity White Rose");
- 
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
 
  sprintf(text,"Inspiration:    River Black Rose");
- 
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
- sprintf(text,"Press Enter to Begin game.");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
  sprintf(text,"Email: chastitywhiterose@gmail.com");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
- 
- sprintf(text,"Do You Know Da Wae?");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*20*scale,scale);
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
- scale=2;
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
+
+ scale=width/400;
 
  sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
  
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
+ chaste_font_draw_string_scaled(text,text_x,height*7/16,scale);
+
+ scale=width/500;
 
  sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nSDL is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
  
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*52,2);
+ chaste_font_draw_string_scaled(text,text_x,height*12/16,scale);
  
  SDL_RenderPresent(renderer);
 
@@ -118,25 +113,25 @@ void welcome_screen_chaste_font()
   scale=width/360;
 
   sprintf(text,"Score %d",score);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
-
-  sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
-  sprintf(text,"This %c",main_block.id);
+  sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
-  sprintf(text,"Hold %c",hold_block.id);
+  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
-  sprintf(text,"Move %d",moves);
+  sprintf(text,"Hold %c",hold_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
 
-  sprintf(text,"B2B %d",back_to_back);
+  sprintf(text,"Move %d",moves);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
 
-  sprintf(text,"Combo %d",combo);
+  sprintf(text,"B2B %d",back_to_back);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
+
+  sprintf(text,"Combo %d",combo);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*14*scale,scale);
 
   
   time(&time1);
@@ -158,10 +153,10 @@ void welcome_screen_chaste_font()
   minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*15*scale,scale);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);
 
   /*sprintf(text,"Frame %d",frame);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);*/
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*17*scale,scale);*/
 
  }
 

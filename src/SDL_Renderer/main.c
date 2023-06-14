@@ -75,9 +75,6 @@ int main(int argc, char **argv)
   x++;
  }
 
-/*low definition*/
-/*width=640;height=360;*/
-
 /*high definition*/
  if(1){width=1920;height=1080; Window_Flags=SDL_WINDOW_FULLSCREEN_DESKTOP;}
 
@@ -108,14 +105,15 @@ int main(int argc, char **argv)
  sprintf(gamename,"Chaste Tris");
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.bmp");
+ main_font=font_8;
 
  chaste_palette_rainbow(40);
  /*chaste_palette_rainbow_pastel(80);*/
  /*chaste_palette_view();*/
 
- /*welcome_screen_chaste_font();*/
+ welcome_screen_chaste_font();
 
- main_font=font_8;
+
 
 
  sdl_chastetris();
