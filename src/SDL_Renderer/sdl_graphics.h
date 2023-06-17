@@ -24,8 +24,8 @@ void welcome_screen_chaste_font()
 
  scale=width/100;
  sprintf(text,"%s",gamename);
- 
- /*chaste_font_draw_string_scaled(text,text_x,64,scale);*/
+
+ /*chaste_font_draw_string_scaled(text,text_x,height/32,scale);*/
 
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
@@ -162,6 +162,67 @@ void welcome_screen_chaste_font()
 
 /*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
 void (*stats_func)()=draw_stats_chaste_font_centered;
+
+
+/*
+a function which draws the text of the input
+this is meant for showing players how the game is played just by looking at the video
+I thought it would be helpful for my Twitch stream viewers
+*/
+void draw_input()
+{
+ int scale=8;
+ main_font=font_8;
+
+ text_x=width*21/32;
+ scale=width/400;
+
+ switch(move_id)
+ {
+  case 'W':
+   strcpy(text,"W/Up");
+  break;
+  case 'A':
+   strcpy(text,"A/Left");
+  break;
+  case 'S':
+   strcpy(text,"S/Down");
+  break;
+  case 'D':
+   strcpy(text,"D/Right");
+  break;
+
+  case 'Z':
+   strcpy(text,"Z/Rotate Left");
+  break;
+  case 'X':
+   strcpy(text,"D/Rotate Right");
+  break;
+  case 'C':
+   strcpy(text,"C/Hold Block");
+  break;
+
+  case 'I':
+   strcpy(text,"I/Game Save");
+  break;
+  case 'P':
+   if(state[save_index].exist)
+   {
+    strcpy(text,"P/Game Load");
+   }
+   else
+   {
+    strcpy(text,"P pressed but there\nis no game state\nto load.");
+   }
+  break;
+
+  default:
+   strcpy(text,"");
+ }
+
+ chaste_font_draw_string_scaled(text,text_x,height*1/16,scale);
+
+}
  
  
 /*more global variables to be defined before game loop function*/
@@ -327,6 +388,7 @@ SDL_RenderFillRect(renderer,&rect);
  /*end of drawing code for grid*/
 
  stats_func();
+ draw_input();
 
 
  /*optionally, get input from another file instead of keyboard if I have this enabled.*/

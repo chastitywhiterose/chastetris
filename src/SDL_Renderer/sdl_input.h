@@ -67,9 +67,11 @@ void keyboard()
     /*keys after this are for other save states*/
     
     case SDLK_i:
+     move_id='I';
      save_gamesave();
     break;
     case SDLK_p:
+     move_id='P';
      load_gamesave();
     break;
     
