@@ -23,3 +23,5 @@ The game also has the ability to save and load at any point in time. This is a n
 
 chastitywhiterose@gmail.com
 
+I have also added some basic fullscreen support and I am not sure exactly what option will be used to enable it or if it will just be the default option.
+

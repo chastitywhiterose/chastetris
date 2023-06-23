@@ -196,7 +196,7 @@ void draw_input()
    strcpy(text,"Z/Rotate Left");
   break;
   case 'X':
-   strcpy(text,"D/Rotate Right");
+   strcpy(text,"X/Rotate Right");
   break;
   case 'C':
    strcpy(text,"C/Hold Block");
