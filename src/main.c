@@ -569,7 +569,7 @@ scale=width/100;
  sprintf(text,"Press Enter to Begin game.");
  chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
 
- scale=width/400;
+ scale=width/450;
 
  sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
  chaste_font_draw_string_scaled(text,text_x,height*7/16,scale);
