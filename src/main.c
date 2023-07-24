@@ -6,8 +6,10 @@
 #include <raylib.h>
 #include <math.h>
 
-const int width = 1280;
-const int height = 720;
+int width = 1280;
+int height = 720;
+int fullscreen=0;
+int window_flags=0;
 
 Color ray_block_color={255,255,255,255};
 Color ray_border_color={127,127,127,255};
@@ -41,7 +43,6 @@ char text[0x200];
 char movetext[256],move_id;
 
 Font font;
-int fontsize=height/12;
 int text_x; /*the x position of where text will go*/
 
 #include "chastetris.h"
@@ -292,7 +293,6 @@ void screen_setup_centered()
  grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
  border_size=12;
  stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
-
 }
 
 
@@ -309,7 +309,6 @@ void ray_chastetris()
  block_size=height/grid_height;
  grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
  border_size=block_size; /*set custom border width alternative to block_size*/
- stats_func=draw_stats_chaste_font; 
  
  /*if the following function is called, screen is centered. Otherwise use old style.*/
  screen_setup_centered();
@@ -513,6 +512,8 @@ DrawRectangle(grid_offset_x+grid_width*block_size,0*block_size,border_size,heigh
 void welcome_screen_chaste_font()
 {
  int scale=8;
+ main_font=font_8;
+ text_x=width/100;
 
  music_index=0; 
  PlaySound(music[music_index]);
@@ -539,53 +540,51 @@ while(!WindowShouldClose()) /*loop runs until key pressed*/
  BeginDrawing();
  ClearBackground((Color){0,0,0,255});
 
- main_font=font_64;
-
- text_x=main_font.char_height*1;
-
+scale=width/100;
  sprintf(text,"%s",gamename);
- chaste_font_draw_string(text,text_x,main_font.char_height*1);
 
- main_font=font_32;
-
-
- sprintf(text,"Programming: Chastity White Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*5);
-
- sprintf(text,"Inspiration:    River Black Rose");
- chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
- sprintf(text,"Press Enter to Begin game.");
- chaste_font_draw_string(text,text_x,main_font.char_height*8);
-
- sprintf(text,"Email: chastitywhiterose@gmail.com");
- chaste_font_draw_string(text,text_x,main_font.char_height*10);
-
- sprintf(text,"Do You Know Da Wae?");
- chaste_font_draw_string(text,text_x,main_font.char_height*16);
- 
-
- main_font=font_16;
-
- sprintf(text,"https://github.com/chastitywhiterose/chastetris");
- chaste_font_draw_string(text,text_x,main_font.char_height*24);
-
- main_font=font_8;
-
- sprintf(text,"All physics code in this game was written by Chastity White Rose using the C Programming Language.\nThe font handling is done with the font library Chastity wrote and named Chaste Font.\nRaylib is used for the graphics API including rectangles and textures.\nCredit goes to Alexey Pajitnov for creating the original Tetris game which Chaste Tris is based on.");
- chaste_font_draw_string(text,text_x,main_font.char_height*52);
-
+ /*chaste_font_draw_string_scaled(text,text_x,height/32,scale);*/
 
   chaste_palette_index=chaste_palette_index1;
-  
-  sprintf(text,"%s",gamename);
-  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
   
   chaste_palette_index1++;
   if(chaste_palette_index1>=chaste_palette_length)
   {
    chaste_palette_index1=0;
   }
+
+ scale=width/300;
+
+ sprintf(text,"Programming: Chastity White Rose");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
+
+ sprintf(text,"Inspiration:    River Black Rose");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
+
+
+ sprintf(text,"Email: chastitywhiterose@gmail.com");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
+
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
+
+ scale=width/400;
+
+ sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
+ chaste_font_draw_string_scaled(text,text_x,height*7/16,scale);
+
+//https://store.steampowered.com/app/1986120/Chaste_Tris/
+
+ sprintf(text,"https://store.steampowered.com/app/1986120/Chaste_Tris/");
+ chaste_font_draw_string_scaled(text,text_x,height*8/16,scale);
+
+
+ scale=width/500;
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nRaylib is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
+ 
+ chaste_font_draw_string_scaled(text,text_x,height*12/16,scale);
 
 
  EndDrawing();
@@ -647,10 +646,21 @@ int main(int argc, char **argv)
   x++;
  }
 
+ /*optionally set dimensions for fullscreen*/
+ if(1)
+ {
+  width=1920;height=1080;
+  fullscreen=1;
+ }
+
  InitWindow(width,height,"Chastity's Game");
  SetTargetFPS(60);
 
- //texture=LoadTexture("textures/star_face.png");
+ if(fullscreen!=0)
+ {
+  window_flags=FLAG_WINDOW_UNDECORATED; /*window without title bar*/
+  SetWindowState(window_flags);
+ }
 
  InitAudioDevice();      // Initialize audio device
 
@@ -671,21 +681,6 @@ int main(int argc, char **argv)
  */
 
  font_8=chaste_font_load("./font/FreeBASIC Font 8.png");
- font_16=chaste_font_load("./font/FreeBASIC Font 16.png");
- font_32=chaste_font_load("./font/FreeBASIC Font 32.png");
- font_64=chaste_font_load("./font/FreeBASIC Font 64.png");
- /*font_128=chaste_font_load("./font/FreeBASIC Font 128.png");*/
- 
- 
- /*check_image(font_8.image);*/
-
-/*
- font_8=chaste_font_load("./font/Tetris Font 8.png");
- font_16=chaste_font_load("./font/Tetris Font 16.png");
- font_32=chaste_font_load("./font/Tetris Font 32.png");
- font_64=chaste_font_load("./font/Tetris Font 64.png");
- font_128=chaste_font_load("./font/Tetris Font 128.png");
-*/
 
  chaste_palette_rainbow(40);
  /*chaste_palette_view();*/
@@ -698,8 +693,6 @@ optionally, close the window and end program after start screen
 this is great when testing something that hasn't been debugged
 */
  //CloseWindow(); return 0;
-
-text_x=fontsize*8; /*position of text for game loop*/
 
 
 

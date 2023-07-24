@@ -2,106 +2,18 @@
 This file is for functions which draw text for the stats of Chaste Tris or perhaps other decorations as I think of them.
 */
 
-/*
-this function draws the stats of the game such as the lines and score using my chaste font routines
-it's in a separate function so that I can switch it out with another function when I feel like it
-This is the original launch version which draws the stats on the right ride of the screen while the grid is on the left.
-*/
-void draw_stats_chaste_font()
-{
- text_x=main_font.char_height*7;
-
-
- chaste_font_draw_string(gamename,text_x,main_font.char_height*1);
-
- sprintf(text,"Score %d",score);
- chaste_font_draw_string(text,text_x,main_font.char_height*3);
-
- sprintf(text,"Lines %d",lines_cleared_total);
- chaste_font_draw_string(text,text_x,main_font.char_height*4);
-
-  sprintf(text,"This %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*5);
-
-  sprintf(text,"Hold %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
-
-  sprintf(text,"Move %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
-
-  sprintf(text,"B2B %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
-  
-  
-  time(&time1);
-  
-  seconds=time1-time0;
-  minutes=seconds/60;
-  seconds%=60;
-  
-  sprintf(text,"Time %d:%02d",minutes,seconds);
-  chaste_font_draw_string(text,text_x,main_font.char_height*9);
-
-
-}
-
-
-/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
-void (*stats_func)()=draw_stats_chaste_font;
-
-
 
  
- 
- 
- void draw_stats_chaste_font_centered()
+  void draw_stats_chaste_font_centered()
  {
   int scale=8;
-  main_font=font_64;
-
-  //text_x=main_font.char_height*1/2;
-  text_x=32;
-
-  chaste_font_draw_string("Chaste\n Tris",text_x,32);
-  
-
- 
-  main_font=font_32;
-
-  sprintf(text,"Score %d",score);
-  chaste_font_draw_string(text,text_x,main_font.char_height*6);
-
-  sprintf(text,"Lines %d",lines_cleared_total);
-  chaste_font_draw_string(text,text_x,main_font.char_height*7);
-
-  sprintf(text,"This %c",main_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*8);
-
-  sprintf(text,"Hold %c",hold_block.id);
-  chaste_font_draw_string(text,text_x,main_font.char_height*9);
-
-
-  sprintf(text,"Move %d",moves);
-  chaste_font_draw_string(text,text_x,main_font.char_height*10);
-
-  sprintf(text,"B2B %d",back_to_back);
-  chaste_font_draw_string(text,text_x,main_font.char_height*11);
-  
-  time(&time1);
-  
-  seconds=time1-time0;
-  minutes=seconds/60;
-  seconds%=60;
-  hours=minutes/60;
-  minutes%=60;
-  
-  sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string(text,text_x,main_font.char_height*13);
-  
   main_font=font_8;
-  
-    /*rainbow title section*/
+
+  /*text_x=main_font.char_height*1/2;*/
+  text_x=16;
+
+  scale=width/130;
+
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
   
@@ -110,9 +22,59 @@ void (*stats_func)()=draw_stats_chaste_font;
   {
    chaste_palette_index1=0;
   }
-  /*end of rainbow title section*/
+ 
+  scale=width/360;
+
+  sprintf(text,"Score %d",score);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
+
+  sprintf(text,"Lines %d",lines_cleared_total);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
+
+  sprintf(text,"This %c",main_block.id);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
+
+  sprintf(text,"Hold %c",hold_block.id);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
+
+  sprintf(text,"Move %d",moves);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
+  sprintf(text,"B2B %d",back_to_back);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
+
+  sprintf(text,"Combo %d",combo);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*14*scale,scale);
+
+  
+  time(&time1);
+  
+  seconds=time1-time0; /*subtract current time from start time to get seconds since game started*/
+  
+/* 
+  if(seconds!=0)
+  {
+   fps_current=frame/seconds;
+   sprintf(text,"FPS %d",fps_current);
+   chaste_font_draw_string(text,text_x,main_font.char_height*16);
+  }
+*/
+  
+  minutes=seconds/60;
+  seconds%=60;
+  hours=minutes/60;
+  minutes%=60;
+  
+  sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);
+
+  /*sprintf(text,"Frame %d",frame);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*17*scale,scale);*/
 
  }
+ 
+/*a function pointer that points to whichever function I currently use to draw the game stats to the screen*/
+void (*stats_func)()=draw_stats_chaste_font_centered;
  
  
 int rect_size=16; /*global variable to determine size of checkerboard squares*/

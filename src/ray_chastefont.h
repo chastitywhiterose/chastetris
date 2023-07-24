@@ -112,7 +112,7 @@ void chaste_font_draw_string_scaled(char *s,int cx,int cy,int scale)
  while(s[i]!=0)
  {
   c=s[i];
-  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height;}
+  if(c=='\n'){ cx=cx_start; cy+=main_font.char_height*scale;}
   else
   {
    x=(c-' ')*main_font.char_width;

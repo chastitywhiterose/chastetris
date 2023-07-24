@@ -21,10 +21,16 @@ https://ffmpeg.org/general.html#Image-Formats
 https://imagemagick.org/script/magick.php
 https://imagemagick.org/script/command-line-options.php#size
 
+
+60 fps is usually best for chaste tris videos. But sometimes can be too fast for people to see the T Spins.
+
+ffmpeg -r 60 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p o/video.mp4
+
+
 example of adding audio to a series of frames
 
 ffmpeg -i music/faded.m4a -r 60 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p -shortest o/video.mp4
 
-60 fps is usually best for chaste tris videos
 
-ffmpeg -r 60 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p o/video.mp4
+
+ffmpeg -i music/plexis.wav -r 30 -f image2 -i o/%08d.png -vcodec libx264 -preset veryslow -crf 23 -pix_fmt yuv420p -shortest o/video.mp4
