@@ -1,0 +1,24 @@
+MacOS Allegro notes
+
+Normally on my linux distro I have this makefile:
+
+allegro_linux:
+	gcc -Wall -ansi -pedantic main.c -o main -lallegro -lallegro_primitives -lallegro_image && ./main
+
+    But when I use it on my macbook I get an error: main.c:10:10: fatal error: 'allegro5/allegro.h' file not found
+#include <allegro5/allegro.h>"
+
+------
+
+This link provided some much needed information to get me started on MacOS.
+
+https://github.com/liballeg/allegro_wiki/wiki/Quickstart
+
+So I managed to get it to compile and run with this command.
+
+gcc main.c -o main $(pkg-config allegro-5 allegro_primitives-5 allegro_image-5 allegro_main-5 allegro_font-5 --libs --cflags) && ./main
+
+And then I added the following to my makefile so I have the option of compiling on MacOS.
+
+allegro_mac:
+	gcc main.c -o main `pkg-config allegro-5 allegro_primitives-5 allegro_image-5 allegro_main-5 allegro_font-5 --libs --cflags` && ./main
