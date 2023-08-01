@@ -1,0 +1,14 @@
+The raylib package installs a pkg-config file, which describes the necessary compilation and linker flags to use it with yourgame:
+eval cc yourgame.c $(pkg-config --libs --cflags raylib) -o YourGame
+If the build fails, you may need to run the following command with the required frameworks
+eval cc yourgame.c -framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --cflags raylib) -o YourGame
+
+
+
+The following command works just fine to compile my game.
+
+gcc main.c $(pkg-config --libs --cflags raylib) -o main
+
+And so does this although I don't understand it.s
+
+cc main.c -framework IOKit -framework Cocoa -framework OpenGL $(pkg-config --libs --cflags raylib) -o main
