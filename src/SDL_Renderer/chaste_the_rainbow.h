@@ -31,7 +31,7 @@ void chaste_prev_color()
 
 void chaste_palette_view()
 {
- uint32_t x=0;
+ int x=0;
  while(x<chaste_palette_length)
  {
   printf("chaste_palette[%d]=%06X;\n",x,chaste_palette[x]);
@@ -109,7 +109,7 @@ void chaste_palette_rainbow_test(int n)
 */
 void chaste_palette_make(int bpp)
 {
- uint32_t x,gray,bitcount,color,red,green,blue;
+ int x,gray,bitcount,color,red,green,blue;
 
  chaste_palette_length=1<<bpp;
 

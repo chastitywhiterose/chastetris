@@ -23,7 +23,7 @@ struct chaste_font
 struct chaste_font main_font,font_8,font_16,font_32,font_64,font_128,font_pico8;
 
 /*function to load a font and return a structure with the needed data to draw later*/
-struct chaste_font chaste_font_load(char *s)
+struct chaste_font chaste_font_load(const char *s)
 {
  int w,h;
  struct chaste_font new_font;
@@ -166,7 +166,7 @@ void chaste_font_free(struct chaste_font font)
 /*
 this uses direct pixel access of the source font surface to draw only when the source pixel is not black. But this one is "special" because it can optionally change the color for each scaled pixel!
 */
-void chaste_font_draw_string_scaled_special(char *s,int cx,int cy,int scale)
+void chaste_font_draw_string_scaled_special(const char *s,int cx,int cy,int scale)
 {
  int x,y,i,c,cx_start=cx;
  Uint32 *ssp; /*ssp is short for Source Surface Pointer*/
