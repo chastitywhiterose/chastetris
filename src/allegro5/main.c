@@ -145,16 +145,20 @@ int main(int argc, char **argv)
  font_8=chaste_font_load("./font/FreeBASIC Font 8.png");
 
 
+
  chaste_palette_rainbow(40);
  /*chaste_palette_view();*/
 
+ 
 
  screenbitmap=al_get_backbuffer(display);
  al_set_target_bitmap(screenbitmap);
 
  /*display the welcome screen*/
-
+ 
  welcome_screen_chaste_font();
+
+ /*printf("What the happened?\n");*/
 
  main_font=font_64; /*make the correct font for game loop*/
 

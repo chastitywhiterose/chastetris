@@ -8,9 +8,19 @@ void welcome_screen_chaste_font()
  main_font=font_8;
  text_x=main_font.char_height*1*scale;
 
+ if(main_font.bitmap==NULL)
+ {
+  printf( "Font is blank! No text can be drawn.\n");return;
+ }
+
+ delay=1.0/fps; /*1 second divided by frames per second*/
+
  loop=1;
  while(loop)
  {
+
+  al_time = al_get_time();
+  al_time1 = al_time+delay;
 
  al_clear_to_color(al_map_rgb(0, 0, 0));
 
@@ -62,6 +72,12 @@ void welcome_screen_chaste_font()
 
  al_flip_display(); /*update the screen*/
 
+  /*time loop used to slow the game down so users can see it*/
+ while(al_time<al_time1)
+ {
+  al_time=al_get_time();
+ }
+
   /*test for events and only process if they exist*/
   while(al_get_next_event(event_queue, &ev))
   {
@@ -85,6 +101,11 @@ void welcome_screen_chaste_font()
  {
   int scale=8;
   main_font=font_8;
+
+  if(main_font.bitmap==NULL)
+  {
+   printf( "Font is blank! No text can be drawn.\n");return;
+  }
 
   /*text_x=main_font.char_height*1/2;*/
   text_x=32;

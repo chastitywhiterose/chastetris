@@ -26,7 +26,12 @@ struct chaste_font chaste_font_load(char *s)
 
  new_font.bitmap=al_load_bitmap(s);
 
- if(new_font.bitmap==NULL){printf( "Allegro could not load image %s\n",s);return new_font;}
+ if(new_font.bitmap==NULL)
+ {
+  new_font.char_width=0;
+  new_font.char_height=0;
+  printf( "Allegro could not load image %s\n",s);return new_font;
+ }
 
  /*by default,font size is detected by original image height*/
  new_font.char_width=al_get_bitmap_height(new_font.bitmap);
