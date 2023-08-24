@@ -13,7 +13,7 @@
 
 /*variables defining the image/screen*/
 ALLEGRO_DISPLAY *display=NULL;
-const int width=1280,height=720;
+int width=1280,height=720;
 ALLEGRO_BITMAP *screenbitmap;
 
 /*variables defining the event loop*/
@@ -105,6 +105,8 @@ int main(int argc, char **argv)
  /*al_set_new_display_refresh_rate(0);*/
  /*fps=al_get_new_display_refresh_rate();*/
  printf("fps:%d\n",fps);
+
+ /*width*=2; height*=2;*/
 
  al_set_new_window_title("Chastity's Game using Allegro");
  display=al_create_display(width,height);

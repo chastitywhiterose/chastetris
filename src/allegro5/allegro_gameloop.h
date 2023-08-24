@@ -6,7 +6,7 @@ void welcome_screen_chaste_font()
 {
  int scale=8;
  main_font=font_8;
- text_x=main_font.char_height*1*scale;
+ text_x=width/100;
 
  if(main_font.bitmap==NULL)
  {
@@ -24,13 +24,14 @@ void welcome_screen_chaste_font()
 
  al_clear_to_color(al_map_rgb(0, 0, 0));
 
- scale=8;
+
+scale=width/100;
  sprintf(text,"%s",gamename);
- 
-  /*chaste_font_draw_string_scaled(text,text_x,64,scale);*/
+
+ /*chaste_font_draw_string_scaled(text,text_x,height/32,scale);*/
 
   chaste_palette_index=chaste_palette_index1;
-  chaste_font_draw_string_scaled_special(text,text_x,64,scale);
+  chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
   
   chaste_palette_index1++;
   if(chaste_palette_index1>=chaste_palette_length)
@@ -38,37 +39,33 @@ void welcome_screen_chaste_font()
    chaste_palette_index1=0;
   }
 
- scale=4;
+ scale=width/300;
 
  sprintf(text,"Programming: Chastity White Rose");
- 
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
 
  sprintf(text,"Inspiration:    River Black Rose");
- 
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
 
- sprintf(text,"Press Enter to Begin game.");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
  sprintf(text,"Email: chastitywhiterose@gmail.com");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
- 
- sprintf(text,"Do You Know Da Wae?");
- 
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*20*scale,scale);
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
- scale=2;
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
+
+ scale=width/400;
 
  sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
  
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*24*scale,scale);
+ chaste_font_draw_string_scaled(text,text_x,height*7/16,scale);
 
- sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nAllegro is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
+ scale=width/500;
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nSDL is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
  
- chaste_font_draw_string_scaled(text,text_x,main_font.char_height*52,2);
+ chaste_font_draw_string_scaled(text,text_x,height*12/16,scale);
+
 
  al_flip_display(); /*update the screen*/
 
@@ -107,10 +104,9 @@ void welcome_screen_chaste_font()
    printf( "Font is blank! No text can be drawn.\n");return;
   }
 
-  /*text_x=main_font.char_height*1/2;*/
-  text_x=32;
+   text_x=16;
 
-  chaste_font_draw_string_scaled("Chaste\n Tris",text_x,32,scale);
+  scale=width/130;
 
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
@@ -120,35 +116,43 @@ void welcome_screen_chaste_font()
   {
    chaste_palette_index1=0;
   }
-
  
-  scale=4;
+  scale=width/360;
 
   sprintf(text,"Score %d",score);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*6*scale,scale);
-
-  sprintf(text,"Lines %d",lines_cleared_total);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
-
-  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
-  sprintf(text,"Hold %c",hold_block.id);
+  sprintf(text,"Lines %d",lines_cleared_total);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
 
-
-  sprintf(text,"Move %d",moves);
+  sprintf(text,"This %c",main_block.id);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
 
-  sprintf(text,"B2B %d",back_to_back);
-    chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
-  
-/*subtract current time from start time to get seconds since game started*/
+  sprintf(text,"Hold %c",hold_block.id);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*11*scale,scale);
 
+  sprintf(text,"Move %d",moves);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
+  sprintf(text,"B2B %d",back_to_back);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
+
+  sprintf(text,"Combo %d",combo);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*14*scale,scale);
+
+  
   time(&time1);
   
-  seconds=time1-time0; 
+  seconds=time1-time0; /*subtract current time from start time to get seconds since game started*/
   
+/* 
+  if(seconds!=0)
+  {
+   fps_current=frame/seconds;
+   sprintf(text,"FPS %d",fps_current);
+   chaste_font_draw_string(text,text_x,main_font.char_height*16);
+  }
+*/
   
   minutes=seconds/60;
   seconds%=60;
@@ -156,8 +160,11 @@ void welcome_screen_chaste_font()
   minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*13*scale,scale);
- 
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);
+
+  /*sprintf(text,"Frame %d",frame);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*17*scale,scale);*/
+
 
  }
 

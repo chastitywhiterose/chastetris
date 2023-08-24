@@ -40,6 +40,7 @@ int last_move_spin=0; /*was the last move a t spin?*/
 int last_move_fail; /*did the last move fail?*/
 int back_to_back=0;
 int score=0;
+int combo=0;
 
 char move_log[0x1000000]; /*large array to store moves*/
 
@@ -308,7 +309,6 @@ void tetris_clear_lines()
    while(x1<grid_width)
    {
     main_grid.array[x1+y1*grid_width]=empty_color;
-
     x1++;
    }
    
@@ -321,8 +321,13 @@ void tetris_clear_lines()
 
  lines_cleared_total+=lines_cleared;
 
- /*printf("this line clear: %d\n",lines_cleared);
- printf("total lines cleared: %d\n",lines_cleared_total);*/
+ if(lines_cleared!=0){combo++;}
+ else{combo=0;}
+
+ /*printf("combo: %d\n",combo);*/
+
+ /*printf("this line clear: %d\n",lines_cleared);*/
+ /*printf("total lines cleared: %d\n",lines_cleared_total);*/
 
  /*scoring section*/
  if(lines_cleared==1)
@@ -420,9 +425,7 @@ void tetris_fall_lines()
     }
     if(xcount>0)
     {
-/*     printf("row %d is not empty. Will copy to row %d.\n",y1,y);*/
-
-     x=0;
+     /*printf("row %d is not empty. Will copy to row %d.\n",y1,y);*/
 
      x=0;
      while(x<grid_width)
