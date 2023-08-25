@@ -77,6 +77,7 @@ void welcome_screen_chaste_font()
    if(e.type == SDL_QUIT){loop=0;}
    if(e.type == SDL_KEYUP)
    {
+    if(e.key.keysym.sym==SDLK_ESCAPE){loop=0;}
     if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
    }
   }
