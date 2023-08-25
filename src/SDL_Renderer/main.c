@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 
  chaste_palette_rainbow(40);
  /*chaste_palette_rainbow_pastel(80);*/
- /*chaste_palette_view();*/
+ chaste_palette_view();
 
  welcome_screen_chaste_font();
 
@@ -149,23 +149,3 @@ int main(int argc, char **argv)
  return 0;
 }
 
-/*
-Compile within Unix/Linux/msys
-gcc -Wall -ansi -pedantic main.c -o main `sdl2-config --cflags --libs` && ./main
-
-Static Compile within Unix/Linux/msys
-gcc -Wall -ansi -pedantic main.c -o main `sdl2-config --cflags --static-libs` -static && ./main
-
-Compiling on Windows:
-
-can dynamic link with my msys install
-set PATH=C:\msys64\mingw32\bin;
-gcc -Wall -ansi -pedantic main.c -o main -IC:\msys64\mingw32\include\SDL2 -Dmain=SDL_main -LC:\msys64\mingw32\lib -lmingw32 -lSDL2main -lSDL2 && main
-
-More frequently, I compile with my official Windows install in C:\SDL
-set PATH=C:\TDM-GCC-32\bin;C:\SDL\bin;
-gcc -Wall -ansi -pedantic main.c -o main -IC:\SDL\include\SDL2 -Dmain=SDL_main -LC:\SDL\lib -lmingw32 -lSDL2main -lSDL2 && main
-
-can static compile too. (only works with my install in C:\SDL)
-gcc -Wall -ansi -pedantic main.c -o main -IC:\SDL\include\SDL2 -Dmain=SDL_main -LC:\SDL\lib -lmingw32 -lSDL2main -lSDL2 -mwindows  -Wl,--no-undefined -lm -ldinput8 -ldxguid -ldxerr8 -luser32 -lgdi32 -lwinmm -limm32 -lole32 -loleaut32 -lshell32 -lsetupapi -lversion -luuid -static-libgcc -static && main
-*/

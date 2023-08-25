@@ -46,6 +46,13 @@ char move_log[0x1000000]; /*large array to store moves*/
 
 int empty_color=0x000000;
 
+/*
+the next array is an experimental feature of indexing colors by block type
+it only works in combination with the "chaste_the_rainbow.h" header for my rainbow palette
+*/
+int block_color_index[]={120,200,0,160,40,20,80};
+int main_color=0xFFFFFF; /*color used to control block colors*/
+
 int lines_cleared=0,lines_cleared_last=0,lines_cleared_total=0;
 
 int block_array_i[]=
@@ -278,6 +285,65 @@ void tetris_clear_screen()
 }
 
 
+
+/*I separated the score into its own function to help me not get lost in the line clearing function*/
+
+void tetris_score()
+{
+ /*scoring section*/
+ if(lines_cleared==1)
+ {
+  if(last_move_spin==1)
+  {
+   if(back_to_back>0){score+=1200;}
+   else{score+=800;}
+   back_to_back++;
+  }
+  else
+  {
+   score+=100;back_to_back=0;
+  }
+ }
+ if(lines_cleared==2)
+ {
+  if(last_move_spin==1)
+  {
+   if(back_to_back>0){score+=1800;}
+   else{score+=1200;}
+   back_to_back++;
+  }
+  else
+  {
+   score+=300;back_to_back=0;
+  }
+ }
+ if(lines_cleared==3)
+ {
+  if(last_move_spin==1)
+  {
+   if(back_to_back>0){score+=2400;}
+   else{score+=1600;}
+   back_to_back++;
+  }
+  else {score+=500;back_to_back=0;}
+ }
+ 
+ if(lines_cleared==4)
+ {
+  if(back_to_back>0){score+=1200;}
+  else{score+=800;}
+  back_to_back++;
+ }
+
+}
+
+
+
+
+
+
+
+
 void tetris_clear_lines()
 {
  int x,y,xcount,x1,y1;
@@ -329,50 +395,8 @@ void tetris_clear_lines()
  /*printf("this line clear: %d\n",lines_cleared);*/
  /*printf("total lines cleared: %d\n",lines_cleared_total);*/
 
- /*scoring section*/
- if(lines_cleared==1)
- {
-  if(last_move_spin==1)
-  {
-   if(back_to_back>0){score+=1200;}
-   else{score+=800;}
-   back_to_back++;
-  }
-  else
-  {
-   score+=100;back_to_back=0;
-  }
- }
- if(lines_cleared==2)
- {
-  if(last_move_spin==1)
-  {
-   if(back_to_back>0){score+=1800;}
-   else{score+=1200;}
-   back_to_back++;
-  }
-  else
-  {
-   score+=300;back_to_back=0;
-  }
- }
- if(lines_cleared==3)
- {
-  if(last_move_spin==1)
-  {
-   if(back_to_back>0){score+=2400;}
-   else{score+=1600;}
-   back_to_back++;
-  }
-  else {score+=500;back_to_back=0;}
- }
+ tetris_score();
  
- if(lines_cleared==4)
- {
-  if(back_to_back>0){score+=1200;}
-  else{score+=800;}
-  back_to_back++;
- }
 
  if(lines_cleared!=0)
  {
@@ -467,7 +491,8 @@ void tetris_set_block()
    {
     if(main_block.array[x+y*max_block_width]!=0)
     {
-      main_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color; 
+     main_color=main_block.color;
+     main_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_color;
     }
     x+=1;
    }

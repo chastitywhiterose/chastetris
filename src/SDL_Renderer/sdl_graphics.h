@@ -243,6 +243,10 @@ void screen_setup_centered()
  stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
 }
 
+
+
+
+
 /*
 this is a function which is called by main after window is created. It contains the game loop.
 */
@@ -278,7 +282,6 @@ void sdl_chastetris()
   }
   y+=1;
  }
-
 
  delay=1000/fps;
  
@@ -317,7 +320,9 @@ void sdl_chastetris()
      }
      else
      {
-      temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_block.color;
+      main_color=main_block.color;
+      /*main_color=chaste_palette[block_color_index[block_type]];*/
+      temp_grid.array[main_block.x+x+(main_block.y+y)*grid_width]=main_color;
      }
     }
     x+=1;
@@ -410,6 +415,13 @@ SDL_RenderFillRect(renderer,&rect);
  }
 
  frame++;
+
+ x=0;
+ while(x<7)
+ {
+  block_color_index[x]=(block_color_index[x]+1)%chaste_palette_length;
+  x++;
+ }
 
  }
 
