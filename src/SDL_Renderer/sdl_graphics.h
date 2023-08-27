@@ -98,9 +98,9 @@ void welcome_screen_chaste_font()
   main_font=font_8;
 
   /*text_x=main_font.char_height*1/2;*/
-  text_x=16;
+  text_x=width/80;
 
-  scale=width/130;
+  scale=width/145;
 
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
@@ -175,7 +175,7 @@ void draw_input()
  int scale=8;
  main_font=font_8;
 
- text_x=width*21/32;
+ text_x=width*22/32;
  scale=width/400;
 
  switch(move_id)
@@ -233,21 +233,6 @@ int grid_offset_x;
 
 
 /*
-sets up the variables before the game loop so that the Tetris field is in the center.
-This is done because I updated the game later on. This corrects everything before the game loop starts.
-*/
-void screen_setup_centered()
-{
- grid_offset_x=(width-(20/2*block_size))/2; /*to center of screen*/
- border_size=12;
- stats_func=draw_stats_chaste_font_centered;  /*if centered, alternate stats function is needed*/
-}
-
-
-
-
-
-/*
 this is a function which is called by main after window is created. It contains the game loop.
 */
 void sdl_chastetris()
@@ -255,15 +240,15 @@ void sdl_chastetris()
  int pixel,r,g,b;
  int x=0,y=0;
 
-
+ /*setup the grid display*/
  block_size=height/grid_height;
- grid_offset_x=block_size*1; /*how far from the left size of the window the grid display is*/
+ grid_offset_x=(width-(20/2*block_size))/2; /*formula for grid to center of screen*/
  border_size=block_size;
 
  printf("block_size==%d\n",block_size);
   
  /*if the following function is called, screen is centered. Otherwise use old left side style.*/
- screen_setup_centered();
+ /*screen_setup_centered();*/
 
  chastetris_info();
 

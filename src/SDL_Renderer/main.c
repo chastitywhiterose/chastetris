@@ -108,7 +108,7 @@ int main(int argc, char **argv)
 
  chaste_palette_rainbow(40);
  /*chaste_palette_rainbow_pastel(80);*/
- chaste_palette_view();
+ /*chaste_palette_view();*/
 
  welcome_screen_chaste_font();
 
