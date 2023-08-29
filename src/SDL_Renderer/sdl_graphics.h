@@ -97,10 +97,11 @@ void welcome_screen_chaste_font()
   int scale=8;
   main_font=font_8;
 
-  /*text_x=main_font.char_height*1/2;*/
-  text_x=width/80;
+  text_x=width/320;
 
-  scale=width/145;
+  scale=width*1/140;
+
+  /*printf("Scale %d\n",scale);*/
 
   chaste_palette_index=chaste_palette_index1;
   chaste_font_draw_string_scaled_special("Chaste\n Tris",text_x,32,scale);
