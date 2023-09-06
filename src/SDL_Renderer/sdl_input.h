@@ -56,15 +56,8 @@ void keyboard()
      tetris_move_right();
     break;
 
-
-    case SDLK_COMMA:
-     tetris_load_state();
-    break;
-    case SDLK_PERIOD:
-     tetris_save_state();
-    break;
     
-    /*keys after this are for other save states*/
+    /*keys after this are for managing save states*/
     
     case SDLK_i:
      move_id='I';

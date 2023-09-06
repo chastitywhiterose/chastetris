@@ -194,26 +194,6 @@ void spawn_block()
  main_block.spawn_y=main_block.y;
 }
 
-void chastetris_info()
-{
- printf("Welcome to the game \"%s\" by Chastity White Rose\n",gamename);
- printf("Email: chastitywhiterose@gmail.com for any questions!\n\n");
-
- printf("This game was written in the C programming language by Chastity White Rose.\nThe inspiration came from a talk with River Black Rose. There are two versions.\n");
- printf("\"Long Boi\" containing only I blocks and\n\"Chaste Tris\" when all 7 Tetrominoes are present\n");
- printf("And of course this game is heavily inspired by Tetris created by Alexey Pajitnov in 1984\n\n");
-
- printf("Because I love playing Tetris, I used all my programming skills to make a simple game that I can play with a few features that I wish other Tetris games had.\n");
- printf("There is infinite time to place the blocks because there is no gravity.\n");
-
- printf("Additionally, you can press the '.' key to save the game at any time and then press ',' to reload to the previously saved state.\n");
- printf("This means my game is the only Tetris game that lets you go back in time to fix mistakes!\n\n");
-}
-
-
-
-
-
 /*Part 2: Functions that modify the block data or Tetris grid itself. */
 
 /*
@@ -780,82 +760,5 @@ void block_hold()
  move_log[moves]=move_id; /*hold block is always valid move*/
  moves=moves+1;
 }
-
-struct tetris_grid save_grid;
-int saved_moves; /*number of valid moves*/
-int saved_frame;  /*current animation frame*/
-int saved_back_to_back; /*back to back score bonus*/
-
-int move_log_position;
-
-int saved_block_type;
-
-int saved_block_array[16],saved_main_block_width,saved_block_color,saved_block_id,saved_main_block_x,saved_block_y; /*to store all details of main block*/
-
-int saved_hold_block_array[16],saved_hold_block_width,saved_hold_block_color,saved_hold_block_id,saved_hold_main_block_x,saved_hold_block_y; /*to store all details of main block*/
-int saved_hold_used;
-
-int saved_score;
-int saved_lines_cleared_total;
-
-int save_exist=0;
-
-struct tetris_block save_main_block,save_hold_block;
-
-/*
- a special function which saves all the important data in the game. This allows reloading to a previous position when I make a mistake.
-*/
-void tetris_save_state()
-{
- save_grid=main_grid;
-
- save_main_block=main_block;
- save_hold_block=hold_block;
-
- saved_block_type=block_type;
-
- saved_moves=moves;
- saved_frame=frame;
- saved_hold_used=hold_used;
- saved_score=score;
- saved_lines_cleared_total=lines_cleared_total;
- saved_back_to_back=back_to_back;
-
- printf("Game Saved at move %d\n",moves);
- save_exist=1;
-}
-
-
-/*
- a special function which loads the data previously saved. This allows reloading to a previous position when I make a mistake.
-*/
-void tetris_load_state()
-{
-
- if(save_exist==0)
- {
-  printf("No save exists yet.\n");
-  return;
- }
-
- main_grid=save_grid;
-
- main_block=save_main_block;
- hold_block=save_hold_block;
-
- block_type=saved_block_type;
-
- moves=saved_moves;
- frame=saved_frame;
- hold_used=saved_hold_used;
- score=saved_score;
- lines_cleared_total=saved_lines_cleared_total;
- back_to_back=saved_back_to_back;
-
- printf("Game Loaded at move %d\n",moves);
-
-}
-
-
 
 

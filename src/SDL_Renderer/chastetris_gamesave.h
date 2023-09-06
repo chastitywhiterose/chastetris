@@ -13,6 +13,7 @@ struct gamesave
  int hold_exist;
  int score;
  int lines;
+ int combo;
  int btb;
  int logpos;
  struct tetris_block main_block,hold_block; /* to save the main and hold blocks */
@@ -40,6 +41,7 @@ void save_gamesave()
  state[save_index].score=score;
  state[save_index].lines=lines_cleared_total;
  state[save_index].btb=back_to_back;
+ state[save_index].combo=combo;
 
  printf("State %d saved\n",save_index);
  
@@ -71,6 +73,7 @@ void load_gamesave()
  score=state[save_index].score;
  lines_cleared_total=state[save_index].lines;
  back_to_back=state[save_index].btb;
+ combo=state[save_index].combo;
 
  printf("State %d loaded\n",save_index);
 }

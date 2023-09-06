@@ -248,11 +248,6 @@ void sdl_chastetris()
 
  printf("block_size==%d\n",block_size);
   
- /*if the following function is called, screen is centered. Otherwise use old left side style.*/
- /*screen_setup_centered();*/
-
- chastetris_info();
-
  spawn_block();
 
 
