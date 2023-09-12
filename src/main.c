@@ -8,7 +8,6 @@
 
 int width = 1280;
 int height = 720;
-int fullscreen=0;
 int window_flags=0;
 
 Color ray_block_color={255,255,255,255};
@@ -131,6 +130,13 @@ void keyboard()
   /*sprintf(movetext,"Block Hold");*/
   /*printf("%s\n",movetext);*/
   grid_print();
+ }
+
+
+ /*toggle fullscreen*/
+ if(IsKeyPressed(KEY_F))
+ {
+  ToggleFullscreen();
  }
  
  
@@ -522,6 +528,13 @@ void welcome_screen_chaste_font()
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
 {
+
+ /*toggle fullscreen*/
+ if(IsKeyPressed(KEY_F))
+ {
+  ToggleFullscreen();
+ }
+
  if(IsKeyPressed(KEY_ENTER)){break;}
  if(IsKeyPressed(KEY_M))
  {
@@ -602,16 +615,27 @@ void title_screen_chaste_font()
 /*before the game actually runs, optionally display a start screen*/
 while(!WindowShouldClose()) /*loop runs until key pressed*/
 {
+ int scale=width/50;
+
  if(IsKeyPressed(KEY_ENTER)){break;}
  BeginDrawing();
  ClearBackground((Color){0,0,0,255});
 
- main_font=font_128;
+ main_font=font_8;
 
- text_x=main_font.char_height*2;
+ text_x=width/80;
 
  sprintf(text,"Chaste\n Tris");
  chaste_font_draw_string(text,text_x,main_font.char_height*1);
+
+ chaste_palette_index=chaste_palette_index1;
+ chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
+  
+ chaste_palette_index1++;
+ if(chaste_palette_index1>=chaste_palette_length)
+ {
+  chaste_palette_index1=0;
+ }
 
 
  EndDrawing();
@@ -646,21 +670,12 @@ int main(int argc, char **argv)
   x++;
  }
 
- /*optionally set dimensions for fullscreen*/
- if(1)
- {
-  width=1920;height=1080;
-  fullscreen=1;
- }
+
 
  InitWindow(width,height,"Chastity's Game");
  SetTargetFPS(60);
 
- if(fullscreen!=0)
- {
-  window_flags=FLAG_WINDOW_UNDECORATED; /*window without title bar*/
-  SetWindowState(window_flags);
- }
+
 
  InitAudioDevice();      // Initialize audio device
 

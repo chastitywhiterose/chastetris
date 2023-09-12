@@ -1,0 +1,30 @@
+raylib fullscreen notes
+
+
+
+old code that was removed
+
+
+
+
+  fullscreen^=1;
+
+  /*optionally set dimensions for fullscreen*/
+  if(fullscreen!=0)
+  {
+   width=1920;height=1080;
+   SetWindowSize(width,height);
+   SetWindowPosition(0,0);
+   window_flags=FLAG_WINDOW_UNDECORATED;
+   SetWindowState(window_flags);
+  }
+  else
+  {
+   width=1280;height=720;
+   SetWindowSize(width,height);
+   SetWindowPosition(0,0);
+   SetWindowState(0);
+  }
+
+
+
