@@ -70,45 +70,54 @@ void keyboard()
     
    case SDLK_0:
     save_index=0;
+    move_id='0';
     printf("State %d selected.\n",save_index);
    break;
    case SDLK_1:
     save_index=1;
+    move_id='1';
     printf("State %d selected.\n",save_index);
    break;
    case SDLK_2:
     save_index=2;
+    move_id='2';
     printf("State %d selected.\n",save_index);
    break;
    case SDLK_3:
     save_index=3;
+    move_id='3';
     printf("State %d selected.\n",save_index);
    break;
   case SDLK_4:
    save_index=4;
+   move_id='4';
    printf("State %d selected.\n",save_index);
    break;
   case SDLK_5:
    save_index=5;
+   move_id='5';
    printf("State %d selected.\n",save_index);
   break;
   case SDLK_6:
    save_index=6;
+   move_id='6';
    printf("State %d selected.\n",save_index);
   break;
   case SDLK_7:
    save_index=7;
+   move_id='7';
    printf("State %d selected.\n",save_index);
   break;
   case SDLK_8:
    save_index=8;
+   move_id='8';
    printf("State %d selected.\n",save_index);
   break;
   case SDLK_9:
    save_index=9;
+   move_id='9';
    printf("State %d selected.\n",save_index);
   break;
-    
     
     /*end of save state managing keys*/
     
