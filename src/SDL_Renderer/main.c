@@ -9,7 +9,9 @@ https://wiki.libsdl.org/SDL2/CategoryRender
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
+#include <math.h>
 #include <SDL.h>
 
 /*
