@@ -26,8 +26,9 @@ SDL_Rect rect;
 
 int rect_color;
 
+int fps=60; /*frames per second*/
 
-int frame=0,lastframe=0,fps=60,delay,framelimit=1; /*only used for animation demos*/
+int frame=0,lastframe=0,delay,framelimit=1; /*only used for animation demos*/
 time_t time0,time1;
 int seconds,minutes,hours; /*to keep track of time*/
 int sdl_time,sdl_time1;
@@ -54,7 +55,7 @@ int main(int argc, char **argv)
 {
 
  /*process command line arguments*/
- int x=1;
+ int x=1,y;
  while(x<argc)
  {
   printf("argv[%i]=%s\n",x,argv[x]);
@@ -77,11 +78,25 @@ int main(int argc, char **argv)
    width=1920;height=1080;
    Window_Flags=SDL_WINDOW_FULLSCREEN_DESKTOP;
   }
- 
+
+  if( strcmp(argv[x],"-fps")==0 )
+  {
+   printf("Default fps is %d\n",fps);
+   return 1;
+  }
+
+  if( strncmp(argv[x],"-fps=",5)==0 )
+  {
+   printf("Changing fps:\n");
+   y=sscanf(argv[x]+5,"%d",&fps);
+   if(y)
+   {
+    printf("fps is now set to %d\n",fps);
+   }
+  }
+
   x++;
  }
-
-
 
  if(SDL_Init(SDL_INIT_VIDEO)){printf( "SDL could not initialize! SDL_Error: %s\n",SDL_GetError());return -1;}
  window=SDL_CreateWindow( "SDL Chaste Tris",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,width,height,Window_Flags);
