@@ -120,6 +120,16 @@ void keyboard()
   break;
     
     /*end of save state managing keys*/
+
+    /*keys to change between two grid drawing methods*/
+    case SDLK_q:
+     move_id='q';
+     show_grid=show_grid_fill_rect;
+    break;
+    case SDLK_e:
+     move_id='e';
+     show_grid=show_grid_draw_rect;
+    break;
     
     /*
      keys after this are for marking special places during the game

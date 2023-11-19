@@ -155,7 +155,7 @@ void welcome_screen_chaste_font()
   minutes%=60;
   
   sprintf(text,"Time %d:%02d:%02d",hours,minutes,seconds);
-  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*16*scale,scale);
+  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*15*scale,scale);
 
   /*sprintf(text,"Frame %d",frame);
   chaste_font_draw_string_scaled(text,text_x,main_font.char_height*17*scale,scale);*/
@@ -257,12 +257,13 @@ void draw_input()
  chaste_font_draw_string_scaled(text,text_x,height*1/16,scale);
 
 }
+
  
  
 /*more global variables to be defined before game loop function*/
-int block_size;
 int border_size;
-int grid_offset_x;
+
+
 
 
 /*
@@ -270,7 +271,7 @@ this is a function which is called by main after window is created. It contains 
 */
 void sdl_chastetris()
 {
- int pixel,r,g,b;
+ /*int pixel,r,g,b;*/
  int x=0,y=0;
 
  /*setup the grid display*/
@@ -300,6 +301,20 @@ void sdl_chastetris()
  
  /*get time before the game starts using standard library time function*/
  time(&time0);
+
+ /*
+  an optional step before the game loop but a very awesome one
+  initialize the spinning polygon that will be drawn each frame
+ */
+
+ init_polygon();
+ main_polygon.radius=height*11/64;
+ main_polygon.sides=4;
+ main_polygon.step=1;
+
+ main_polygon.cx=width*11/64;
+ main_polygon.cy=height*50/64;
+
  
  loop=1;
   /* Loop until the user closes the window */
@@ -346,43 +361,12 @@ void sdl_chastetris()
 
 
 /*display the tetris grid*/
+show_grid();
 
- y=0;
- while(y<grid_height)
- {
-  x=0;
-  while(x<grid_width)
-  {
-   pixel=temp_grid.array[x+y*grid_width];
-   r=(pixel&0xFF0000)>>16;
-   g=(pixel&0x00FF00)>>8;
-   b=(pixel&0x0000FF);
-
-
-/* printf("x=%d y=%d ",x,y);
- printf("red=%d green=%d blue=%d\n",r,g,b);*/
-
-
-/*rect_color=SDL_MapRGB(surface->format,r,g,b);*/
-
- SDL_SetRenderDrawColor(renderer,r,g,b,255);
-
-
-/*set up the rectangle structure with the needed data to square the squares*/
-rect.x=grid_offset_x+x*block_size;
-rect.y=y*block_size;
-rect.w=block_size;
-rect.h=block_size;
-
-SDL_RenderFillRect(renderer,&rect);
-
-
-   x+=1;
-  }
-  y+=1;
- }
-
-
+/*show the polygon just for fun*/
+chaste_polygon_draw_star();
+/*chaste_polygon_draw_star_lines();*/
+main_polygon.radians+=PI/180;
 
 
  /*draw the boundary walls*/

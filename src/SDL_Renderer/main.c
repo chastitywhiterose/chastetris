@@ -48,7 +48,9 @@ FILE *fp_input; /*file to get input from instead of the keyboard*/
 #include "chastetris_gamesave.h"
 #include "chaste_the_rainbow.h"
 #include "sdl_chastefont_texture.h"
+#include "sdl_grid_draw.h"
 #include "sdl_input.h"
+#include "sdl_chaste_polygon.h"
 #include "sdl_graphics.h"
 
 int main(int argc, char **argv)
