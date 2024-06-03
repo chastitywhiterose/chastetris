@@ -22,6 +22,10 @@ WASD or arrow keys move the block
 Z and X rotate it
 and C holds the block for later use. It can be swapped infinite times with the current block.
 
+N goes to the next song. There are 3 songs.
+
+M mutes or unmutes the music if you need to turn it off for some reason.
+
 The game also has the ability to save and load at any point in time. This is a neat feature that I have shown in some of my videos. Please contact me if you want to know more:
 
 chastitywhiterose@gmail.com
