@@ -33,6 +33,11 @@ void keyboard()
      block_hold();
     break;
 
+    case SDLK_h:
+    case SDLK_SPACE:
+     move_id='H';
+     tetris_hard_drop();
+    break;
 
     /*the main 4 directions*/
     case SDLK_UP:
@@ -221,6 +226,7 @@ void next_file_input()
   if(c=='Z'){block_rotate_left_basic();}
   if(c=='X'){block_rotate_right_basic();}
   if(c=='C'){block_hold();}
+  if(c=='H'){tetris_hard_drop();}
   
   if(c=='[')
   {

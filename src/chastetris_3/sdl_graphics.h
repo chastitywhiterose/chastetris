@@ -4,6 +4,99 @@ sdl_graphics.h
 this header file is meant to contain all the functions which write things to the screen
 */
 
+
+/* this function is now the official welcome screen*/
+void help_screen_chaste_font()
+{
+ int scale=8;
+ main_font=font_8;
+ text_x=width/100;
+
+ delay=1000/fps;
+
+ loop=1;
+ while(loop)
+ {
+  sdl_time = SDL_GetTicks();
+  sdl_time1 = sdl_time+delay;
+
+ SDL_SetRenderDrawColor(renderer,0,0,0,255);
+ SDL_RenderClear(renderer);
+
+ scale=width/100;
+ sprintf(text,"%s",gamename);
+
+ /*chaste_font_draw_string_scaled(text,text_x,height/32,scale);*/
+
+  chaste_palette_index=chaste_palette_index1;
+  chaste_font_draw_string_scaled_special(text,text_x,height/32,scale);
+  
+  chaste_palette_index1++;
+  if(chaste_palette_index1>=chaste_palette_length)
+  {
+   chaste_palette_index1=0;
+  }
+
+ scale=width/400;
+
+ sprintf(text,"The game is controlled with the keyboard.");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*5*scale,scale);
+
+ sprintf(text,"X = Rotate Clockwise");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*7*scale,scale);
+
+
+ sprintf(text,"Z = Rotate Counter Clockwise");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
+
+ sprintf(text,"Arrow or WASD keys move in the four directions.");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*9*scale,scale);
+
+ sprintf(text,"Hard drop with space bar or H key.");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*10*scale,scale);
+
+ sprintf(text,"This is an open-source game so controls can be\ncustomized if you have a C compiler and\nSDL libraries installed.\n");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
+ sprintf(text,"This is an open-source game so controls can be\ncustomized if you have a C compiler and\nSDL libraries installed.\n");
+ chaste_font_draw_string_scaled(text,text_x,main_font.char_height*12*scale,scale);
+
+ sprintf(text,"Press Enter to Begin game.");
+ chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
+
+ scale=width/500;
+
+ sprintf(text,"All physics code in this game was written by Chastity White Rose using the\nC Programming Language. The font handling is done with the font library\nChastity wrote and named Chaste Font.\n\nSDL is used for the graphics API including rectangles and textures.\n\nCredit goes to Alexey Pajitnov for creating the original Tetris game which\nChaste Tris is based on. I also like to thank Henk Rogers for helping\nTetris become the worldwide hit that it is.");
+ 
+ chaste_font_draw_string_scaled(text,text_x,height*12/16,scale);
+ 
+ SDL_RenderPresent(renderer);
+
+ /*time loop used to slow the game down so users can see it*/
+ while(sdl_time<sdl_time1)
+ {
+  sdl_time=SDL_GetTicks();
+ }
+
+  /*test for events and only process if they exist*/
+  while(SDL_PollEvent(&e))
+  {
+   if(e.type == SDL_QUIT){loop=0;}
+   if(e.type == SDL_KEYUP)
+   {
+    if(e.key.keysym.sym==SDLK_ESCAPE){loop=0;}
+    if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
+    if(e.key.keysym.sym==SDLK_h){loop=0;}
+   }
+  }
+  
+ }
+}
+
+
+
+
+
 /* this function is now the official welcome screen*/
 void welcome_screen_chaste_font()
 {
@@ -48,12 +141,15 @@ void welcome_screen_chaste_font()
  sprintf(text,"Email: chastitywhiterose@gmail.com");
  chaste_font_draw_string_scaled(text,text_x,main_font.char_height*8*scale,scale);
 
+ sprintf(text,"Press H for help with the controls.");
+ chaste_font_draw_string_scaled(text,text_x,height*9/16,scale);
+
  sprintf(text,"Press Enter to Begin game.");
  chaste_font_draw_string_scaled(text,text_x,height*10/16,scale);
 
  scale=width/400;
 
- sprintf(text,"https://www.patreon.com/ChastityWhiteRoseProgramming");
+ sprintf(text,"https://github.com/chastitywhiterose/chastetris");
  
  chaste_font_draw_string_scaled(text,text_x,height*7/16,scale);
 
@@ -79,6 +175,7 @@ void welcome_screen_chaste_font()
    {
     if(e.key.keysym.sym==SDLK_ESCAPE){loop=0;}
     if(e.key.keysym.sym==SDLK_RETURN){loop=0;}
+    if(e.key.keysym.sym==SDLK_h){help_screen_chaste_font();}
    }
   }
   
@@ -202,6 +299,9 @@ void draw_input()
   break;
   case 'C':
    strcpy(text,"C/Hold Block");
+  break;
+  case 'H':
+   strcpy(text,"H/Hard Drop");
   break;
 
   case 'I':

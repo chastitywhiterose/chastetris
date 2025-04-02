@@ -520,6 +520,38 @@ void tetris_move_down()
 }
 
 
+
+/*
+ this function is a modification of the move down function to instantly drop a block down.
+ in modern tetris games, this is called a hard drop.
+*/
+
+void tetris_hard_drop()
+{
+ int temp_moves=moves;
+
+ last_move_fail=tetris_check_move();
+ while(!last_move_fail)
+ {
+  temp_block=main_block;  /*make backup of block location*/
+  main_block.y+=1;
+  last_move_fail=tetris_check_move();
+ }
+
+  main_block=temp_block;
+  /*printf("Block is finished\n");*/
+  tetris_set_block();
+  moves=temp_moves;
+  move_log[moves]=move_id;
+  moves++; /*moves normally wouldn't be incremented because move check fails but setting a block is actually a valid move.*/
+
+
+ last_move_fail=0; /*because moving down is always a valid operation, the fail variable should be set to 0*/
+}
+
+
+
+
 /*all things about moving up*/
 void tetris_move_up()
 {
