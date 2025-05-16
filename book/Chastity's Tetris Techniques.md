@@ -41,7 +41,11 @@ Modern Tetris is different. The 7 blocks come in random order, but they are also
 
 # Mechanical TSD
 
+In all modern Tetris games, the 7-bag system ensures that the blocks are evenly distributed. You will always receive one of each of the 7 deadly blocks in each set of 7. The order will be different each time but with careful planning and the ability to "hold" a block for later use, there are opening setups that work 100% of the time to allow a technique called the Mechanical T-Spin Double. By looking at some of the pictures and explanations I have provided, you can learn the tricks I have been using in my videos to achieve ridiculously high scores and come in first place in Tetris 99 for the Nintendo Switch.
 
+
+
+https://harddrop.com/wiki/Mechanical_TSD_Setups
 
 https://www.youtube.com/watch?v=v5FX8BHwtGA
 
