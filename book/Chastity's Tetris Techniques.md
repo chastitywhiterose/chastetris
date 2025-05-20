@@ -52,11 +52,13 @@ I will show you some common setups for the first bag that will enable you to con
 
 ## The Standard Method
 
-In just 6 easy steps, you can make consistent T Spin doubles. These images illustrate how it works.
+In just 7 easy steps, you can make consistent T Spin doubles. These images illustrate how it works.
 
-![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-2.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-3.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-4.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-5.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-6.png)
+![mech-tsd-v2-page-1.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2.png) ![mech-tsd-v2-page-2.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-2.png) ![mech-tsd-v2-page-3.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-3.png) ![mech-tsd-v2-page-4.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-4.png) ![mech-tsd-v2-page-5.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-5.png) ![mech-tsd-v2-page-6.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-6-1.png) ![mech-tsd-v2-page-7.png](https://chastitywhiterose.com/wp-content/uploads/2025/05/mech-tsd-v2-page-7.png)
 
 This is what I call the standard or the common method for clearing T Spins as fast as possible. However, there are other methods which may be covered later. In my experience, this is going to work in most cases and is best for beginners.
+
+However, there are infinite ways this T Spin loop can be started. This is only one specific opening. Much like Chess, Tetris has openings because there is some consistency to the blocks, even if we cannot predict their order.
 
 https://harddrop.com/wiki/Mechanical_TSD_Setups
 
