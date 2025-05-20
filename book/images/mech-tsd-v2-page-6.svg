@@ -27,8 +27,8 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="px"
      inkscape:zoom="1.1527778"
-     inkscape:cx="163.9518"
-     inkscape:cy="384.28915"
+     inkscape:cx="179.56626"
+     inkscape:cy="389.49397"
      inkscape:window-width="1920"
      inkscape:window-height="1057"
      inkscape:window-x="-8"
@@ -60,6 +60,97 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
+    <rect
+       style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect4"
+       width="9.5249996"
+       height="9.5249996"
+       x="19.049999"
+       y="180.97499" />
+    <rect
+       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect10"
+       width="9.5249996"
+       height="9.5249996"
+       x="-180.97501"
+       y="-38.099998"
+       transform="matrix(0,-1,-1,0,0,0)" />
+    <rect
+       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect11"
+       width="9.5249996"
+       height="9.5249996"
+       x="-180.97501"
+       y="-28.574999"
+       transform="matrix(0,-1,-1,0,0,0)" />
+    <rect
+       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect12"
+       width="9.5249996"
+       height="9.5249996"
+       x="-171.45001"
+       y="-38.099998"
+       transform="matrix(0,-1,-1,0,0,0)" />
+    <rect
+       style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect13"
+       width="9.5249996"
+       height="9.5249996"
+       x="-95.25"
+       y="-190.5"
+       transform="scale(-1)" />
+    <rect
+       style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect19"
+       width="9.5249996"
+       height="9.5249996"
+       x="76.199997"
+       y="180.97499" />
+    <rect
+       style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect20"
+       width="9.5249996"
+       height="9.5249996"
+       x="66.674995"
+       y="180.97499" />
+    <rect
+       style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect23"
+       width="9.5249996"
+       height="9.5249996"
+       x="4.2236366e-07"
+       y="171.45001" />
+    <rect
+       style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect24"
+       width="9.5249996"
+       height="9.5249996"
+       x="4.2236329e-07"
+       y="180.97501" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect29"
+       width="9.5249996"
+       height="9.5249996"
+       x="9.5249996"
+       y="-180.97499"
+       transform="scale(1,-1)" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect30"
+       width="9.5249996"
+       height="9.5249996"
+       x="9.5249996"
+       y="-171.45"
+       transform="scale(1,-1)" />
+    <rect
+       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
+       id="rect31"
+       width="9.5249996"
+       height="9.5249996"
+       x="19.049999"
+       y="-171.45"
+       transform="scale(1,-1)" />
     <text
        xml:space="preserve"
        style="font-size:7.40833px;line-height:1;font-family:hack;-inkscape-font-specification:hack;text-align:center;word-spacing:0px;text-anchor:middle;fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
@@ -70,22 +161,22 @@
          style="font-size:7.40833px;fill:#000000;stroke-width:0.264583"
          x="48.256229"
          y="24.678595"
-         id="tspan150">Now place the</tspan><tspan
+         id="tspan111">After the lines</tspan><tspan
          sodipodi:role="line"
          style="font-size:7.40833px;fill:#000000;stroke-width:0.264583"
          x="48.256229"
          y="32.086926"
-         id="tspan180">blocks into the</tspan><tspan
+         id="tspan6">are cleared,</tspan><tspan
          sodipodi:role="line"
          style="font-size:7.40833px;fill:#000000;stroke-width:0.264583"
-         x="48.256229"
+         x="48.256226"
          y="39.495255"
-         id="tspan181">same pattern as</tspan><tspan
+         id="tspan7">it looks like this.</tspan><tspan
          sodipodi:role="line"
          style="font-size:7.40833px;fill:#000000;stroke-width:0.264583"
-         x="48.256229"
+         x="50.486324"
          y="46.903584"
-         id="tspan182">before and repeat!</tspan></text>
+         id="tspan14"> </tspan></text>
     <g
        id="g34"
        transform="translate(127.94516,9.5249996)">
@@ -404,560 +495,5 @@
          style="fill:#000000;stroke-width:0.264583"
          x="177.07317"
          y="154.9247">I</tspan></text>
-    <rect
-       style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect4"
-       width="9.5249996"
-       height="9.5249996"
-       x="19.049999"
-       y="180.97499" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect10"
-       width="9.5249996"
-       height="9.5249996"
-       x="-180.97499"
-       y="-38.099998"
-       transform="matrix(0,-1,-1,0,0,0)" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect11"
-       width="9.5249996"
-       height="9.5249996"
-       x="-180.97499"
-       y="-28.574999"
-       transform="matrix(0,-1,-1,0,0,0)" />
-    <rect
-       style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect12"
-       width="9.5249996"
-       height="9.5249996"
-       x="-171.45"
-       y="-38.099998"
-       transform="matrix(0,-1,-1,0,0,0)" />
-    <rect
-       style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect13"
-       width="9.5249996"
-       height="9.5249996"
-       x="-95.25"
-       y="-190.5"
-       transform="scale(-1)" />
-    <rect
-       style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect19"
-       width="9.5249996"
-       height="9.5249996"
-       x="76.199997"
-       y="180.97499" />
-    <rect
-       style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect20"
-       width="9.5249996"
-       height="9.5249996"
-       x="66.674995"
-       y="180.97499" />
-    <rect
-       style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect23"
-       width="9.5249996"
-       height="9.5249996"
-       x="4.2236329e-07"
-       y="171.45" />
-    <rect
-       style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect24"
-       width="9.5249996"
-       height="9.5249996"
-       x="4.2236329e-07"
-       y="180.97501" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect29"
-       width="9.5249996"
-       height="9.5249996"
-       x="9.5249996"
-       y="-180.97498"
-       transform="scale(1,-1)" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect30"
-       width="9.5249996"
-       height="9.5249996"
-       x="9.5249996"
-       y="-171.44998"
-       transform="scale(1,-1)" />
-    <rect
-       style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-       id="rect31"
-       width="9.5249996"
-       height="9.5249996"
-       x="19.049999"
-       y="-171.44998"
-       transform="scale(1,-1)" />
-    <g
-       id="g150">
-      <g
-         id="g114"
-         transform="translate(-104.775,142.875)"
-         style="stroke:none">
-        <rect
-           style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect111"
-           width="9.5249996"
-           height="9.5249996"
-           x="9.5249996"
-           y="19.049999" />
-        <rect
-           style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect112"
-           width="9.5249996"
-           height="9.5249996"
-           x="28.574999"
-           y="19.049999" />
-        <rect
-           style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect113"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="19.049999" />
-        <rect
-           style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect114"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="28.574997" />
-      </g>
-      <g
-         id="g118"
-         style="fill:#00ff00;stroke:none"
-         transform="translate(-114.3,104.775)">
-        <rect
-           style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect115"
-           width="9.5249996"
-           height="9.5249996"
-           x="57.149998"
-           y="57.149998" />
-        <rect
-           style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect116"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="47.625" />
-        <rect
-           style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect117"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="57.149998" />
-        <rect
-           style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect118"
-           width="9.5249996"
-           height="9.5249996"
-           x="76.199997"
-           y="47.625" />
-      </g>
-      <g
-         id="g122"
-         style="fill:#ff0000;stroke:none"
-         transform="matrix(0,-1,-1,0,-19.050003,219.075)">
-        <rect
-           style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect119"
-           width="9.5249996"
-           height="9.5249996"
-           x="57.149998"
-           y="57.149998" />
-        <rect
-           style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect120"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="47.625" />
-        <rect
-           style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect121"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="57.149998" />
-        <rect
-           style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect122"
-           width="9.5249996"
-           height="9.5249996"
-           x="76.199997"
-           y="47.625" />
-      </g>
-      <g
-         id="g126"
-         style="fill:#ff8000;stroke:none"
-         transform="rotate(180,4.762498,142.87499)">
-        <rect
-           style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect123"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="104.77499" />
-        <rect
-           style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect124"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="114.3" />
-        <rect
-           style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect125"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="123.825" />
-        <rect
-           style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect126"
-           width="9.5249996"
-           height="9.5249996"
-           x="28.574999"
-           y="123.825" />
-      </g>
-      <g
-         id="g130"
-         style="fill:#ffff00;stroke:none"
-         transform="translate(-57.150002,9.5250002)">
-        <rect
-           style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect127"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="152.39999" />
-        <rect
-           style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect128"
-           width="9.5249996"
-           height="9.5249996"
-           x="28.574999"
-           y="152.39999" />
-        <rect
-           style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect129"
-           width="9.5249996"
-           height="9.5249996"
-           x="28.574999"
-           y="161.92499" />
-        <rect
-           style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect130"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="161.92499" />
-      </g>
-      <g
-         id="g134"
-         style="fill:#00ffff;stroke:none"
-         transform="translate(-171.44999)">
-        <rect
-           style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect131"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="161.92499" />
-        <rect
-           style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect132"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="152.39999" />
-        <rect
-           style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect133"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="142.875" />
-        <rect
-           style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect134"
-           width="9.5249996"
-           height="9.5249996"
-           x="66.674995"
-           y="171.45" />
-      </g>
-      <g
-         id="g138"
-         style="fill:#0000ff;stroke:none"
-         transform="matrix(1,0,0,-1,-114.3,266.69999)">
-        <rect
-           style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect135"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="104.77499" />
-        <rect
-           style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect136"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="114.3" />
-        <rect
-           style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect137"
-           width="9.5249996"
-           height="9.5249996"
-           x="19.049999"
-           y="123.825" />
-        <rect
-           style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-           id="rect138"
-           width="9.5249996"
-           height="9.5249996"
-           x="28.574999"
-           y="123.825" />
-      </g>
-    </g>
-    <g
-       id="g142"
-       transform="rotate(180,33.337499,50.149692)">
-      <rect
-         style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect139"
-         width="9.5249996"
-         height="9.5249996"
-         x="9.5249996"
-         y="19.049999" />
-      <rect
-         style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect140"
-         width="9.5249996"
-         height="9.5249996"
-         x="28.574999"
-         y="19.049999" />
-      <rect
-         style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect141"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="19.049999" />
-      <rect
-         style="fill:#ff00ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect142"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="28.574997" />
-    </g>
-    <g
-       id="g157"
-       style="fill:#00ff00;stroke:none"
-       transform="translate(-9.5249997,104.775)">
-      <rect
-         style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect154"
-         width="9.5249996"
-         height="9.5249996"
-         x="57.149998"
-         y="57.149998" />
-      <rect
-         style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect155"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="47.625" />
-      <rect
-         style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect156"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="57.149998" />
-      <rect
-         style="fill:#00ff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect157"
-         width="9.5249996"
-         height="9.5249996"
-         x="76.199997"
-         y="47.625" />
-    </g>
-    <g
-       id="g161"
-       style="fill:#ff0000;stroke:none"
-       transform="matrix(0,-1,-1,0,85.724997,219.07499)">
-      <rect
-         style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect158"
-         width="9.5249996"
-         height="9.5249996"
-         x="57.149998"
-         y="57.149998" />
-      <rect
-         style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect159"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="47.625" />
-      <rect
-         style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect160"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="57.149998" />
-      <rect
-         style="fill:#ff0000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect161"
-         width="9.5249996"
-         height="9.5249996"
-         x="76.199997"
-         y="47.625" />
-    </g>
-    <g
-       id="g165"
-       style="fill:#ff8000;stroke:none"
-       transform="rotate(180,57.149998,142.87499)">
-      <rect
-         style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect162"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="104.77499" />
-      <rect
-         style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect163"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="114.3" />
-      <rect
-         style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect164"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="123.825" />
-      <rect
-         style="fill:#ff8000;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect165"
-         width="9.5249996"
-         height="9.5249996"
-         x="28.574999"
-         y="123.825" />
-    </g>
-    <g
-       id="g169"
-       style="fill:#ffff00;stroke:none"
-       transform="translate(47.624998,9.5250053)">
-      <rect
-         style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect166"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="152.39999" />
-      <rect
-         style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect167"
-         width="9.5249996"
-         height="9.5249996"
-         x="28.574999"
-         y="152.39999" />
-      <rect
-         style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect168"
-         width="9.5249996"
-         height="9.5249996"
-         x="28.574999"
-         y="161.92499" />
-      <rect
-         style="fill:#ffff00;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect169"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="161.92499" />
-    </g>
-    <g
-       id="g173"
-       style="fill:#00ffff;stroke:none"
-       transform="translate(-66.674995,-9.5250034)">
-      <rect
-         style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect170"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="161.92499" />
-      <rect
-         style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect171"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="152.39999" />
-      <rect
-         style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect172"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="142.875" />
-      <rect
-         style="fill:#00ffff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect173"
-         width="9.5249996"
-         height="9.5249996"
-         x="66.674995"
-         y="171.45" />
-    </g>
-    <g
-       id="g177"
-       style="fill:#0000ff;stroke:none"
-       transform="matrix(1,0,0,-1,-9.5249996,266.69998)">
-      <rect
-         style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect174"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="104.77499" />
-      <rect
-         style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect175"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="114.3" />
-      <rect
-         style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect176"
-         width="9.5249996"
-         height="9.5249996"
-         x="19.049999"
-         y="123.825" />
-      <rect
-         style="fill:#0000ff;fill-rule:evenodd;stroke:none;stroke-width:0.264583;stroke-opacity:1;paint-order:fill markers stroke"
-         id="rect177"
-         width="9.5249996"
-         height="9.5249996"
-         x="28.574999"
-         y="123.825" />
-    </g>
   </g>
 </svg>
